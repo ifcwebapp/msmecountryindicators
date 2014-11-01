@@ -1,1 +1,177 @@
-test
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Main</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="Content/themes/base/jquery-ui.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="scripts/jquery-2.1.1.min.js"></script>
+    <script src="scripts/jquery-ui.min-1.11.1.js"></script>
+    <script src="scripts/knockout-3.2.0.js"></script>
+    <script src="scripts/highcharts.js"></script>
+    <script src="scripts/sprintf.js"></script>
+    <!--<script src="scripts/models/CountryRegionMap.js" type="text/javascript"></script>-->
+    <script src="scripts/models/CountryIndicatorData.js" type="text/javascript"></script>
+    <script src="scripts/models/CountriesInfo.js" type="text/javascript"></script>
+    <script src="scripts/models/MainModel.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <script type="text/javascript">
+                $("#header").load("header.html");
+            </script>
+        </div>
+        <div id="main">
+            <h2 style="font-size: 1.5em"> MSME Country Indicators</h2>
+            <div >
+
+                
+                <div id="shortPanel" style="max-width: 700px" data-bind="visible: !isExpanded(), click: expandMenu">
+                    <div data-bind="html: shortPanelText"></div>
+                    <div class="clear"></div>
+                </div>
+                <div id="panel" data-bind="visible: isExpanded">
+                    <div class="title left" style="padding-top: 4px">Definition:</div>
+                    <div class="left">
+                        <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
+                            <option value="0">Most Widely Used</option>
+                            <option value="1" >Statistical Institution</option>
+                            <option value="2" >Ministry of Finance/Central Bank</option>
+                            <option value="3" >SME Associations </option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="title left" style="padding-top: 4px">Enterprise Choice:</div>
+                    <div class="left">
+                        <select id="enterpriseChoice" style="width: 80px;" data-bind="value: enterprise, event: { change: refreshData }">
+                            <option value="Micro">Micro</option>
+                            <option value="SMEs">SMEs</option>
+                            <option value="MSMEs">MSMEs</option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="title left" style="padding-top: 4px">Map Layer:</div>
+                    <div class="left">
+                        <select id="category" style="width: 457px;" data-bind="value: category, event: { change: getKml }">
+                            <option value="Density">Density</option>
+                            <option value="Employment">Employment</option>
+                            <option value="Vallue added">Value added</option>
+                        </select>
+                    </div>
+                    <div class="left">
+                        <input id="showLegend" name="showLegend" style="margin-top: 6px; margin-left: 10px" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
+                        
+                    </div>
+                    <div class="left" style="height: 18px; padding-top: 4px;">Show Legend</div>
+                    <div class="clear"></div>
+                    <div class="title left"  style="padding-top: 4px">Indicator Style: </div>
+                    <div class="left">
+                        <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
+                            <option value="bubble">Bubble</option>
+                            <option value="chart" disabled="disabled">Chart</option>
+                        </select>
+                    </div>
+                    <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
+
+                        <select id="bubbleIndicator" style="width: 387px;" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
+                            <option value="Number of Enterprises">
+                                # of enterprises
+                            </option>
+                        </select>
+                    </div>
+                    <div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
+
+                        <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Trade">Trade</option>
+                            <option value="Services">Services</option>
+                            <option value="Agri/Other">Agri/Other</option>
+                        </select>
+
+                    </div>
+                    
+                    <div class="clear"></div>
+                    <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
+                        <div id="legendserved" style="display: none">
+                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Well served, %</div>
+                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Underserved, %</div>
+                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Unserved, %</div>
+                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Does not need credit, %</div>
+                        </div>
+                        <div id="legendaccount" style="display: block">
+                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Have Access to Credit, %</div>
+                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Have Loan, %</div>
+                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Have Overdraft, %</div>
+                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Have Checking, %</div>
+                        </div>
+                        <div id="legendsource" style="display: none">
+                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Other, %</div>
+                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Non-bank Financial Institution, %</div>
+                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">State-owned Bank and/or Govt. Agency, %</div>
+                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Private Commercial Bank, %</div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <!--<div style="width: 100%;">
+                        <div class="up" data-bind="click: expandMenu"></div>
+                    </div>-->
+                    <div class="clear"></div>
+                </div>
+                <div id="map-canvas"></div>
+            
+                
+            
+            </div>
+            <div class="clear"></div>
+            <!--<div id="data">
+                <div class="section clearfix">
+                    <div id="bottom-left">
+                        The <i>IFC Enterprise Finance Gap Database</i>, using primarily data from World Bank Enterprise Surveys, estimates the number of micro, small, and medium enterprises (MSMEs) in the world, and the degree of access to credit and use of deposit accounts for formal and informal MSMEs. The database currently covers 177 countries.
+                    </div>
+                    <div id="bottom-middle">
+                        <div ><strong>400 million</strong> MSMEs in developing countries</div>
+                        <div><img src="Content/ico_15.png" /> <strong>15%</strong> have access to credit</div>
+                        <div><img src="Content/ico_40.png" /> <strong>40%</strong> unserved</div>
+                        <div><img src="Content/ico_10.png" /> <strong>10%</strong> underserved</div>
+                        <div><img src="Content/ico_25.png" /> Access to finance a major constraint for <strong>25%</strong></div>
+
+                    </div>
+                    <div id="bottom-right">
+                        <div style="float: right">
+                        <h2 class="logo_title" style="font-size: 1.2em">Connect with us</h2>
+                            <div style="width: 50px; margin: 0 auto;">
+                        <div id="twitter_logo">
+                            <a href="https://twitter.com/SMEFinanceForum" title="SME Finance Forum Twitter" target="_blank">
+                                <div style="width: 100%; height: 100%"></div>
+                            </a>
+                        </div>
+                        <div id="linkedin_logo">
+                            <a href="http://www.linkedin.com/groups/SME-Finance-Forum-managed-IFC-4416977" title="SME Finance Forum LinkedIn" target="_blank">
+                                <div style="width: 100%; height: 100%"></div>
+                            </a>
+                        </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    
+    <div id="footer">
+        <script type="text/javascript">
+            $("#footer").load("footer.html");
+        </script>
+    </div>
+    <script type="text/javascript">
+        
+        ko.applyBindings(new models.MainModel('http://ifcwebapp.github.io/msmecountryindicators/'));
+
+    </script>
+</body>
+</html>
