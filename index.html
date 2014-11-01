@@ -12,7 +12,7 @@
     <script src="scripts/knockout-3.2.0.js"></script>
     <script src="scripts/highcharts.js"></script>
     <script src="scripts/sprintf.js"></script>
-    <!--<script src="scripts/models/CountryRegionMap.js" type="text/javascript"></script>-->
+    <script src="scripts/models/CountryIndicatorDataDimensions.js" type="text/javascript"></script>
     <script src="scripts/models/CountryIndicatorData.js" type="text/javascript"></script>
     <script src="scripts/models/CountriesInfo.js" type="text/javascript"></script>
     <script src="scripts/models/MainModel.js" type="text/javascript"></script>
@@ -72,7 +72,7 @@
                     <div class="left">
                         <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
                             <option value="bubble">Bubble</option>
-                            <option value="chart" disabled="disabled">Chart</option>
+                            <option value="chart">Chart</option>
                         </select>
                     </div>
                     <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
@@ -86,34 +86,20 @@
                     <div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
 
                         <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
-                            <option value="Manufacturing">Manufacturing</option>
-                            <option value="Trade">Trade</option>
-                            <option value="Services">Services</option>
-                            <option value="Agri/Other">Agri/Other</option>
+                            <option value="sectors">Sector Breakdown</option>
                         </select>
 
                     </div>
                     
                     <div class="clear"></div>
                     <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
-                        <div id="legendserved" style="display: none">
-                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Well served, %</div>
-                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Underserved, %</div>
-                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Unserved, %</div>
-                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Does not need credit, %</div>
+                        <div id="legendserved">
+                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Manufacturing</div>
+                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Trade</div>
+                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Services</div>
+                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Agri/Other</div>
                         </div>
-                        <div id="legendaccount" style="display: block">
-                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Have Access to Credit, %</div>
-                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Have Loan, %</div>
-                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Have Overdraft, %</div>
-                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Have Checking, %</div>
-                        </div>
-                        <div id="legendsource" style="display: none">
-                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Other, %</div>
-                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Non-bank Financial Institution, %</div>
-                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">State-owned Bank and/or Govt. Agency, %</div>
-                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Private Commercial Bank, %</div>
-                        </div>
+                        
                     </div>
                     <div class="clear"></div>
                     <!--<div style="width: 100%;">
@@ -171,7 +157,7 @@
     <script type="text/javascript">
         
         ko.applyBindings(new models.MainModel('http://ifcwebapp.github.io/msmecountryindicators/'));
-
+        //ko.applyBindings(new models.MainModel('http://localhost:49909/msmecountryindicators/'));
     </script>
 </body>
 </html>
