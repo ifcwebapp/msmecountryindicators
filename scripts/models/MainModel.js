@@ -141,7 +141,7 @@ var models;
             var chartData = this.chartIndicatorValue();
             var alpha = {};
             var betta = {};
-            var scaledZoom = isCountry ? zoom - 3 : zoom;
+            var scaledZoom = zoom != 3 ? zoom - 3 : 1;
             if (isCountry) {
                 switch (id) {
                     case "Number of Enterprises":
@@ -151,20 +151,10 @@ var models;
                 }
 
                 switch (chartData) {
-                    case "account":
+                    case "sectors":
                         betta.index = 22;
-                        betta.categories = ['Have Checking', 'Have Overdraft', 'Have Loan', 'Have Access to Credit'];
+                        betta.categories = ['Manufacturing', 'Trade', 'Services', 'Agri/Other'];
                         betta.indexes = [6, 7, 8, 9];
-                        break;
-                    case "served":
-                        betta.index = 24;
-                        betta.categories = ['Does not need credit', 'Unserved', 'Underserved', 'Well served'];
-                        betta.indexes = [11, 12, 13, 14];
-                        break;
-                    case "source":
-                        betta.index = 26;
-                        betta.categories = ['Private Commercial Bank', 'State-owned Bank and/or Govt. Agency', 'Non-bank Financial Institution', 'Other'];
-                        betta.indexes = [15, 16, 17, 18];
                         break;
                 }
             }
@@ -172,9 +162,6 @@ var models;
             for (var i = 0; i < this.bubbles.length; i++) {
                 var bubble = this.bubbles[i];
 
-                //if ((bubble.bubbleType != "country" && isCountry) || (bubble.bubbleType != "region" && !isCountry)) {
-                //        continue;
-                //}
                 if (isBubble) {
                     if (bubble.data.Value[id] != undefined && bubble.data.Value[id][_this.source() + _this.enterprise()] != undefined) {
                         var record = bubble.data.Value[id][_this.source() + _this.enterprise()];
@@ -193,11 +180,48 @@ var models;
                         bubble.setMap(null);
                     }
                 } else {
-                    bubble.setIcon({
-                        url: this.host + "images/" + chartData + "/" + bubble.data[1] + ".png",
-                        scaledSize: new google.maps.Size(bubble.data[betta.index - 1] / 4 * scaledZoom, bubble.data[betta.index] / 4 * scaledZoom)
+                    var categoryData = [];
+                    for (var j = 0; j < betta.categories.length; j++) {
+                        var c = betta.categories[j];
+                        try  {
+                            var d = bubble.data.Value[c][_this.source() + _this.enterprise()];
+                            categoryData[j] = { category: c, year: d[3], value: d[13] };
+                        } catch (e) {
+                            categoryData[j] = { category: c, year: 0, value: 0 };
+                        }
+                    }
+
+                    var total = 0;
+                    categoryData.forEach(function (v, n) {
+                        return total += v.value;
                     });
-                    bubble.setTitle(sprintf('%s: %s%%\n%s: %s%%\n%s: %s%%\n%s: %s%%\n', betta.categories[3], bubble.data[betta.indexes[3]], betta.categories[2], bubble.data[betta.indexes[2]], betta.categories[1], bubble.data[betta.indexes[1]], betta.categories[0], bubble.data[betta.indexes[0]]));
+
+                    if (categoryData.filter(function (v, n) {
+                        return v.year != 0;
+                    }).length > 0) {
+                        var dims = { width: 0, height: 0 };
+                        try  {
+                            dims = models.CountryIndicatorDataDimensions.rows[_this.source() + _this.enterprise()][bubble.data.Key]["sectors"];
+                        } catch (e) {
+                        }
+
+                        bubble.setIcon({
+                            //url: this.host + "images/" + chartData + "/" + bubble.data[1] + ".png",
+                            url: this.host + "images/" + _this.source() + _this.enterprise() + "/" + bubble.data.Key + ".png",
+                            //scaledSize: new google.maps.Size(bubble.data[betta.index - 1] / 4 * scaledZoom, bubble.data[betta.index] / 4 * scaledZoom)
+                            scaledSize: new google.maps.Size(dims.width / 4 * scaledZoom, dims.height / 4 * scaledZoom)
+                        });
+
+                        //bubble.setTitle(sprintf('%s: %s\n%s: %s\n%s: %s\n%s: %s\n', betta.categories[3], bubble.data[betta.indexes[3]], betta.categories[2], bubble.data[betta.indexes[2]], betta.categories[1], bubble.data[betta.indexes[1]], betta.categories[0], bubble.data[betta.indexes[0]]));
+                        var title = '';
+                        for (var k = 0; k < betta.categories.length; k++) {
+                            title += sprintf('%s: %s\n', betta.categories[k], categoryData[k].year != 0 ? categoryData[k].value + "% at " + categoryData[k].year : (total == 100 ? categoryData[k].value + '%' : 'No data'));
+                        }
+                        bubble.setTitle(title);
+                        bubble.setMap(map);
+                    } else {
+                        bubble.setMap(null);
+                    }
                 }
             }
         };
@@ -272,7 +296,6 @@ var models;
             //    if (info[18] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Other Source of Financing</strong></td><td style='text-align:right'>" + info[18] + "%</td></tr>"; }
             //}
             //str += "</table>";
-            console.log(info.Key);
             return str;
         };
 
