@@ -173,7 +173,7 @@ var models;
                             scale: alpha.value * Math.sqrt(parseInt(record[13])) + scaledZoom * 4
                         });
 
-                        bubble.setTitle(selectedText + ": " + _this.numberWithCommas(record[13]) + " at " + record[3]);
+                        bubble.setTitle(selectedText + ": " + _this.numberWithCommas(record[13]) + " in " + record[3]);
 
                         bubble.setMap(map);
                     } else {
@@ -215,7 +215,7 @@ var models;
                         //bubble.setTitle(sprintf('%s: %s\n%s: %s\n%s: %s\n%s: %s\n', betta.categories[3], bubble.data[betta.indexes[3]], betta.categories[2], bubble.data[betta.indexes[2]], betta.categories[1], bubble.data[betta.indexes[1]], betta.categories[0], bubble.data[betta.indexes[0]]));
                         var title = '';
                         for (var k = 0; k < betta.categories.length; k++) {
-                            title += sprintf('%s: %s\n', betta.categories[k], categoryData[k].year != 0 ? categoryData[k].value + "% at " + categoryData[k].year : (total == 100 ? categoryData[k].value + '%' : 'No data'));
+                            title += sprintf('%s: %s\n', betta.categories[k], categoryData[k].year != 0 ? categoryData[k].value + "% in " + categoryData[k].year : (total == 100 ? categoryData[k].value + '%' : 'No data'));
                         }
                         bubble.setTitle(title);
                         bubble.setMap(map);
