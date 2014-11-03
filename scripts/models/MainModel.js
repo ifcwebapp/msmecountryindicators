@@ -25,6 +25,7 @@ var models;
             this.countriesAndRegions = ko.observableArray([]);
             this.isExpanded = ko.observable(true);
             this.summaryType = ko.observable('summary');
+            this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.linkText = ko.observable('Show link to this page');
             this.isLinkVisible = ko.observable(false);
             var _this = this;
@@ -70,14 +71,15 @@ var models;
             //}
             //_this.countries.sort(function (left, right) { return left.Name == right.Name ? 0 : (left.Name < right.Name ? -1 : 1) });
             //_this.countriesAndRegions.sort(function (left, right) { return left.Name == right.Name ? 0 : (left.Name < right.Name ? -1 : 1) });
-            //$('#scrollablePart').height($(window).height() - 110);
-            //_this.summaryDialog = $('#summary').dialog({
-            //    autoOpen: false,
-            //    modal: true,
-            //    height: $(window).height() - 50,
-            //    width: 1000,
-            //    dialogClass: 'noTitleDialog'
-            //});
+            $('#scrollablePart').height($(window).height() - 110);
+            _this.summaryDialog = $('#summary').dialog({
+                autoOpen: false,
+                modal: true,
+                height: $(window).height() - 50,
+                width: 1000,
+                dialogClass: 'noTitleDialog'
+            });
+
             ////_this.createCharts(_this);
             //for (var i = 0; i < 3; i++) {
             //    this.selectedValues.push(ko.observable(new SummaryItem(null, null, 'empty')));
@@ -111,6 +113,27 @@ var models;
 
         MainModel.prototype.closeSummary = function (data) {
             data.summaryDialog.dialog('close');
+        };
+
+        MainModel.prototype.showSummaryDialog = function (data, event, country) {
+            var d = models.CountryData.rows[country];
+            data.summaryData(d);
+
+            //if (country != undefined) {
+            //    var c = $.grep(data.countriesAndRegions(), function (e, i) { return e.Name == country });
+            //    if (c.length > 0) {
+            //        data.selectedValues()[0](c[0]);
+            //    }
+            //}
+            //else {
+            //    var c = $.grep(data.countriesAndRegions(), function (e, i) { return e.Name == 'Afghanistan' });
+            //    if (c.length > 0) {
+            //        data.selectedValues()[0](c[0]);
+            //    }
+            //}
+            //data.summaryType('summary');
+            //data.onCountryChange(data, event);
+            data.summaryDialog.dialog("open");
         };
 
         MainModel.prototype.showSelectors = function () {
@@ -270,6 +293,8 @@ var models;
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
             //var rowNum = 1;
+            var data = models.CountryData.rows[info.Key];
+
             //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
             //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }
             //if (info[19] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total deposit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[19]) + "</td></tr>"; }
@@ -355,10 +380,11 @@ var models;
                         });
 
                         google.maps.event.addListener(bubble, 'click', function () {
-                            for (var j = 0; j < main.windows.length; j++) {
-                                main.windows[j].close();
-                            }
-                            main.windows[i].open(main.map, main.bubbles[i]);
+                            main.showSummaryDialog(main, null, countryCode);
+                            //for (var j = 0; j < main.windows.length; j++) {
+                            //    main.windows[j].close();
+                            //}
+                            //main.windows[i].open(main.map, main.bubbles[i]);
                         });
 
                         //google.maps.event.addListener(infowindow, 'domready', function () {

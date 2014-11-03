@@ -15,6 +15,7 @@
     <script src="scripts/models/CountryIndicatorDataDimensions.js" type="text/javascript"></script>
     <script src="scripts/models/CountryIndicatorData.js" type="text/javascript"></script>
     <script src="scripts/models/CountriesInfo.js" type="text/javascript"></script>
+    <script src="scripts/models/CountryData.js" type="text/javascript"></script>
     <script src="scripts/models/MainModel.js" type="text/javascript"></script>
 
 </head>
@@ -147,7 +148,60 @@
             </div>-->
         </div>
     </div>
+    
+    <div id="summary" style="font-size: 1.3em">
+        <div style="margin-bottom: 10px">
+            <div class="close right" title="Close summary" data-bind="click: closeSummary"></div>
+            <div class="clear"></div>
+        </div>
+        <div data-bind="text: summaryData()[0].CountryName" style="font-size: 2em"></div>
+        <div id="scrollablePart" style="overflow-y: auto">
+            <div>Sector Distribution Details</div>
+            <div data-bind="foreach: summaryData()">
+                <table>
+                    <thead>
+                        <tr >
+                            <th></th>
+                            <!-- ko foreach: $data.Categories[0].Value[0].Value -->
+                            <th data-bind="text: Key"></th>
+                            <!-- /ko -->
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: $data.Categories">
+                        <tr>
+                            <td data-bind="text: Key" style="font-weight: bold"></td>
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key == 'Total' -->
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key.indexOf('%') == -1 -->
+                            <td data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                            <td data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tr>
+                        <!-- ko foreach: Value -->
+                        <tr data-bind="if: Key != 'Total'">
+                            <td data-bind="text: Key" style="padding-left: 20px"></td>
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key.indexOf('%') == -1 -->
+                            <td data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                            <td data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
 
+                </table>
+            </div>
+        </div>
+    </div>
     
     <div id="footer">
         <script type="text/javascript">
