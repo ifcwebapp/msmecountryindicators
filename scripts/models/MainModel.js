@@ -272,7 +272,7 @@ var models;
                 this.ctaLayer.setMap(null);
             }
 
-            var kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + "_" + this.year() + ".kmz";
+            var kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz";
             kmlName = kmlName.replace(' ', '_');
 
             this.ctaLayer = new google.maps.KmlLayer(this.host + "kml/" + kmlName, {
