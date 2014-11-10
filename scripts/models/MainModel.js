@@ -288,12 +288,39 @@ var models;
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };
 
-        MainModel.prototype.getCountryInfo = function (info) {
-            var str = "<div style='width: 50px; overflow'><h2 style='white-space:nowrap'>" + info.Key + "              </h2></div>";
+        MainModel.prototype.getCountryInfo = function (info, main) {
+            var titleReplacements = { "Density": "# of enterprises per 1,000 people", "Employment": "Employment (% total)", "Vallue added": "Value added" };
+
+            var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
+
+            var str = "<div style='width: 250px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='#' id='link" + info.Key + "' data-bind='click : function(data, event) { showSummaryDialog(data, event, \"" + info.Key + "\") }'>Show Summary</a><table></div>";
+            str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
             //var rowNum = 1;
             var data = models.CountryData.rows[info.Key];
+
+            str += "<table style='width: 250px;'><tr><th></th><th>" + $("#enterpriseChoice>option:selected").text() + "</th></tr>";
+            var year = "";
+            var source = "";
+            var rowNum = 1;
+            for (var key in info.Value) {
+                var title = titleReplacements[key] != undefined ? titleReplacements[key] : key;
+
+                var value = info.Value[key][main.source() + main.enterprise()] != undefined ? info.Value[key][main.source() + main.enterprise()][13] : "No data";
+
+                if (value != "No data") {
+                    value = main.numberWithCommas(value);
+                    year = info.Value[key][main.source() + main.enterprise()][3];
+                    source = info.Value[key][main.source() + main.enterprise()][6];
+                }
+                str += "<tr class='odd'><td><strong>" + title + "</strong></td><td>" + value + "</td></tr>";
+            }
+
+            str = str.replace('[Year]', year);
+            str = str.replace('[Source]', source);
+
+            str += "</table>";
 
             //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
             //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }
@@ -376,20 +403,21 @@ var models;
                         });
 
                         var infowindow = new google.maps.InfoWindow({
-                            content: main.getCountryInfo(info)
+                            content: main.getCountryInfo(info, main)
                         });
 
                         google.maps.event.addListener(bubble, 'click', function () {
-                            main.showSummaryDialog(main, null, countryCode);
-                            //for (var j = 0; j < main.windows.length; j++) {
-                            //    main.windows[j].close();
-                            //}
-                            //main.windows[i].open(main.map, main.bubbles[i]);
+                            for (var j = 0; j < main.windows.length; j++) {
+                                main.windows[j].close();
+                            }
+                            main.windows[i].setContent(main.getCountryInfo(info, main));
+                            main.windows[i].open(main.map, main.bubbles[i]);
                         });
 
-                        //google.maps.event.addListener(infowindow, 'domready', function () {
-                        //    ko.applyBindings(main, $("#link" + info[1])[0]);
-                        //});
+                        google.maps.event.addListener(infowindow, 'domready', function () {
+                            ko.applyBindings(main, $("#link" + countryCode)[0]);
+                        });
+
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
                     })(i);
