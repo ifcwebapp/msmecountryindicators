@@ -12,7 +12,7 @@ var models;
             this.windows = [];
             this.ctaLayer = null;
             this.source = ko.observable(0);
-            this.enterprise = ko.observable('Micro');
+            this.enterprise = ko.observable('MSMEs');
             this.category = ko.observable('Density');
             this.year = ko.observable(2010);
             this.kmlValue = ko.observable('');
@@ -293,7 +293,7 @@ var models;
 
             var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
 
-            var str = "<div style='width: 250px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='#' id='link" + info.Key + "' data-bind='click : function(data, event) { showSummaryDialog(data, event, \"" + info.Key + "\") }'>Show Summary</a><table></div>";
+            var str = "<div style='width: 250px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='countries.html?country=" + info.Key + "'>Country Page</a><table></div>";
             str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
@@ -414,10 +414,9 @@ var models;
                             main.windows[i].open(main.map, main.bubbles[i]);
                         });
 
-                        google.maps.event.addListener(infowindow, 'domready', function () {
-                            ko.applyBindings(main, $("#link" + countryCode)[0]);
-                        });
-
+                        //google.maps.event.addListener(infowindow, 'domready', function () {
+                        //    ko.applyBindings(main, $("#link" + countryCode)[0]);
+                        //});
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
                     })(i);
