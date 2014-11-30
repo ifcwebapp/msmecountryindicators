@@ -271,10 +271,13 @@ var models;
             if (this.ctaLayer != null) {
                 this.ctaLayer.setMap(null);
             }
-
-            var kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz";
-            kmlName = kmlName.replace(' ', '_');
-
+            var kmlName = "";
+            if (this.category() == "Density" || this.category() == "Employment" || this.category() == "Vallue added") {
+                kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz";
+                kmlName = kmlName.replace(' ', '_');
+            } else {
+                kmlName = this.category() + ".kmz";
+            }
             this.ctaLayer = new google.maps.KmlLayer(this.host + "kml/" + kmlName, {
                 preserveViewport: true,
                 screenOverlays: this.isLegendVisible()
