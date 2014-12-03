@@ -307,7 +307,8 @@ var models;
             str += "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
 
             //str += "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
-            //var str2 = "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
+            var str2 = "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
+
             var year = "";
             var source = "";
             var rowNum = 1;
@@ -328,6 +329,18 @@ var models;
                     }
                     str += "<td>" + value + "</td>";
                     str += "</tr>";
+                } else {
+                    str2 += "<tr class='odd'><td><strong>" + title + "</strong></td>";
+
+                    var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
+
+                    if (value != "No data") {
+                        value = main.numberWithCommas(value);
+                        year = info.Value[key][src + enterprise][3];
+                        source = info.Value[key][src + enterprise][6];
+                    }
+                    str2 += "<td>" + value + "</td>";
+                    str2 += "</tr>";
                 }
             }
 
@@ -337,7 +350,7 @@ var models;
             str = str.replace('[Year]', year);
             str = str.replace('[Source]', source);
 
-            str += "</table>"; //"<br/><br/>" + str2 + "</table><br/><br/><a href='javascript:void()' id='srcShow' onclick=\"$('#sources').show();$('#srcShow').hide();$('#srcHide').show();\" >Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick=\"$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();\" >Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br/><br/><br/><br/>";
+            str += "</table><br/><br/>" + str2 + "</table><br/><br/><a href='javascript:void()' id='srcShow' onclick=\"$('#sources').show();$('#srcShow').hide();$('#srcHide').show();\" >Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick=\"$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();\" >Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br/><br/><br/><br/>";
 
             //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
             //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }
