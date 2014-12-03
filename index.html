@@ -45,8 +45,8 @@
                             <option value="3" >SME Associations </option>
                         </select>
                     </div>
-                    <div class="clear"></div>
-                    <div class="title left" style="padding-top: 4px">Firm Size:</div>
+                    <div class="clear" style="margin-bottom: 5px"></div>
+                    <div class="title left" style="padding-top: 4px; padding-left:1px">Firm Size:</div>
                     <div class="left">Micro</div>
                     <div class="left" style="margin-right:20px"><input type="radio" name="firm" value="Micro" data-bind="checked: enterprise, click: refreshData " /></div>
                     <div class="left">SMEs</div>
@@ -63,7 +63,7 @@
 
                             </select>
                         </div>-->
-                        <div class="clear"></div>
+                        <div class="clear" style="margin-bottom: 5px"></div>
                         <div class="title left" style="padding-top: 4px">Map Layer:</div>
                         <div class="left">
                             <select id="category" data-bind="value: category, event: { change: getKml }">
@@ -88,11 +88,11 @@
                             </select>
                         </div>
                         <div class="left">
-                            <input id="showLegend" name="showLegend" style="margin-top: 6px; margin-left: 10px" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
-
+                            <input id="showLegend" name="showLegend" style="margin: 2px 0px 0px 30px;" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
+							Show Legend
                         </div>
-                        <div class="left" style="height: 18px; padding-top: 4px;">Show Legend</div>
-                        <div class="clear"></div>
+                        <div class="left" style="height: 18px; "></div>
+                        <div class="clear"  style="margin-bottom: 5px"></div>
                         <div class="title left" style="padding-top: 4px">Indicator Style: </div>
                         <!--<div class="left">
                                 <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
