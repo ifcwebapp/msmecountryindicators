@@ -265,6 +265,7 @@ var models;
         MainModel.prototype.refreshData = function () {
             this.getKml();
             this.zoomChanged(this.map);
+            return true;
         };
 
         MainModel.prototype.getKml = function () {
@@ -292,38 +293,51 @@ var models;
         };
 
         MainModel.prototype.getCountryInfo = function (info, main) {
-            var titleReplacements = { "Density": "# of enterprises per 1,000 people", "Employment": "Employment (% total)", "Vallue added": "Value added" };
+            var titleReplacements = { "Number of Enterprises": "Enterprises (absolute #)", "Density": "Enterprises density (per 1000 people)", "Employment": "Employment (% of total)", "Vallue added": "Value added to the economy (% of total)" };
 
             var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
 
-            var str = "<div style='width: 250px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='countries.html?country=" + info.Key + "'>Country Page</a><table></div>";
+            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='countries.html?country=" + info.Key + "'>Country Page</a><table></div>";
             str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
             //var rowNum = 1;
             var data = models.CountryData.rows[info.Key];
 
-            str += "<table style='width: 250px;'><tr><th></th><th>" + $("#enterpriseChoice>option:selected").text() + "</th></tr>";
+            str += "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
+
+            //str += "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
+            //var str2 = "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
             var year = "";
             var source = "";
             var rowNum = 1;
+            var enterprise = main.enterprise();
+            var src = main.source();
+
             for (var key in info.Value) {
                 var title = titleReplacements[key] != undefined ? titleReplacements[key] : key;
+                if (key != 'Manufacturing' && key != 'Trade' && key != 'Services' && key != 'Agri/Other') {
+                    str += "<tr class='odd'><td><strong>" + title + "</strong></td>";
 
-                var value = info.Value[key][main.source() + main.enterprise()] != undefined ? info.Value[key][main.source() + main.enterprise()][13] : "No data";
+                    var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
 
-                if (value != "No data") {
-                    value = main.numberWithCommas(value);
-                    year = info.Value[key][main.source() + main.enterprise()][3];
-                    source = info.Value[key][main.source() + main.enterprise()][6];
+                    if (value != "No data") {
+                        value = main.numberWithCommas(value);
+                        year = info.Value[key][src + enterprise][3];
+                        source = info.Value[key][src + enterprise][6];
+                    }
+                    str += "<td>" + value + "</td>";
+                    str += "</tr>";
                 }
-                str += "<tr class='odd'><td><strong>" + title + "</strong></td><td>" + value + "</td></tr>";
             }
 
+            //str += "<tr class='odd'><td><strong>Enterprises (% of total)</strong></td><td>[Placeholder]</td></tr>";
+            //str += "<tr class='odd'><td><strong>Employment (absolute #)</strong></td><td>[Placeholder]</td></tr>";
+            //str += "<tr class='odd'><td><strong>Employment (% of total)</strong></td><td>[Placeholder]</td></tr>";
             str = str.replace('[Year]', year);
             str = str.replace('[Source]', source);
 
-            str += "</table>";
+            str += "</table>"; //"<br/><br/>" + str2 + "</table><br/><br/><a href='javascript:void()' id='srcShow' onclick=\"$('#sources').show();$('#srcShow').hide();$('#srcHide').show();\" >Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick=\"$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();\" >Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br/><br/><br/><br/>";
 
             //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
             //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }

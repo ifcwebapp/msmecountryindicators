@@ -47,78 +47,94 @@
                     </div>
                     <div class="clear"></div>
                     <div class="title left" style="padding-top: 4px">Firm Size:</div>
-                    <div class="left">
-                        <select id="enterpriseChoice" style="width: 80px;" data-bind="value: enterprise, event: { change: refreshData }">
-                            <option value="MSMEs">MSMEs</option>
-                            <option value="SMEs">SMEs</option>
-                            <option value="Micro">Micro</option>
-                            <option value="Small">Small</option>
-                            <option value="Medium">Medium</option>
-                            
-                        </select>
-                    </div>
-                    <div class="clear"></div>
-                    <div class="title left" style="padding-top: 4px">Map Layer:</div>
-                    <div class="left">
-                        <select id="category" style="width: 457px;" data-bind="value: category, event: { change: getKml }">
-                            <option value="Density"># of enterprises per 1,000 people</option>
-                            <option value="Employment">Employment (% total)</option>
-                            <option value="Vallue added">Value added</option>
-                            <option value="PopulationTotal">Total Population</option>
-                            <option value="GNI">GNI per capita, Atlas method</option>
-                            <option value="IncomeGroup">Income group</option>
-                            <option value="EnterpriseSurveysChecking">Percent of firms with a checking or savings account</option>
-                            <option value="EnterpriseSurveysCredit">Percent of firms with a bank loan/line of credit</option>
-                            <option value="StartingBusinessRank">Starting a Business rank</option>
-                            <option value="DomesticCreditToPrivateSector">Domestic credit to private sector (% of GDP)</option>
-                            <option value="LaborForceTotal">Labor force, total</option>
-                        </select>
-                    </div>
-                    <div class="left">
-                        <input id="showLegend" name="showLegend" style="margin-top: 6px; margin-left: 10px" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
-                        
-                    </div>
-                    <div class="left" style="height: 18px; padding-top: 4px;">Show Legend</div>
-                    <div class="clear"></div>
-                    <div class="title left"  style="padding-top: 4px">Indicator Style: </div>
-                    <div class="left">
-                        <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
-                            <option value="bubble">Bubble</option>
-                            <option value="chart">Chart</option>
-                        </select>
-                    </div>
-                    <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
+                    <div class="left">Micro</div>
+                    <div class="left" style="margin-right:20px"><input type="radio" name="firm" value="Micro" data-bind="checked: enterprise, click: refreshData " /></div>
+                    <div class="left">SMEs</div>
+                    <div class="left" style="margin-right:20px"><input type="radio" name="firm" value="SMEs" data-bind="checked: enterprise, click: refreshData " /></div>
+                    <div class="left">MSMEs</div>
+                    <div class="left"><input type="radio" name="firm" value="MSMEs" data-bind="checked: enterprise, click: refreshData " /></div>
+                        <!--<div class="left">
 
-                        <select id="bubbleIndicator" style="width: 387px;" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
-                            <option value="Number of Enterprises">
-                                # of enterprises
-                            </option>
-                        </select>
-                    </div>
-                    <div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
+                            <select id="enterpriseChoice" style="width: 80px;" data-bind="value: enterprise, event: { change: refreshData }">
+                                <option value="MSMEs">MSMEs</option>
+                                <option value="SMEs">SMEs</option>
+                                <option value="Micro">Micro</option>
+                                
 
-                        <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
-                            <option value="sectors">Sector Breakdown</option>
-                        </select>
+                            </select>
+                        </div>-->
+                        <div class="clear"></div>
+                        <div class="title left" style="padding-top: 4px">Map Layer:</div>
+                        <div class="left">
+                            <select id="category" data-bind="value: category, event: { change: getKml }">
+                                <option disabled="disabled">------ Country level indicators -------------------------</option>
 
-                    </div>
-                    
-                    <div class="clear"></div>
-                    <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
-                        <div id="legendserved">
-                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Manufacturing</div>
-                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Trade</div>
-                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Services</div>
-                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Agri/Other</div>
+                                <option value="PopulationTotal">Total Population</option>
+                                <option value="GNI">GNI per capita, Atlas method</option>
+                                <option value="IncomeGroup">Income group</option>
+                                <option value="EnterpriseSurveysChecking">Percent of firms with a checking or savings account</option>
+                                <option value="EnterpriseSurveysCredit">Percent of firms with a bank loan/line of credit</option>
+                                <option value="StartingBusinessRank">Starting a Business rank</option>
+                                <option value="DomesticCreditToPrivateSector">Domestic credit to private sector (% of GDP)</option>
+                                <option value="LaborForceTotal">Labor force, total</option>
+                                <option disabled="disabled">------ MSME Country Indicators by Firm Size -------------</option>
+                                <option value="EnterprisePersent">Enterprises (% of total)</option>
+                                <option value="Density">Enterprises density (per 1000 people)</option>
+                                <option value="Employment">Employment (% of total)</option>
+                                <option value="Vallue added">Value added to the economy (% of total)</option>
+                                <option value="FirmSizeByNumbers">Firm size definition by # of employees</option>
+                                <option value="FirmSizeByAssets">Firm size definition by assets</option>
+                                <option value="FirmSizeBySales">Firm size definition by sales</option>
+                            </select>
                         </div>
-                        
+                        <div class="left">
+                            <input id="showLegend" name="showLegend" style="margin-top: 6px; margin-left: 10px" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
+
+                        </div>
+                        <div class="left" style="height: 18px; padding-top: 4px;">Show Legend</div>
+                        <div class="clear"></div>
+                        <div class="title left" style="padding-top: 4px">Indicator Style: </div>
+                        <!--<div class="left">
+                                <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
+                                    <option value="bubble">Bubble</option>
+                                    <option value="chart">Chart</option>
+                                </select>
+                            </div>-->
+                        <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
+
+                            <select id="bubbleIndicator" style="width: 387px;" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
+                                <option value="Number of Enterprises">Enterprises (absolute #)</option>
+                                <option value="Enterprises (% of total)">Enterprises (% of total)</option>
+                                <option value="Enterprises density (per 1000 people)">Enterprises density (per 1000 people)</option>
+                                <option value="Employment (absolute #)">Employment (absolute #)</option>
+                                <option value="Employment (% of total)">Employment (% of total)</option>
+                                <option value="Value added to the economy (% of total)">Value added to the economy (% of total)</option>
+                            </select>
+                        </div>
+                        <!--<div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
+
+                                <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
+                                    <option value="sectors">Sector Breakdown</option>
+                                </select>
+
+                            </div>-->
+
+                        <div class="clear"></div>
+                        <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
+                            <div id="legendserved">
+                                <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Manufacturing</div>
+                                <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Trade</div>
+                                <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Services</div>
+                                <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Agri/Other</div>
+                            </div>
+
+                        </div>
+                        <div class="clear"></div>
+                        <!--<div style="width: 100%;">
+                                <div class="up" data-bind="click: expandMenu"></div>
+                            </div>-->
+                        <div class="clear"></div>
                     </div>
-                    <div class="clear"></div>
-                    <!--<div style="width: 100%;">
-                        <div class="up" data-bind="click: expandMenu"></div>
-                    </div>-->
-                    <div class="clear"></div>
-                </div>
                 <div id="map-canvas"></div>
             
                 
@@ -167,6 +183,8 @@
         </div>
         <div data-bind="text: summaryData()[0].CountryName" style="font-size: 2em"></div>
         <div id="scrollablePart" style="overflow-y: auto">
+            <div style="font-weight: bold">Enterprises Data</div>
+            <div style="margin-bottom: 20px">[Placeholder]</div>
             <div style="font-weight: bold">Sector Distribution Details</div>
             <div data-bind="foreach: summaryData()">
                 <table>
@@ -211,6 +229,7 @@
 
                 </table>
             </div>
+            <br /><br /><a href='javascript:void()' id='srcShow' onclick="$('#sources').show();$('#srcShow').hide();$('#srcHide').show();">Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick="$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();">Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br /><br /><br /><br />
         </div>
     </div>
     

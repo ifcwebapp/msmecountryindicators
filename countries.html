@@ -39,6 +39,8 @@
         </div>
         <div data-bind="text: summaryData()[0].CountryName" style="font-size: 2em"></div>
         <div id="scrollablePart" style="overflow-y: auto">
+            <div style="font-weight: bold">Enterprises Data</div>
+            <div style="margin-bottom: 20px">[Placeholder]</div>
             <div style="font-weight: bold">Sector Distribution Details</div>
             <div data-bind="foreach: summaryData()">
                 <table>
@@ -83,6 +85,7 @@
 
                 </table>
             </div>
+            <br /><br /><a href='javascript:void()' id='srcShow' onclick="$('#sources').show();$('#srcShow').hide();$('#srcHide').show();">Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick="$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();">Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br /><br /><br /><br />
         </div>
     </div>
 
