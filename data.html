@@ -5,24 +5,48 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link href="styles/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="Content/themes/base/jquery-ui.css" />
     <script src="scripts/jquery-2.1.1.min.js"></script>
-
+    <script src="scripts/jquery-ui.min-1.11.1.js"></script>
 
 </head>
 <body>
     <div id="wrap">
         <div id="header">
             <script type="text/javascript">
-                $("#header").load("header.html");
+                $().ready(function() {
+                    $("#header").load("header.html");
+                    $("#tabs").tabs();
+                });
             </script>
         </div>
         <div id="main">
-        <h3>Explore the data</h3>
-           <ul>Micro, Small and Medium Enterprise Country Indicators (MSME-CI) provides both the latest global snapshot and historic data back 20 years on the number of MSMEs in 132 world economies.</ul>
-           <ul>Please read the ‘Methodology Note on the MSME Country Indicators - 2014’ along with the country specific comments in the MSME-CI excel workbook before using the data.  MSME-CI presents secondary data.  The data are not always standardized across countries and time. The original data are collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). </ul> 
-        
-            <h2>MSME Country Indicators Data Sources</h2>
-            <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/c4gr-ddxa?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>
+            <h3>Explore the data</h3>
+            
+           <p>Micro, Small and Medium Enterprise Country Indicators (MSME-CI) provides both the latest global snapshot and historic data back 20 years on the number of MSMEs in 132 world economies.</p>
+           <p>Please read the ‘Methodology Note on the MSME Country Indicators - 2014’ along with the country specific comments in the MSME-CI excel workbook before using the data.  MSME-CI presents secondary data.  The data are not always standardized across countries and time. The original data are collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). </p> 
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Definitions and Data</a></li>
+                    <li><a href="#tabs-2">Historical Data</a></li>
+                    <li><a href="#tabs-3">MME CI Data Sources</a></li>
+                    <li><a href="#tabs-4">About Data</a></li>
+                </ul>
+                <div id="tabs-1">
+                    Definitions and Data
+                </div>
+                <div id="tabs-2">
+                    Historical Data
+                </div>
+                <div id="tabs-3">
+                    MME CI Data Sources
+                </div>
+                <div id="tabs-4">
+                    About Data
+                </div>
+            </div>
+            <!--<h2>MSME Country Indicators Data Sources</h2>
+            <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/c4gr-ddxa?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>-->
         </div>
         </div>
 
