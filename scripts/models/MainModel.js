@@ -4,6 +4,7 @@
 ///<reference path='../typings/googlemaps/google.maps.d.ts' />
 ///<reference path='../typings/highcharts/highcharts.d.ts' />
 ///<reference path='../typings/sprintf/sprintf.d.ts' />
+///<reference path='../typings/taffy/taffy.d.ts' />
 var models;
 (function (models) {
     var MainModel = (function () {
@@ -11,6 +12,7 @@ var models;
             this.bubbles = [];
             this.windows = [];
             this.ctaLayer = null;
+            //db: TaffyInterface = TAFFY(models.CountryIndicatorData.rows);
             this.source = ko.observable(0);
             this.enterprise = ko.observable('MSMEs');
             this.category = ko.observable('Density');
@@ -31,7 +33,16 @@ var models;
             var _this = this;
 
             _this.host = host;
-            var countryParams = [_this.getUrlParameter('country1'), _this.getUrlParameter('country2'), _this.getUrlParameter('country3')];
+
+            //var countryParams = [ _this.getUrlParameter('country1'), _this.getUrlParameter('country2'), _this.getUrlParameter('country3')];
+            var enterpriseParam = _this.getUrlParameter('enterprise');
+            if (enterpriseParam != "null") {
+                _this.enterprise(enterpriseParam);
+            }
+            var sourceParam = _this.getUrlParameter('source');
+            if (sourceParam != "null") {
+                _this.source(parseInt(sourceParam));
+            }
 
             var mapOptions = {
                 zoom: 2,
@@ -297,7 +308,7 @@ var models;
 
             var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
 
-            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='countries.html?country=" + info.Key + "'>Country Page</a><table></div>";
+            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='country.html?country=" + info.Key + "&enterprise=" + main.enterprise() + "&source=" + main.source() + "'>Country Page</a><table></div>";
             str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
