@@ -17,6 +17,10 @@ var models;
                 me.countries.push({ name: infos[info][0].CountryName, code: infos[info][0].CountryCode });
             }
 
+            me.countries.sort(function (left, right) {
+                return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
+            });
+
             me.summaryDialog = $('#summary').dialog({
                 autoOpen: false,
                 modal: true,

@@ -308,7 +308,7 @@ var models;
 
             var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
 
-            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='country.html?country=" + info.Key + "&enterprise=" + main.enterprise() + "&source=" + main.source() + "'>Country Page</a><table></div>";
+            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='country.html?country=" + info.Key + "&source=" + main.source() + "'>Country Page</a><table></div>";
             str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
 
             //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
