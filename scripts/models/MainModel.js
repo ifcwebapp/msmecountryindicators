@@ -297,7 +297,7 @@ var models;
             }
             var kmlName = "";
             if (this.category() == "Density" || this.category() == "Employment" || this.category() == "Vallue added") {
-                kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz";
+                kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz?v=1";
                 kmlName = kmlName.replace(' ', '_');
             } else {
                 kmlName = this.category() + ".kmz";
