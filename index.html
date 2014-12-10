@@ -37,7 +37,7 @@
                     <div class="clear"></div>
                 </div>
                 <div id="panel" data-bind="visible: isExpanded">
-                    <div class="title left" style="padding-top: 4px">Source:</div>
+                    <div class="title left" style="padding-top: 4px">Source Type:</div>
                     <div class="left">
                         <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
                             <option value="0">Most Widely Used</option>
@@ -68,7 +68,7 @@
                         <div class="title left" style="padding-top: 4px">Map Layer:</div>
                         <div class="left">
                             <select id="category" data-bind="value: category, event: { change: getKml }">
-                                <option disabled="disabled">------ Country level indicators -------------------------</option>
+                                <option disabled="disabled">------ Country Level Indicators -------------------------</option>
 
                                 <option value="PopulationTotal">Total Population</option>
                                 <option value="GNI">GNI per capita, Atlas method</option>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="left" style="height: 18px; "></div>
                         <div class="clear"  style="margin-bottom: 5px"></div>
-                        <div class="title left" style="padding-top: 4px">Indicator Style: </div>
+                        <div class="title left" style="padding-top: 4px">Indicator: </div>
                         <!--<div class="left">
                                 <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
                                     <option value="bubble">Bubble</option>
