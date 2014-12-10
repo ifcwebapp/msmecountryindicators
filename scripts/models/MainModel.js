@@ -179,6 +179,7 @@ var models;
             if (isCountry) {
                 switch (id) {
                     case "Number of Enterprises":
+                    case "Number of Employees":
                         alpha.index = 5;
                         alpha.value = 50 / 10000;
                         break;
@@ -191,6 +192,7 @@ var models;
                         alpha.value = 1;
                         break;
                     case "Employment":
+                    case "Size Breakdown":
                         alpha.index = 5;
                         alpha.value = 1;
                         break;
@@ -316,7 +318,10 @@ var models;
         };
 
         MainModel.prototype.getCountryInfo = function (info, main) {
-            var titleReplacements = { "Number of Enterprises": "Enterprises (absolute #)", "Density": "Enterprises density (per 1000 people)", "Employment": "Employment (% of total)", "Vallue added": "Value added to the economy (% of total)" };
+            var titleReplacements = {
+                "Number of Enterprises": "Enterprises (absolute #)", "Density": "Enterprises density (per 1000 people)", "Employment": "Employment (% of total)", "Vallue added": "Value added to the economy (% of total)",
+                "Size Breakdown": "Enterprises (% of total)", "Number of Employees": "Employment (absolute #)"
+            };
 
             var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
 

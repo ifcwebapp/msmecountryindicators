@@ -28,11 +28,17 @@ var models;
             this.enterpriseDataEmploymentPersentMicro = ko.observable(this.noData);
             this.enterpriseDataEmploymentPersentSme = ko.observable(this.noData);
             this.enterpriseDataEmploymentPersentMsme = ko.observable(this.noData);
+            this.enterpriseDataEnterprisePersentMicro = ko.observable(this.noData);
+            this.enterpriseDataEnterprisePersentSme = ko.observable(this.noData);
+            this.enterpriseDataEnterprisePersentMsme = ko.observable(this.noData);
+            this.enterpriseDataEmploymentCountMicro = ko.observable(this.noData);
+            this.enterpriseDataEmploymentCountSme = ko.observable(this.noData);
+            this.enterpriseDataEmploymentCountMsme = ko.observable(this.noData);
             this.enterpriseDataValueAddedMicro = ko.observable(this.noData);
             this.enterpriseDataValueAddedSme = ko.observable(this.noData);
             this.enterpriseDataValueAddedMsme = ko.observable(this.noData);
             this.showEnterpriseCommonData = ko.computed(function () {
-                return _this.enterpriseDataEnterpriseCountMicro() != _this.noData || _this.enterpriseDataEnterpriseCountSme() != _this.noData || _this.enterpriseDataEnterpriseCountMsme() != _this.noData || _this.enterpriseDataEnterpriseDensityMicro() != _this.noData || _this.enterpriseDataEnterpriseDensitySme() != _this.noData || _this.enterpriseDataEnterpriseDensityMsme() != _this.noData || _this.enterpriseDataEmploymentPersentMicro() != _this.noData || _this.enterpriseDataEmploymentPersentSme() != _this.noData || _this.enterpriseDataEmploymentPersentMsme() != _this.noData;
+                return _this.enterpriseDataEnterpriseCountMicro() != _this.noData || _this.enterpriseDataEnterpriseCountSme() != _this.noData || _this.enterpriseDataEnterpriseCountMsme() != _this.noData || _this.enterpriseDataEnterpriseDensityMicro() != _this.noData || _this.enterpriseDataEnterpriseDensitySme() != _this.noData || _this.enterpriseDataEnterpriseDensityMsme() != _this.noData || _this.enterpriseDataEmploymentPersentMicro() != _this.noData || _this.enterpriseDataEmploymentPersentSme() != _this.noData || _this.enterpriseDataEmploymentPersentMsme() != _this.noData || _this.enterpriseDataEnterprisePersentMicro() != _this.noData || _this.enterpriseDataEnterprisePersentSme() != _this.noData || _this.enterpriseDataEnterprisePersentMsme() != _this.noData || _this.enterpriseDataEmploymentCountMicro() != _this.noData || _this.enterpriseDataEmploymentCountSme() != _this.noData || _this.enterpriseDataEmploymentCountMsme() != _this.noData;
             });
             this.showEnterpriseValueAddedData = ko.computed(function () {
                 return _this.enterpriseDataValueAddedMicro() != _this.noData || _this.enterpriseDataValueAddedSme() != _this.noData || _this.enterpriseDataValueAddedMsme() != _this.noData;
@@ -67,10 +73,10 @@ var models;
                 if (typeof i === "undefined") { i = 13; }
                 var pName = source + entp;
                 if (a[pName] != null) {
-                    return a[pName][i];
+                    return _this.numberWithCommas(a[pName][i]);
                 } else {
                     if (source != 0 && a[0 + entp] != null && a[0 + entp][0] == source) {
-                        return a[0 + entp][i];
+                        return _this.numberWithCommas(a[0 + entp][i]);
                     } else {
                         return me.noData;
                     }
@@ -161,6 +167,20 @@ var models;
                         me.enterpriseDataValueAddedSme(getVal2(num, me.source(), 'SMEs'));
                         me.enterpriseDataValueAddedMsme(getVal2(num, me.source(), 'MSMEs'));
                     }
+
+                    if (val['Number of Employees'] != null) {
+                        var num = val['Number of Employees'];
+                        me.enterpriseDataEmploymentCountMicro(getVal2(num, me.source(), 'Micro'));
+                        me.enterpriseDataEmploymentCountSme(getVal2(num, me.source(), 'SMEs'));
+                        me.enterpriseDataEmploymentCountMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
+
+                    if (val['Size Breakdown'] != null) {
+                        var num = val['Size Breakdown'];
+                        me.enterpriseDataEnterprisePersentMicro(getVal2(num, me.source(), 'Micro'));
+                        me.enterpriseDataEnterprisePersentSme(getVal2(num, me.source(), 'SMEs'));
+                        me.enterpriseDataEnterprisePersentMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
                 }
             };
 
@@ -175,6 +195,10 @@ var models;
                 return true;
             };
         }
+        CountryModel.prototype.numberWithCommas = function (x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+
         CountryModel.prototype.urlify = function (text) {
             //var urlRegex = /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi;
             var urlRegex = /(\b(?:(?:https?|ftp|file|[A-Za-z]+):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$]))/gi;
