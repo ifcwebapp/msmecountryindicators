@@ -182,6 +182,18 @@ var models;
                         alpha.index = 5;
                         alpha.value = 50 / 10000;
                         break;
+                    case "Density":
+                        alpha.index = 5;
+                        alpha.value = 1;
+                        break;
+                    case "Vallue added":
+                        alpha.index = 5;
+                        alpha.value = 1;
+                        break;
+                    case "Employment":
+                        alpha.index = 5;
+                        alpha.value = 1;
+                        break;
                 }
 
                 switch (chartData) {
