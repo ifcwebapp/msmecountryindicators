@@ -26,9 +26,17 @@
             </script>
         </div>
         <div id="main">
-            <ul data-bind="foreach: countries">
-                <li style="font-size: 1.3em; padding-bottom: 5px;" ><a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a></li>
-            </ul>
+            <div id="leftColumn" class="methodology" style="height: auto; ">
+                <ul data-bind="foreach: countries">
+                    <li style="font-size: 1.3em; padding-bottom: 5px;"><a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a></li>
+                </ul>
+            </div>
+            <div id="mRight" class="methodologyRight">
+                <script type="text/javascript">
+                    $("#mRight").load("right_column.html");
+                </script>
+
+            </div>
         </div>
     </div>
     

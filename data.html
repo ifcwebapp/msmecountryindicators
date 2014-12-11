@@ -14,106 +14,130 @@
     <div id="wrap">
         <div id="header">
             <script type="text/javascript">
-                $().ready(function() {
+                $().ready(function () {
                     $("#header").load("header.html");
                     $("#tabs").tabs();
                 });
             </script>
         </div>
         <div id="main">
-            <h3>Explore the data</h3>
-            
-           <p>Micro, Small and Medium Enterprise Country Indicators (MSME-CI) provides both the latest global snapshot and historic data back 20 years on the number of MSMEs in 132 world economies.</p>
-           <p>Please read the ‘Methodology Note on the MSME Country Indicators - 2014’ along with the country specific comments in the MSME-CI excel workbook before using the data.  MSME-CI presents secondary data.  The data are not always standardized across countries and time. The original data are collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). </p> 
-            <div id="tabs">
-                <ul>
-                    <li><a href="#tabs-1">About the Data</a></li>
-                    <li><a href="#tabs-2">Definitions and Data</a></li>
-                    <li><a href="#tabs-3">MME CI Data Sources</a></li>
-                    <li><a href="#tabs-4">Historical data</a></li>
-                </ul>
-                <div id="tabs-1">
-                    About the Data
-                    
-                    <table>
-<tr>
-<td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Number of Economies:</span></span></td>
-<td bgcolor="#d7e3f1" width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">132</span></span></td>
-</tr>
+            <div id="leftColumn" class="methodology" style="height: auto; ">
+                <h3>Explore the data</h3>
 
-<tr valign="top">
-<td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Data Updates:</span></span></td>
-<td width="478"><a href="http://www.ifc.org/ifcext/sme.nsf/Content/Resources" ><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">01/2007 - Micro, Small, and Medium Enterprises: A Collection of Published Data</span></span></a><em><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;"><font color="#00bfff"> </font></span></span></em><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">08/2010 - Micro, Small and Medium Enterprise Country Indicators (MSME-CI)</span></span></td>
-</tr>
+                <p>Micro, Small and Medium Enterprise Country Indicators (MSME-CI) provides both the latest global snapshot and historic data back 20 years on the number of MSMEs in 132 world economies.</p>
+                <p>Please read the ‘Methodology Note on the MSME Country Indicators - 2014’ along with the country specific comments in the MSME-CI excel workbook before using the data.  MSME-CI presents secondary data.  The data are not always standardized across countries and time. The original data are collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). </p>
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#tabs-1">About the Data</a></li>
+                        <li><a href="#tabs-2">Definitions and Data</a></li>
+                        <li><a href="#tabs-3">MME CI Data Sources</a></li>
+                        <li><a href="#tabs-4">Historical data</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        About the Data
 
-<tr valign="top">
-<td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Format:</span></span></td>
-<td bgcolor="#d7e3f1" width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Excel</span></span></td>
-</tr>
+                        <table>
+                            <tr>
+                                <td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Number of Economies:</span></span></td>
+                                <td bgcolor="#d7e3f1" width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">132</span></span></td>
+                            </tr>
 
-<tr valign="top">
-<td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME-CI Structure:</span></span></td>
-<td width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">1. The most recent and complete data.</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">2. Historic data.</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">3. Estimated data on informal sector.</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">4. Data sources.</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">5. Detailed sector breakdown by economy.</span></span></td>
-</tr>
+                            <tr valign="top">
+                                <td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Data Updates:</span></span></td>
+                                <td width="478">
+                                    <a href="http://www.ifc.org/ifcext/sme.nsf/Content/Resources"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">01/2007 - Micro, Small, and Medium Enterprises: A Collection of Published Data</span></span></a><em><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;"><font color="#00bfff"> </font></span></span></em><span style=" font-size: small;">
+                                        <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                    </span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">08/2010 - Micro, Small and Medium Enterprise Country Indicators (MSME-CI)</span></span>
+                                </td>
+                            </tr>
 
-<tr valign="top">
-<td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Data Scope:</span></span></td>
-<td bgcolor="#d7e3f1" width="478"><strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME structure</span></span></strong> 
+                            <tr valign="top">
+                                <td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Format:</span></span></td>
+                                <td bgcolor="#d7e3f1" width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Excel</span></span></td>
+                            </tr>
 
-<ul>
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME Definitions (number of employees, unless otherwise noted): micro, small and medium</span></span></li>
+                            <tr valign="top">
+                                <td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME-CI Structure:</span></span></td>
+                                <td width="478">
+                                    <span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">1. The most recent and complete data.</span></span><span style=" font-size: small;">
+                                        <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                    </span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">2. Historic data.</span></span><span style=" font-size: small;">
+                                        <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                    </span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">3. Estimated data on informal sector.</span></span><span style=" font-size: small;">
+                                        <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                    </span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">4. Data sources.</span></span><span style=" font-size: small;">
+                                        <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                    </span><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">5. Detailed sector breakdown by economy.</span></span>
+                                </td>
+                            </tr>
 
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Size Breakdown of the MSME Sector (% of all MSMEs): micro, small and medium</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span></li>
-</ul>
+                            <tr valign="top">
+                                <td bgcolor="#d7e3f1" width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Data Scope:</span></span></td>
+                                <td bgcolor="#d7e3f1" width="478">
+                                    <strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME structure</span></span></strong>
 
-<strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME Participation in the Economy</span></span></strong> 
+                                    <ul>
+                                        <li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME Definitions (number of employees, unless otherwise noted): micro, small and medium</span></span></li>
 
-<ul>
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Number of micro, small and medium enterprises</span></span></li>
+                                        <li type="disc">
+                                            <span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Size Breakdown of the MSME Sector (% of all MSMEs): micro, small and medium</span></span><span style=" font-size: small;">
+                                                <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                            </span>
+                                        </li>
+                                    </ul>
 
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME per 1000 people</span></span></li>
+                                    <strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME Participation in the Economy</span></span></strong>
 
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME employment (% of total)</span></span><span style=" font-size: small;"><br style=" font-family: verdana,helvetica,sans-serif;" />
-</span></li>
-</ul>
+                                    <ul>
+                                        <li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Number of micro, small and medium enterprises</span></span></li>
 
-<strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Distribution of MSMEs by Sectors</span></span></strong> 
+                                        <li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME per 1000 people</span></span></li>
 
-<ul>
-<li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Percentage distribution of micro, small and medium enterprises in manufacturing, trade, services, agriculture/other</span></span></li>
-</ul>
-</td>
-</tr>
+                                        <li type="disc">
+                                            <span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">MSME employment (% of total)</span></span><span style=" font-size: small;">
+                                                <br style=" font-family: verdana,helvetica,sans-serif;" />
+                                            </span>
+                                        </li>
+                                    </ul>
 
-<tr valign="top">
-<td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Sources:</span></span></td>
-<td width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">National institutes of statistics; respective ministries, such as economy, labor and others; respective governmental agencies, such as company registers and MSME promotion agencies; international organizations.</span></span></td>
-</tr>
+                                    <strong><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Distribution of MSMEs by Sectors</span></span></strong>
 
-</tbody></table>
+                                    <ul>
+                                        <li type="disc"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Percentage distribution of micro, small and medium enterprises in manufacturing, trade, services, agriculture/other</span></span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td width="142"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">Sources:</span></span></td>
+                                <td width="478"><span style=" font-family: verdana,helvetica,sans-serif;"><span style=" font-size: small;">National institutes of statistics; respective ministries, such as economy, labor and others; respective governmental agencies, such as company registers and MSME promotion agencies; international organizations.</span></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-2">
+                        Definitions and Data
+
+                    </div>
+                    <div id="tabs-3">
+                        MME CI Data Sources
+                        <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/894k-irm2?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>
+                    </div>
+                    <div id="tabs-4">
+                        Historical Data
+                    </div>
                 </div>
-                <div id="tabs-2">
-                    Definitions and Data
-                    
-                                    </div>
-                <div id="tabs-3">
-                    MME CI Data Sources
-                    <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/894k-irm2?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>
-                </div>
-                <div id="tabs-4">
-                    Historical Data
-                </div>
+
+                <!--<h2>MSME Country Indicators Data Sources</h2>
+                <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/c4gr-ddxa?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>-->
             </div>
-            <!--<h2>MSME Country Indicators Data Sources</h2>
-            <div><iframe width="760px" title="MSME Country Indicators Data Sources" height="646px" src="https://finances.worldbank.org/w/b4ku-nmqr/c4gr-ddxa?cur=PibCqu2FH4S&from=root" frameborder="0" scrolling="no"><a href="https://finances.worldbank.org/dataset/MSME-Country-Indicators-Data-Sources/b4ku-nmqr" title="MSME Country Indicators Data Sources" target="_blank">MSME Country Indicators Data Sources</a></iframe><p><a href="http://www.socrata.com/" target="_blank">Powered by Socrata</a></p></div>-->
+            <div id="mRight" class="methodologyRight">
+                <script type="text/javascript">
+                    $("#mRight").load("right_column.html");
+                </script>
+
+            </div>
         </div>
-        </div>
+    </div>
 
 
     <div id="footer">
@@ -121,7 +145,7 @@
             $("#footer").load("footer.html");
         </script>
     </div>
-    
+
 </body>
-    
+
 </html>
