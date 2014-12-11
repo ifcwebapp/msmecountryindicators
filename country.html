@@ -29,26 +29,30 @@
         <div id="summary" style="font-size: 1.3em">
             <div data-bind="text: summaryData()[0].CountryName" style="font-size: 2em"></div>
             <div style="margin-bottom: 5px">
-                <a style="" href="#" data-bind="attr: {href: 'index.html?source=' + source() }">Back to map</a>
-                <a style="margin-left:20px" href="countries.html">Back to countries</a>
-            </div>
-            <div>
-                <div class="title left" style="padding-top: 4px">Source Type:</div>
-                <div class="left">
-                    <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
-                        <option value="0">Most Widely Used</option>
-                        <option value="1">Statistical Institution</option>
-                        <option value="2">Ministry of Finance/Central Bank</option>
-                        <option value="3">SME Associations </option>
-                    </select>
+                <div style="float:right">
+                    <a style="" href="#" data-bind="attr: {href: 'index.html?source=' + source() }">Back to map</a>
+                    <a style="margin-left:20px" href="countries.html">Back to countries</a>
                 </div>
-                <div class="clear" style="margin-bottom: 5px"></div>
+                <!--<div class="clear"></div>-->
             </div>
+            
                 <div id="scrollablePart" style="overflow-y: auto">
                     <div style="font-weight: bold" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+                    <div>
+                        <div class="title left" style="padding-top: 4px">Source Type:</div>
+                        <div class="left">
+                            <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
+                                <option value="0">Most Widely Used</option>
+                                <option value="1">Statistical Institution</option>
+                                <option value="2">Ministry of Finance/Central Bank</option>
+                                <option value="3">SME Associations </option>
+                            </select>
+                        </div>
+                        <div class="clear" style="margin-bottom: 5px"></div>
+                    </div>
                     <div style="margin-bottom: 20px">
-                        <div data-bind="visible: showEnterpriseCommonData">
-                            <table>
+                        <div style="" data-bind="visible: showEnterpriseCommonData">
+                            <table style="width:550px">
                                 <thead>
                                     <tr class="odd">
                                         <th></th>
@@ -76,7 +80,7 @@
                                         <td data-bind="text: enterpriseDataEnterpriseDensitySme"></td>
                                         <td data-bind="text: enterpriseDataEnterpriseDensityMsme"></td>
                                     </tr>
-                                    
+
                                     <tr class="odd">
                                         <td style="font-weight: bold">Employment (absolute #)</td>
                                         <td data-bind="text: enterpriseDataEmploymentCountMicro"></td>
@@ -92,11 +96,11 @@
                                 </tbody>
                             </table>
                             <div>
-                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource"></span>
+                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
                             </div>
-                         </div>
-                        <div data-bind="visible: showEnterpriseValueAddedData">
-                            <table>
+                        </div>
+                        <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
+                            <table style="width:550px">
                                 <thead>
                                     <tr class="odd">
                                         <th></th>
@@ -116,13 +120,14 @@
                                 </tbody>
                             </table>
                             <div>
-                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource"></span>
+                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
                             </div>
                         </div>
-                        </div>
-                    <div style="font-weight: bold">Sector Distribution Details</div>
+                    </div>
+                    <div style=" border-bottom: gray solid 1px; width: 550px"></div>
+                    <div style="margin-top:20px; font-weight: bold">Sector Distribution Details</div>
                     <div data-bind="foreach: summaryData()">
-                        <table data-bind="if: $data.Categories.length > 0">
+                        <table style="width:550px" data-bind="if: $data.Categories.length > 0">
                             <thead>
                                 <tr class="odd">
                                     <th></th>
@@ -168,8 +173,9 @@
                             <div data-bind="foreach: $data.Sources">
                                 <span data-bind="text: Name"></span>
                             </div>
-                        </div><br /><br />
+                        </div>
                     </div>
+                    <div style="margin-top:20px; margin-bottom: 20px; border-bottom: gray solid 1px; width: 550px"></div>
                     <a href='javascript:void()' data-bind="click: showSources, text: isSourcesVisible() ? 'Hide data sources' : 'Show data sources'">Show data sources</a>
                     <div id='sources' data-bind="visible: isSourcesVisible">
                         <h2>MSME Participation in the Economy Sources</h2>

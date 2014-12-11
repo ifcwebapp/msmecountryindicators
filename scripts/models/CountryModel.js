@@ -16,8 +16,10 @@ var models;
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             //enterpriseData: KnockoutObservable<any> = ko.observable(null);
             this.enterpriseDataCommonSource = ko.observable(this.noData);
+            this.enterpriseDataCommonSourceYear = ko.observable(this.noData);
             this.enterpriseDataCommonSources = ko.observableArray([]);
             this.enterpriseDataValueAddedSource = ko.observable(this.noData);
+            this.enterpriseDataValueAddedSourceYear = ko.observable(this.noData);
             this.enterpriseDataValueAddedSources = ko.observableArray([]);
             this.enterpriseDataEnterpriseCountMicro = ko.observable(this.noData);
             this.enterpriseDataEnterpriseCountSme = ko.observable(this.noData);
@@ -103,6 +105,7 @@ var models;
                                 break;
                             }
                             me.enterpriseDataCommonSource(getVal(val[c], p, 6));
+                            me.enterpriseDataCommonSourceYear(getVal(val[c], p, 3));
                         } else {
                             var p;
                             for (var first in val[c]) {
@@ -110,6 +113,7 @@ var models;
                                 break;
                             }
                             me.enterpriseDataValueAddedSource(getVal(val[c], p, 6));
+                            me.enterpriseDataValueAddedSourceYear(getVal(val[c], p, 3));
                         }
                     }
 

@@ -298,9 +298,9 @@ var models;
                 this.ctaLayer.setMap(null);
             }
             var kmlName = "";
-            if (this.category() == "Density" || this.category() == "Employment" || this.category() == "Vallue added") {
+            if (this.category() == "Density" || this.category() == "Employment" || this.category() == "Vallue added" || this.category() == "Size Breakdown" || this.category() == "Firm Size by Number" || this.category() == "Firm Size by Assets" || this.category() == "Firm Size by Sales") {
                 kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz?v=1";
-                kmlName = kmlName.replace(' ', '_');
+                kmlName = kmlName.replace(/\s/g, '_');
             } else {
                 kmlName = this.category() + ".kmz";
             }
