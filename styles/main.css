@@ -472,3 +472,8 @@ line-height: 15px;
 .text-right {
     text-align: right;
 }
+
+.infoSource {
+    font-size: 0.9em;
+    color: grey;
+}

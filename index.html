@@ -15,8 +15,12 @@
     <script src="scripts/taffy-min.js"></script>
     <script src="scripts/models/CountryIndicatorDataDimensions.js" type="text/javascript"></script>
     <script src="scripts/models/CountryIndicatorData.js" type="text/javascript"></script>
+    <script src="scripts/models/CountryIndicatorSources.js" type="text/javascript"></script>
     <script src="scripts/models/CountriesInfo.js" type="text/javascript"></script>
     <script src="scripts/models/CountryData.js" type="text/javascript"></script>
+    <script src="scripts/models/AdditionalIndicatorData.js" type="text/javascript"></script>
+    <script src="scripts/models/CountryModel.js" type="text/javascript"></script>
+    <script src="scripts/models/MapInfoModel.js" type="text/javascript"></script>
     <script src="scripts/models/MainModel.js" type="text/javascript"></script>
 
 </head>
@@ -177,8 +181,6 @@
         </div>
     </div>
     
-    
-    
     <div id="footer">
         <script type="text/javascript">
             $("#footer").load("footer.html");
@@ -186,8 +188,9 @@
     </div>
     <script type="text/javascript">
         
-        ko.applyBindings(new models.MainModel('http://ifcwebapp.github.io/msmecountryindicators/'));
+        ko.applyBindings(new models.MainModel('http://ifcwebapp.github.io/msmecountryindicators/'), $('#main')[0]);
         //ko.applyBindings(new models.MainModel('http://localhost:49909/msmecountryindicators/'));
     </script>
+    <div id="temp" style="display:none"></div>
 </body>
 </html>

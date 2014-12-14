@@ -168,7 +168,7 @@ var models;
         MainModel.prototype.showBubbles = function (zoom, map) {
             //var selector = $('#bubbleIndicator');
             var _this = this;
-            var selectedText = $('#bubbleIndicator option:selected').text().trim();
+
             var isCountry = true;
             var id = this.bubbleIndicatorValue();
             var isBubble = (this.indicatorStyleValue() == "bubble");
@@ -221,8 +221,16 @@ var models;
                             scale: alpha.value * Math.sqrt(parseInt(record[13])) + scaledZoom * 4
                         });
 
-                        bubble.setTitle(selectedText + ": " + _this.numberWithCommas(record[13]) + " in " + record[3]);
-
+                        //var bubbleTitle = selectedText + ": " + _this.numberWithCommas(record[13]) + " in " + record[3];
+                        //if (selectedText != selectedTextMap) {
+                        //    debugger;
+                        //    switch (_this.category()) {
+                        //        case "PopulationTotal":
+                        //            bubbleTitle += ", " + selectedTextMap + ": " + _this.numberWithCommas(record[5]) + " in " + record[3];
+                        //        break;
+                        //    }
+                        //}
+                        //bubble.setTitle(bubbleTitle);
                         bubble.setMap(map);
                     } else {
                         bubble.setMap(null);
@@ -306,7 +314,9 @@ var models;
             }
             this.ctaLayer = new google.maps.KmlLayer(this.host + "kml/" + kmlName, {
                 preserveViewport: true,
-                screenOverlays: this.isLegendVisible()
+                screenOverlays: this.isLegendVisible(),
+                suppressInfoWindows: true,
+                clickable: false
             });
             this.ctaLayer.setMap(this.map);
 
@@ -317,98 +327,88 @@ var models;
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };
 
-        MainModel.prototype.getCountryInfo = function (info, main) {
-            var titleReplacements = {
-                "Number of Enterprises": "Enterprises (absolute #)", "Density": "Enterprises density (per 1000 people)", "Employment": "Employment (% of total)", "Vallue added": "Value added to the economy (% of total)",
-                "Size Breakdown": "Enterprises (% of total)", "Number of Employees": "Employment (absolute #)"
-            };
-
-            var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
-
-            var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='country.html?country=" + info.Key + "&source=" + main.source() + "'>Country Page</a><table></div>";
-            str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
-
-            //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
-            //var rowNum = 1;
-            var data = models.CountryData.rows[info.Key];
-
-            str += "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
-
-            //str += "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
-            var str2 = "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
-
-            var year = "";
-            var source = "";
-            var rowNum = 1;
-            var enterprise = main.enterprise();
-            var src = main.source();
-
-            for (var key in info.Value) {
-                var title = titleReplacements[key] != undefined ? titleReplacements[key] : key;
-                if (key != 'Manufacturing' && key != 'Trade' && key != 'Services' && key != 'Agri/Other') {
-                    str += "<tr class='odd'><td><strong>" + title + "</strong></td>";
-
-                    var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
-
-                    if (value != "No data") {
-                        value = main.numberWithCommas(value);
-                        year = info.Value[key][src + enterprise][3];
-                        source = info.Value[key][src + enterprise][6];
-                    }
-                    str += "<td>" + value + "</td>";
-                    str += "</tr>";
-                } else {
-                    str2 += "<tr class='odd'><td><strong>" + title + "</strong></td>";
-
-                    var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
-
-                    if (value != "No data") {
-                        value = main.numberWithCommas(value);
-                        year = info.Value[key][src + enterprise][3];
-                        source = info.Value[key][src + enterprise][6];
-                    }
-                    str2 += "<td>" + value + "</td>";
-                    str2 += "</tr>";
-                }
-            }
-
-            //str += "<tr class='odd'><td><strong>Enterprises (% of total)</strong></td><td>[Placeholder]</td></tr>";
-            //str += "<tr class='odd'><td><strong>Employment (absolute #)</strong></td><td>[Placeholder]</td></tr>";
-            //str += "<tr class='odd'><td><strong>Employment (% of total)</strong></td><td>[Placeholder]</td></tr>";
-            str = str.replace('[Year]', year);
-            str = str.replace('[Source]', source);
-
-            str += "</table><br/><br/>" + str2 + "</table><br/><br/><a href='javascript:void()' id='srcShow' onclick=\"$('#sources').show();$('#srcShow').hide();$('#srcHide').show();\" >Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick=\"$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();\" >Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br/><br/><br/><br/>";
-
-            //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
-            //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }
-            //if (info[19] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total deposit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[19]) + "</td></tr>"; }
-            //if (info[10] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Access to finance as major/severe barrier</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[10]) + "%</td></tr>"; }
-            //if ((info[6] != null) || (info[7] != null) || (info[8] != null) || (info[9] != null)) {
-            //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>Access</strong></td></tr>";
-            //    if (info[6] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Checking</strong></td><td style='text-align:right'>" + info[6] + "%</td></tr>"; }
-            //    if (info[7] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Overdraft</strong></td><td style='text-align:right'>" + info[7] + "%</td></tr>"; }
-            //    if (info[8] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Loan</strong></td><td style='text-align:right'>" + info[8] + "%</td></tr>"; }
-            //    if (info[9] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Access to Credit</strong></td><td style='text-align:right'>" + info[9] + "%</td></tr>"; }
-            //}
-            //if ((info[11] != null) || (info[12] != null) || (info[13] != null) || (info[14] != null)) {
-            //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>How well served?</strong></td></tr>";
-            //    if (info[11] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Does not need credit</strong></td><td style='text-align:right'>" + info[11] + "%</td></tr>"; }
-            //    if (info[12] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Unserved</strong></td><td style='text-align:right'>" + info[12] + "%</td></tr>"; }
-            //    if (info[13] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Underserved</strong></td><td style='text-align:right'>" + info[13] + "%</td></tr>"; }
-            //    if (info[14] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Well served</strong></td><td style='text-align:right'>" + info[14] + "%</td></tr>"; }
-            //}
-            //if ((info[15] != null) || (info[16] != null) || (info[17] != null) || (info[18] != null)) {
-            //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>Source of Financing</strong></td></tr>";
-            //    if (info[15] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Private Commercial Bank as Source of Financing</strong></td><td style='text-align:right'>" + info[15] + "%</td></tr>"; }
-            //    if (info[16] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>State-owned Bank and/or Govt. Agency as Source of Financing</strong></td><td style='text-align:right'>" + info[16] + "%</td></tr>"; }
-            //    if (info[17] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Non-bank Financial Institution as Source of Financing</strong></td><td style='text-align:right'>" + info[17] + "%</td></tr>"; }
-            //    if (info[18] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Other Source of Financing</strong></td><td style='text-align:right'>" + info[18] + "%</td></tr>"; }
-            //}
-            //str += "</table>";
-            return str;
+        MainModel.prototype.getCountryInfoModel = function (info, main) {
+            return new models.MapInfoModel(this.host, main, info);
         };
 
+        //getCountryInfo(info: any, main: MainModel) {
+        //    var titleReplacements = {
+        //        "Number of Enterprises": "Enterprises (absolute #)", "Density": "Enterprises density (per 1000 people)", "Employment": "Employment (% of total)", "Vallue added": "Value added to the economy (% of total)",
+        //        "Size Breakdown": "Enterprises (% of total)", "Number of Employees": "Employment (absolute #)"
+        //    };
+        //    var countryName = models.CountriesInfo.rows[info.Key] != undefined ? models.CountriesInfo.rows[info.Key].Name : info.Key;
+        //    var str = "<div style='width: 350px;'><h1 style='white-space:nowrap; float: left; margin:0'>" + countryName + "</h1><a style='float: right' href='country.html?country=" + info.Key + "&source=" + main.source() + "'>Country Page</a><table></div>";
+        //    str += "<div class='clear'></div><div><strong>Year: </strong>[Year]</div><div><strong>Source: </strong>[Source]</div>";
+        //    //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
+        //    //var rowNum = 1;
+        //    var data = models.CountryData.rows[info.Key];
+        //    str += "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
+        //    //str += "<table style='width: 250px;'><tr><th></th><th>Micro</th><th>SMEs</th><th>MSMEs</th></tr>";
+        //    var str2 = "<table style='width: 250px;'><tr><th></th><th>" + main.enterprise() + "</th></tr>";
+        //    var year = "";
+        //    var source = "";
+        //    var rowNum = 1;
+        //    var enterprise = main.enterprise();
+        //    var src = main.source();
+        //    //var enterprises = ["Micro", "SMEs", "MSMEs"];
+        //    for (var key in info.Value) {
+        //        var title = titleReplacements[key] != undefined ? titleReplacements[key] : key;
+        //        if (key != 'Manufacturing' && key != 'Trade' && key != 'Services' && key != 'Agri/Other') {
+        //            str += "<tr class='odd'><td><strong>" + title + "</strong></td>";
+        //            var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
+        //            if (value != "No data") {
+        //                value = main.numberWithCommas(value);
+        //                year = info.Value[key][src + enterprise][3];
+        //                source = info.Value[key][src + enterprise][6];
+        //            }
+        //            str += "<td>" + value + "</td>";
+        //            str += "</tr>";
+        //        } else {
+        //            str2 += "<tr class='odd'><td><strong>" + title + "</strong></td>";
+        //            var value = info.Value[key][src + enterprise] != undefined ? info.Value[key][src + enterprise][13] : "No data";
+        //            if (value != "No data") {
+        //                value = main.numberWithCommas(value);
+        //                year = info.Value[key][src + enterprise][3];
+        //                source = info.Value[key][src + enterprise][6];
+        //            }
+        //            str2 += "<td>" + value + "</td>";
+        //            str2 += "</tr>";
+        //        }
+        //    }
+        //    //str += "<tr class='odd'><td><strong>Enterprises (% of total)</strong></td><td>[Placeholder]</td></tr>";
+        //    //str += "<tr class='odd'><td><strong>Employment (absolute #)</strong></td><td>[Placeholder]</td></tr>";
+        //    //str += "<tr class='odd'><td><strong>Employment (% of total)</strong></td><td>[Placeholder]</td></tr>";
+        //    str = str.replace('[Year]', year);
+        //    str = str.replace('[Source]', source);
+        //    str += "</table><br/><br/>" + str2 + "</table><br/><br/><a href='javascript:void()' id='srcShow' onclick=\"$('#sources').show();$('#srcShow').hide();$('#srcHide').show();\" >Show data sources</a><a href='javascript:void()' id='srcHide' style='display:none' onclick=\"$('#sources').hide();$('#srcHide').hide();$('#srcShow').show();\" >Hide data sources</a><div id='sources' style='display:none'>[Sources placeholder]</div><br/><br/><br/><br/>";
+        //    //if (info[5] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>#MSMEs</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[5]) + "</td></tr>"; }
+        //    //if (info[20] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total credit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[20]) + "</td></tr>"; }
+        //    //if (info[19] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Total deposit gap, US$, millions</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[19]) + "</td></tr>"; }
+        //    //if (info[10] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td><strong>Access to finance as major/severe barrier</strong></td><td style='text-align:right'>" + this.numberWithCommas(info[10]) + "%</td></tr>"; }
+        //    //if ((info[6] != null) || (info[7] != null) || (info[8] != null) || (info[9] != null)) {
+        //    //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>Access</strong></td></tr>";
+        //    //    if (info[6] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Checking</strong></td><td style='text-align:right'>" + info[6] + "%</td></tr>"; }
+        //    //    if (info[7] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Overdraft</strong></td><td style='text-align:right'>" + info[7] + "%</td></tr>"; }
+        //    //    if (info[8] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Loan</strong></td><td style='text-align:right'>" + info[8] + "%</td></tr>"; }
+        //    //    if (info[9] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Have Access to Credit</strong></td><td style='text-align:right'>" + info[9] + "%</td></tr>"; }
+        //    //}
+        //    //if ((info[11] != null) || (info[12] != null) || (info[13] != null) || (info[14] != null)) {
+        //    //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>How well served?</strong></td></tr>";
+        //    //    if (info[11] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Does not need credit</strong></td><td style='text-align:right'>" + info[11] + "%</td></tr>"; }
+        //    //    if (info[12] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Unserved</strong></td><td style='text-align:right'>" + info[12] + "%</td></tr>"; }
+        //    //    if (info[13] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Underserved</strong></td><td style='text-align:right'>" + info[13] + "%</td></tr>"; }
+        //    //    if (info[14] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Well served</strong></td><td style='text-align:right'>" + info[14] + "%</td></tr>"; }
+        //    //}
+        //    //if ((info[15] != null) || (info[16] != null) || (info[17] != null) || (info[18] != null)) {
+        //    //    str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td colspan=2><strong>Source of Financing</strong></td></tr>";
+        //    //    if (info[15] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Private Commercial Bank as Source of Financing</strong></td><td style='text-align:right'>" + info[15] + "%</td></tr>"; }
+        //    //    if (info[16] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>State-owned Bank and/or Govt. Agency as Source of Financing</strong></td><td style='text-align:right'>" + info[16] + "%</td></tr>"; }
+        //    //    if (info[17] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Non-bank Financial Institution as Source of Financing</strong></td><td style='text-align:right'>" + info[17] + "%</td></tr>"; }
+        //    //    if (info[18] != null) { str += "<tr class='" + ((rowNum++) % 2 == 1 ? "odd" : "even") + "' ><td class='shift'><strong>Other Source of Financing</strong></td><td style='text-align:right'>" + info[18] + "%</td></tr>"; }
+        //    //}
+        //    //str += "</table>";
+        //    return str;
+        //}
         //getRegionInfo(info: any) {
         //    var str = "<h2>" + info[0] + "</h2><a href='#' id='link" + info[1] + "' data-bind='click : function(data, event) { showSummaryDialog(data, event, \"" + info[0] + "\") }'>Show Summary</a><table>";
         //    //console.log(info[0] + ":" + models.CountryRegionMap.map[info[0]]);
@@ -444,6 +444,33 @@ var models;
         //    }
         //    return str;
         //}
+        MainModel.prototype.getFirstRecord = function (record, records, i, yearIndex) {
+            if (record[i] == null) {
+                for (var r in records) {
+                    for (var a in records[r]) {
+                        if (records[r][a][i] != null) {
+                            return { val: records[r][a][i], year: records[r][a][yearIndex] };
+                        }
+                    }
+                }
+            } else {
+                return { val: record[i], year: record[yearIndex] };
+            }
+
+            return { val: record[i], year: record[yearIndex] };
+        };
+
+        MainModel.prototype.getRecord = function (main, records, id, i, yearIndex) {
+            if (records[id] != undefined && records[id][main.source() + main.enterprise()] != undefined) {
+                var record = records[id][main.source() + main.enterprise()];
+                if (record != undefined) {
+                    return { val: record[i], year: record[yearIndex] };
+                }
+            }
+
+            return { val: null, year: null };
+        };
+
         MainModel.prototype.initiateBubbles = function (main) {
             if (this.bubbles.length == 0) {
                 for (var i = 0; i < models.CountryIndicatorData.rows.length; i++) {
@@ -461,15 +488,90 @@ var models;
                         });
 
                         var infowindow = new google.maps.InfoWindow({
-                            content: main.getCountryInfo(info, main)
+                            content: ''
                         });
 
                         google.maps.event.addListener(bubble, 'click', function () {
                             for (var j = 0; j < main.windows.length; j++) {
                                 main.windows[j].close();
                             }
-                            main.windows[i].setContent(main.getCountryInfo(info, main));
-                            main.windows[i].open(main.map, main.bubbles[i]);
+
+                            //main.windows[i].setContent(main.getCountryInfo(info, main));
+                            $.get('mapInfo.html', function (data) {
+                                var node = $("#temp");
+                                node.html(data);
+                                var infoData = $("#infoData");
+                                ko.applyBindings(main.getCountryInfoModel(info, main), infoData[0]);
+                                var html = node.html();
+                                main.windows[i].setContent(html);
+                                main.windows[i].open(main.map, main.bubbles[i]);
+                            });
+                        });
+
+                        google.maps.event.addListener(bubble, 'mouseover', function () {
+                            var id = main.bubbleIndicatorValue();
+                            var selectedText = $('#bubbleIndicator option:selected').text().trim();
+                            var selectedTextMap = $('#category option:selected').text().trim();
+                            if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
+                                var record = info.Value[id][main.source() + main.enterprise()];
+                                var bubbleTitle = selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
+                                if (selectedText != selectedTextMap) {
+                                    var r = { val: null, year: null };
+                                    var postfix = "";
+                                    switch (main.category()) {
+                                        case "PopulationTotal":
+                                            r = main.getFirstRecord(record, info.Value, 5, 3);
+                                            break;
+                                        case "GNI":
+                                            r = main.getFirstRecord(record, info.Value, 4, 3);
+                                            break;
+                                        case "IncomeGroup":
+                                            r = main.getFirstRecord(record, info.Value, 7, 3);
+                                            break;
+                                        case "Size Breakdown":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            postfix = "%";
+                                            break;
+                                        case "Density":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "Employment":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "Vallue added":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "Firm Size by Number":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "Firm Size by Assets":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "Firm Size by Sales":
+                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                                            break;
+                                        case "EnterpriseSurveysChecking":
+                                            r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
+                                            break;
+                                        case "EnterpriseSurveysCredit":
+                                            r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
+                                            break;
+                                        case "StartingBusinessRank":
+                                            r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
+                                            break;
+                                        case "DomesticCreditToPrivateSector":
+                                            r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
+                                            break;
+                                        case "LaborForceTotal":
+                                            r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
+                                            break;
+                                    }
+                                    if (r != null && r.val != null) {
+                                        bubbleTitle += ", " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
+                                    }
+                                }
+                                bubble.setTitle(bubbleTitle);
+                            }
                         });
 
                         //google.maps.event.addListener(infowindow, 'domready', function () {

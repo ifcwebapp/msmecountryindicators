@@ -26,196 +26,210 @@
                 $("#header").load("header.html");
             </script>
         </div>
-        <div id="summary" style="font-size: 1.3em">
-            <div data-bind="text: summaryData()[0].CountryName" style="font-size: 2em"></div>
-            <div style="margin-bottom: 5px">
-                <div style="float:right">
-                    <a style="" href="#" data-bind="attr: {href: 'index.html?source=' + source() }">Back to map</a>
-                    <a style="margin-left:20px" href="countries.html">Back to countries</a>
-                </div>
-                <!--<div class="clear"></div>-->
-            </div>
-            
-                <div id="scrollablePart" style="overflow-y: auto">
-                    <div style="font-weight: bold" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
-                    <div>
-                        <div class="title left" style="padding-top: 4px">Source Type:</div>
-                        <div class="left">
-                            <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
-                                <option value="0">Most Widely Used</option>
-                                <option value="1">Statistical Institution</option>
-                                <option value="2">Ministry of Finance/Central Bank</option>
-                                <option value="3">SME Associations </option>
-                            </select>
+        <div id="main">
+            <div id="leftColumn" class="methodology" style="height: auto; ">
+                <div id="summary" style="font-size: 1.3em">
+                    
+                    <div style="margin-bottom: 5px">
+                        <div style="float:left; font-size: 2em" data-bind="text: name"></div>
+                        <div style="float:right">
+                            <a style="" href="#" data-bind="attr: {href: 'index.html?source=' + source() }">Back to map</a>
+                            <a style="margin-left:10px" href="countries.html">Back to countries</a>
+                            <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                                <img alt="Download country summary data" src="Content/excel.png" border="0" />
+                            </a>
                         </div>
-                        <div class="clear" style="margin-bottom: 5px"></div>
+                        <div class="clear"></div>
                     </div>
-                    <div style="margin-bottom: 20px">
-                        <div style="" data-bind="visible: showEnterpriseCommonData">
-                            <table style="width:550px">
-                                <thead>
-                                    <tr class="odd">
-                                        <th></th>
-                                        <th>Micro</th>
-                                        <th>SMEs</th>
-                                        <th>MSMEs</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Enterprises (absolute #)</td>
-                                        <td data-bind="text: enterpriseDataEnterpriseCountMicro"></td>
-                                        <td data-bind="text: enterpriseDataEnterpriseCountSme"></td>
-                                        <td data-bind="text: enterpriseDataEnterpriseCountMsme"></td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Enterprises (% of total)</td>
-                                        <td data-bind="text: enterpriseDataEnterprisePersentMicro"></td>
-                                        <td data-bind="text: enterpriseDataEnterprisePersentSme"></td>
-                                        <td data-bind="text: enterpriseDataEnterprisePersentMsme"></td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Enterprises density (per 1000 people)</td>
-                                        <td data-bind="text: enterpriseDataEnterpriseDensityMicro"></td>
-                                        <td data-bind="text: enterpriseDataEnterpriseDensitySme"></td>
-                                        <td data-bind="text: enterpriseDataEnterpriseDensityMsme"></td>
-                                    </tr>
 
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Employment (absolute #)</td>
-                                        <td data-bind="text: enterpriseDataEmploymentCountMicro"></td>
-                                        <td data-bind="text: enterpriseDataEmploymentCountSme"></td>
-                                        <td data-bind="text: enterpriseDataEmploymentCountMsme"></td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Employment (% of total)</td>
-                                        <td data-bind="text: enterpriseDataEmploymentPersentMicro"></td>
-                                        <td data-bind="text: enterpriseDataEmploymentPersentSme"></td>
-                                        <td data-bind="text: enterpriseDataEmploymentPersentMsme"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div>
-                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
-                            </div>
-                        </div>
-                        <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
-                            <table style="width:550px">
-                                <thead>
-                                    <tr class="odd">
-                                        <th></th>
-                                        <th>Micro</th>
-                                        <th>SMEs</th>
-                                        <th>MSMEs</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="odd">
-                                        <td style="font-weight: bold">Value added to the economy (% of total)</td>
-                                        <td data-bind="text: enterpriseDataValueAddedMicro"></td>
-                                        <td data-bind="text: enterpriseDataValueAddedSme"></td>
-                                        <td data-bind="text: enterpriseDataValueAddedMsme"></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                            <div>
-                                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style=" border-bottom: gray solid 1px; width: 550px"></div>
-                    <div style="margin-top:20px; font-weight: bold">Sector Distribution Details</div>
-                    <div data-bind="foreach: summaryData()">
-                        <table style="width:550px" data-bind="if: $data.Categories.length > 0">
-                            <thead>
-                                <tr class="odd">
-                                    <th></th>
-                                    <!-- ko foreach: $data.Categories[0].Value[0].Value -->
-                                    <th data-bind="text: Key"></th>
-                                    <!-- /ko -->
-                                </tr>
-                            </thead>
-                            <tbody data-bind="foreach: $data.Categories">
-                                <tr class="odd">
-                                    <td data-bind="text: Key" style="font-weight: bold"></td>
-                                    <!-- ko foreach: Value -->
-                                    <!-- ko if: Key == 'Total' -->
-                                    <!-- ko foreach: Value -->
-                                    <!-- ko if: Key.indexOf('%') == -1 -->
-                                    <td data-bind="text: Value" style="font-weight: bold"></td>
-                                    <!-- /ko -->
-                                    <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                                    <td data-bind="text: Value" style="font-weight: bold"></td>
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                </tr>
-                                <!-- ko foreach: Value -->
-                                <tr class="odd" data-bind="if: Key != 'Total'">
-                                    <td data-bind="text: Key" style="padding-left: 20px"></td>
-                                    <!-- ko foreach: Value -->
-                                    <!-- ko if: Key.indexOf('%') == -1 -->
-                                    <td data-bind="text: Value"></td>
-                                    <!-- /ko -->
-                                    <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                                    <td data-bind="text: Value"></td>
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                </tr>
-                                <!-- /ko -->
-                            </tbody>
-
-                        </table>
+                    <div id="scrollablePart" style="overflow-y: auto">
+                        <div style="font-weight: bold" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
                         <div>
-                            <span style="font-weight: bold">Source: </span>
-                            <div data-bind="foreach: $data.Sources">
-                                <span data-bind="text: Name"></span>
+                            <div class="title left" style="padding-top: 4px">Source Type:</div>
+                            <div class="left">
+                                <select id="source" style="width: 200px;" data-bind="value: source, event: { change: refreshData }">
+                                    <option value="0">Most Widely Used</option>
+                                    <option value="1">Statistical Institution</option>
+                                    <option value="2">Ministry of Finance/Central Bank</option>
+                                    <option value="3">SME Associations </option>
+                                </select>
                             </div>
+                            <div class="clear" style="margin-bottom: 5px"></div>
                         </div>
-                    </div>
-                    <div style="margin-top:20px; margin-bottom: 20px; border-bottom: gray solid 1px; width: 550px"></div>
-                    <a href='javascript:void()' data-bind="click: showSources, text: isSourcesVisible() ? 'Hide data sources' : 'Show data sources'">Show data sources</a>
-                    <div id='sources' data-bind="visible: isSourcesVisible">
-                        <h2>MSME Participation in the Economy Sources</h2>
-                        <div data-bind="if: enterpriseDataCommonSource() != noData">
-                            <div style="font-weight: bold" data-bind="text: enterpriseDataCommonSource"></div>
-                            <div data-bind="foreach: enterpriseDataCommonSources">
-                                <div data-bind="html: $data"></div>
+                        <div style="margin-bottom: 20px">
+                            <div style="" data-bind="visible: showEnterpriseCommonData">
+                                <table style="width:550px">
+                                    <thead>
+                                        <tr class="odd">
+                                            <th></th>
+                                            <th>Micro</th>
+                                            <th>SMEs</th>
+                                            <th>MSMEs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Enterprises (absolute #)</td>
+                                            <td data-bind="text: enterpriseDataEnterpriseCountMicro"></td>
+                                            <td data-bind="text: enterpriseDataEnterpriseCountSme"></td>
+                                            <td data-bind="text: enterpriseDataEnterpriseCountMsme"></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Enterprises (% of total)</td>
+                                            <td data-bind="text: enterpriseDataEnterprisePersentMicro() + (enterpriseDataEnterprisePersentMicro() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataEnterprisePersentSme() + (enterpriseDataEnterprisePersentSme() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataEnterprisePersentMsme() + (enterpriseDataEnterprisePersentMsme() != 'No data' ? '%' : ' ')"></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Enterprises density (per 1000 people)</td>
+                                            <td data-bind="text: enterpriseDataEnterpriseDensityMicro"></td>
+                                            <td data-bind="text: enterpriseDataEnterpriseDensitySme"></td>
+                                            <td data-bind="text: enterpriseDataEnterpriseDensityMsme"></td>
+                                        </tr>
+
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Employment (absolute #)</td>
+                                            <td data-bind="text: enterpriseDataEmploymentCountMicro"></td>
+                                            <td data-bind="text: enterpriseDataEmploymentCountSme"></td>
+                                            <td data-bind="text: enterpriseDataEmploymentCountMsme"></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Employment (% of total)</td>
+                                            <td data-bind="text: enterpriseDataEmploymentPersentMicro() + (enterpriseDataEmploymentPersentMicro() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataEmploymentPersentSme() + (enterpriseDataEmploymentPersentSme() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataEmploymentPersentMsme() + (enterpriseDataEmploymentPersentMsme() != 'No data' ? '%' : ' ')"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div data-bind="if: enterpriseDataValueAddedSource() != noData && enterpriseDataValueAddedSource() != enterpriseDataCommonSource()">
-                            <div style="font-weight: bold" data-bind="text: enterpriseDataValueAddedSource"></div>
-                            <div data-bind="foreach: enterpriseDataValueAddedSources">
-                                <div data-bind="text: $data"></div>
-                            </div>
-                        </div>
-                        <div data-bind="if: summaryData() != null && summaryData().length > 0 && summaryData()[0]['Sources'].length > 0">
-                            <h2 style="font-weight: bold">Sector Distribution Details Data Sources</h2>
-                            <div data-bind="foreach: summaryData">
-                                <div data-bind="foreach: $data.Sources">
-                                    <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
+                            <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
+                                <table style="width:550px">
+                                    <thead>
+                                        <tr class="odd">
+                                            <th></th>
+                                            <th>Micro</th>
+                                            <th>SMEs</th>
+                                            <th>MSMEs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="odd">
+                                            <td style="font-weight: bold">Value added to the economy (% of total)</td>
+                                            <td data-bind="text: enterpriseDataValueAddedMicro() + (enterpriseDataValueAddedMicro() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataValueAddedSme() + (enterpriseDataValueAddedSme() != 'No data' ? '%' : ' ')"></td>
+                                            <td data-bind="text: enterpriseDataValueAddedMsme() + (enterpriseDataValueAddedMsme() != 'No data' ? '%' : ' ')"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
                                 </div>
                             </div>
                         </div>
-                    </div><br><br><br><br>
+                        <div style=" border-bottom: gray solid 1px; width: 550px"></div>
+                        <div style="margin-top:20px; font-weight: bold">Sector Distribution Details</div>
+                        <div data-bind="foreach: summaryData()">
+                            <table style="width:550px" data-bind="if: $data.Categories.length > 0">
+                                <thead>
+                                    <tr class="odd">
+                                        <th></th>
+                                        <!-- ko foreach: $data.Categories[0].Value[0].Value -->
+                                        <th data-bind="text: Key"></th>
+                                        <!-- /ko -->
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: $data.Categories">
+                                    <tr class="odd">
+                                        <td data-bind="text: Key" style="font-weight: bold"></td>
+                                        <!-- ko foreach: Value -->
+                                        <!-- ko if: Key == 'Total' -->
+                                        <!-- ko foreach: Value -->
+                                        <!-- ko if: Key.indexOf('%') == -1 -->
+                                        <td data-bind="text: Value" style="font-weight: bold"></td>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                                        <td data-bind="text: Value + '%'" style="font-weight: bold"></td>
+                                        <!-- /ko -->
+                                        <!-- /ko -->
+                                        <!-- /ko -->
+                                        <!-- /ko -->
+                                    </tr>
+                                    <!-- ko foreach: Value -->
+                                    <tr class="odd" data-bind="if: Key != 'Total'">
+                                        <td data-bind="text: Key" style="padding-left: 20px"></td>
+                                        <!-- ko foreach: Value -->
+                                        <!-- ko if: Key.indexOf('%') == -1 -->
+                                        <td data-bind="text: Value"></td>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                                        <td data-bind="text: Value + '%'"></td>
+                                        <!-- /ko -->
+                                        <!-- /ko -->
+                                    </tr>
+                                    <!-- /ko -->
+                                </tbody>
+
+                            </table>
+                            <div>
+                                <span style="font-weight: bold">Source: </span>
+                                <div data-bind="foreach: $data.Sources">
+                                    <span data-bind="text: Name"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:20px; margin-bottom: 20px; border-bottom: gray solid 1px; width: 550px"></div>
+                        <a href='javascript:void()' data-bind="click: showSources, text: isSourcesVisible() ? 'Hide data sources' : 'Show data sources'">Show data sources</a>
+                        <div id='sources' data-bind="visible: isSourcesVisible">
+                            <h2>MSME Participation in the Economy Sources</h2>
+                            <div data-bind="if: enterpriseDataCommonSource() != noData">
+                                <div style="font-weight: bold" data-bind="text: enterpriseDataCommonSource"></div>
+                                <div data-bind="foreach: enterpriseDataCommonSources">
+                                    <div data-bind="html: $data"></div>
+                                </div>
+                            </div>
+                            <div data-bind="if: enterpriseDataValueAddedSource() != noData && enterpriseDataValueAddedSource() != enterpriseDataCommonSource()">
+                                <div style="font-weight: bold" data-bind="text: enterpriseDataValueAddedSource"></div>
+                                <div data-bind="foreach: enterpriseDataValueAddedSources">
+                                    <div data-bind="text: $data"></div>
+                                </div>
+                            </div>
+                            <div data-bind="if: summaryData() != null && summaryData().length > 0 && summaryData()[0]['Sources'].length > 0">
+                                <h2 style="font-weight: bold">Sector Distribution Details Data Sources</h2>
+                                <div data-bind="foreach: summaryData">
+                                    <div data-bind="foreach: $data.Sources">
+                                        <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br><br><br><br>
                     </div>
+                </div>
             </div>
-    </div>
-    
-    
+            <div id="mRight" class="methodologyRight">
+                <script type="text/javascript">
+                    $("#mRight").load("right_column.html");
+                </script>
 
-    <div id="footer">
+            </div>
+
+        </div>
+
+
+
+        <div id="footer">
+            <script type="text/javascript">
+                $("#footer").load("footer.html");
+            </script>
+        </div>
         <script type="text/javascript">
-            $("#footer").load("footer.html");
-        </script>
-    </div>
-    <script type="text/javascript">
 
-        ko.applyBindings(new models.CountryModel('http://ifcwebapp.github.io/msmecountryindicators/'));
-        //ko.applyBindings(new models.CountryListModel('http://localhost:49909/msmecountryindicators/'));
-    </script>
+            ko.applyBindings(new models.CountryModel('http://ifcwebapp.github.io/msmecountryindicators/'));
+            //ko.applyBindings(new models.CountryListModel('http://localhost:49909/msmecountryindicators/'));
+        </script>
 
 </body>
 </html>

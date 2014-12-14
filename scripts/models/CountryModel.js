@@ -6,7 +6,7 @@
 var models;
 (function (models) {
     var CountryModel = (function () {
-        function CountryModel(host) {
+        function CountryModel(host, src, cd) {
             var _this = this;
             this.source = ko.observable(0);
             //enterprise: KnockoutObservable<string> = ko.observable('MSMEs');
@@ -14,6 +14,10 @@ var models;
             this.countries = ko.observableArray([]);
             this.isSourcesVisible = ko.observable(false);
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
+            this.name = ko.observable('');
+            this.url = ko.computed(function () {
+                return encodeURI('data/MSME Country Indicators - ' + _this.name() + ' Summary' + '.xlsx');
+            });
             //enterpriseData: KnockoutObservable<any> = ko.observable(null);
             this.enterpriseDataCommonSource = ko.observable(this.noData);
             this.enterpriseDataCommonSourceYear = ko.observable(this.noData);
@@ -39,6 +43,18 @@ var models;
             this.enterpriseDataValueAddedMicro = ko.observable(this.noData);
             this.enterpriseDataValueAddedSme = ko.observable(this.noData);
             this.enterpriseDataValueAddedMsme = ko.observable(this.noData);
+            this.sectorBreakdownManufacturingMicro = ko.observable(this.noData);
+            this.sectorBreakdownManufacturingSme = ko.observable(this.noData);
+            this.sectorBreakdownManufacturingMsme = ko.observable(this.noData);
+            this.sectorBreakdownTradeMicro = ko.observable(this.noData);
+            this.sectorBreakdownTradeSme = ko.observable(this.noData);
+            this.sectorBreakdownTradeMsme = ko.observable(this.noData);
+            this.sectorBreakdownAgriMicro = ko.observable(this.noData);
+            this.sectorBreakdownAgriSme = ko.observable(this.noData);
+            this.sectorBreakdownAgriMsme = ko.observable(this.noData);
+            this.sectorBreakdownServicesMicro = ko.observable(this.noData);
+            this.sectorBreakdownServicesSme = ko.observable(this.noData);
+            this.sectorBreakdownServicesMsme = ko.observable(this.noData);
             this.showEnterpriseCommonData = ko.computed(function () {
                 return _this.enterpriseDataEnterpriseCountMicro() != _this.noData || _this.enterpriseDataEnterpriseCountSme() != _this.noData || _this.enterpriseDataEnterpriseCountMsme() != _this.noData || _this.enterpriseDataEnterpriseDensityMicro() != _this.noData || _this.enterpriseDataEnterpriseDensitySme() != _this.noData || _this.enterpriseDataEnterpriseDensityMsme() != _this.noData || _this.enterpriseDataEmploymentPersentMicro() != _this.noData || _this.enterpriseDataEmploymentPersentSme() != _this.noData || _this.enterpriseDataEmploymentPersentMsme() != _this.noData || _this.enterpriseDataEnterprisePersentMicro() != _this.noData || _this.enterpriseDataEnterprisePersentSme() != _this.noData || _this.enterpriseDataEnterprisePersentMsme() != _this.noData || _this.enterpriseDataEmploymentCountMicro() != _this.noData || _this.enterpriseDataEmploymentCountSme() != _this.noData || _this.enterpriseDataEmploymentCountMsme() != _this.noData;
             });
@@ -52,7 +68,7 @@ var models;
             //if (enterpriseParam != "null") {
             //    me.enterprise(enterpriseParam);
             //}
-            var sourceParam = me.getUrlParameter('source');
+            var sourceParam = src != undefined ? src : me.getUrlParameter('source');
             if (sourceParam != "null") {
                 me.source(parseInt(sourceParam));
             }
@@ -92,6 +108,7 @@ var models;
             me.showSummary = function (obj, ev) {
                 var d = models.CountryData.rows[obj.code];
                 me.summaryData(d);
+
                 var ed = $.grep(models.CountryIndicatorData.rows, function (e, i) {
                     return e["Key"] == obj.code;
                 });
@@ -104,6 +121,7 @@ var models;
                                 p = first;
                                 break;
                             }
+                            me.name(getVal(val[c], p, 2));
                             me.enterpriseDataCommonSource(getVal(val[c], p, 6));
                             me.enterpriseDataCommonSourceYear(getVal(val[c], p, 3));
                         } else {
@@ -185,10 +203,38 @@ var models;
                         me.enterpriseDataEnterprisePersentSme(getVal2(num, me.source(), 'SMEs'));
                         me.enterpriseDataEnterprisePersentMsme(getVal2(num, me.source(), 'MSMEs'));
                     }
+
+                    if (val['Manufacturing'] != null) {
+                        var num = val['Manufacturing'];
+                        me.sectorBreakdownManufacturingMicro(getVal2(num, me.source(), 'Micro'));
+                        me.sectorBreakdownManufacturingSme(getVal2(num, me.source(), 'SMEs'));
+                        me.sectorBreakdownManufacturingMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
+
+                    if (val['Trade'] != null) {
+                        var num = val['Trade'];
+                        me.sectorBreakdownTradeMicro(getVal2(num, me.source(), 'Micro'));
+                        me.sectorBreakdownTradeSme(getVal2(num, me.source(), 'SMEs'));
+                        me.sectorBreakdownTradeMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
+
+                    if (val['Agri/Other'] != null) {
+                        var num = val['Agri/Other'];
+                        me.sectorBreakdownAgriMicro(getVal2(num, me.source(), 'Micro'));
+                        me.sectorBreakdownAgriSme(getVal2(num, me.source(), 'SMEs'));
+                        me.sectorBreakdownAgriMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
+
+                    if (val['Services'] != null) {
+                        var num = val['Services'];
+                        me.sectorBreakdownServicesMicro(getVal2(num, me.source(), 'Micro'));
+                        me.sectorBreakdownServicesSme(getVal2(num, me.source(), 'SMEs'));
+                        me.sectorBreakdownServicesMsme(getVal2(num, me.source(), 'MSMEs'));
+                    }
                 }
             };
 
-            var countryCode = me.getUrlParameter('country');
+            var countryCode = cd != undefined ? cd : me.getUrlParameter('country');
 
             if (countryCode != "null") {
                 me.showSummary({ code: countryCode }, null);
