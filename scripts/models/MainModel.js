@@ -45,8 +45,9 @@ var models;
             }
 
             var mapOptions = {
-                zoom: 2,
-                center: new google.maps.LatLng(45.58329, 12.980347),
+                zoom: 3,
+                //center: new google.maps.LatLng(45.58329, 12.980347),
+                center: new google.maps.LatLng(0.509535, 9.337073),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 streetViewControl: false,
                 panControl: false,

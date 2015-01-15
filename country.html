@@ -146,16 +146,16 @@
                                     <tr class="odd">
                                         <td data-bind="text: Key" style="font-weight: bold"></td>
                                         <!-- ko foreach: Value -->
-                                        <!-- ko if: Key == 'Total' -->
-                                        <!-- ko foreach: Value -->
-                                        <!-- ko if: Key.indexOf('%') == -1 -->
-                                        <td data-bind="text: Value" style="font-weight: bold"></td>
-                                        <!-- /ko -->
-                                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                                        <td data-bind="text: Value + '%'" style="font-weight: bold"></td>
-                                        <!-- /ko -->
-                                        <!-- /ko -->
-                                        <!-- /ko -->
+                                            <!-- ko if: Key == 'Total' -->
+                                                <!-- ko foreach: Value -->
+                                                    <!-- ko if: Key.indexOf('%') == -1 -->
+                                                        <td data-bind="text: Value" style="font-weight: bold"></td>
+                                                    <!-- /ko -->
+                                                     <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                                                        <td data-bind="text: Value + '%'" style="font-weight: bold"></td>
+                                                    <!-- /ko -->
+                                                 <!-- /ko -->
+                                            <!-- /ko -->
                                         <!-- /ko -->
                                     </tr>
                                     <!-- ko foreach: Value -->
