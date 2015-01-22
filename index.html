@@ -58,7 +58,7 @@
                     <div class="left" style="margin-right:20px"><input type="radio" name="firm" value="SMEs" data-bind="checked: enterprise, click: refreshData " /></div>
                     <div class="left">MSMEs</div>
                     <div class="left"><input type="radio" name="firm" value="MSMEs" data-bind="checked: enterprise, click: refreshData " /></div>
-                        <!--<div class="left">
+                    <!--<div class="left">
 
                             <select id="enterpriseChoice" style="width: 80px;" data-bind="value: enterprise, event: { change: refreshData }">
                                 <option value="MSMEs">MSMEs</option>
@@ -68,80 +68,85 @@
 
                             </select>
                         </div>-->
-                        <div class="clear" style="margin-bottom: 5px"></div>
-                        <div class="title left" style="padding-top: 4px">Map Layer:</div>
-                        <div class="left">
-                            <select id="category" data-bind="value: category, event: { change: getKml }">
-                                <option disabled="disabled">------ Country Level Indicators -------------------------</option>
+                    <div class="clear" style="margin-bottom: 5px"></div>
+                    <div class="title left" style="padding-top: 4px">Map Layer:</div>
+                    <div class="left">
+                        <select id="category" data-bind="value: category, event: { change: getKml }">
+                            <option disabled="disabled">------ Country Level Indicators -------------------------</option>
 
-                                <option value="PopulationTotal">Total Population</option>
-                                <option value="GNI">GNI per capita, Atlas method</option>
-                                <option value="IncomeGroup">Income group</option>
-                                <option value="EnterpriseSurveysChecking">Percent of firms with a checking or savings account</option>
-                                <option value="EnterpriseSurveysCredit">Percent of firms with a bank loan/line of credit</option>
-                                <option value="StartingBusinessRank">Starting a Business rank</option>
-                                <option value="DomesticCreditToPrivateSector">Domestic credit to private sector (% of GDP)</option>
-                                <option value="LaborForceTotal">Labor force, total</option>
-                                <option disabled="disabled">------ MSME Country Indicators by Firm Size -------------</option>
-                                <option value="Size Breakdown">Enterprises (% of total)</option>
-                                <option value="Density">Enterprises density (per 1000 people)</option>
-                                <option value="Employment">Employment (% of total)</option>
-                                <option value="Vallue added">Value added to the economy (% of total)</option>
-                                <option value="Firm Size by Number">Firm size definition by # of employees</option>
-                                <option value="Firm Size by Assets">Firm size definition by assets</option>
-                                <option value="Firm Size by Sales">Firm size definition by sales</option>
-                            </select>
-                        </div>
-                        <div class="left">
-                            <input id="showLegend" name="showLegend" style="margin: 2px 0px 0px 30px;" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
-							Show Legend
-                        </div>
-                        <div class="left" style="height: 18px; "></div>
-                        <div class="clear"  style="margin-bottom: 5px"></div>
-                        <div class="title left" style="padding-top: 4px">Indicator: </div>
-                        <!--<div class="left">
-                                <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
-                                    <option value="bubble">Bubble</option>
-                                    <option value="chart">Chart</option>
-                                </select>
-                            </div>-->
-                        <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
-
-                            <select id="bubbleIndicator" style="width: 387px;" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
-                                <option value="Number of Enterprises">Enterprises (absolute #)</option>
-                                <option value="Size Breakdown">Enterprises (% of total)</option>
-                                <option value="Density">Enterprises density (per 1000 people)</option>
-                                <option value="Number of Employees">Employment (absolute #)</option>
-                                <option value="Employment">Employment (% of total)</option>
-                                <option value="Vallue added">Value added to the economy (% of total)</option>
-                            </select>
-                        </div>
-                        <!--<div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
-
-                                <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
-                                    <option value="sectors">Sector Breakdown</option>
-                                </select>
-
-                            </div>-->
-
-                        <div class="clear"></div>
-                        <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
-                            <div id="legendserved">
-                                <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Manufacturing</div>
-                                <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Trade</div>
-                                <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Services</div>
-                                <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Agri/Other</div>
-                            </div>
-
-                        </div>
-                        <div class="clear"></div>
-                        <!--<div style="width: 100%;">
-                                <div class="up" data-bind="click: expandMenu"></div>
-                            </div>-->
-                        <div class="clear"></div>
+                            <option value="PopulationTotal">Total Population</option>
+                            <option value="GNI">GNI per capita, Atlas method</option>
+                            <option value="IncomeGroup">Income group</option>
+                            <option value="EnterpriseSurveysChecking">Percent of firms with a checking or savings account</option>
+                            <option value="EnterpriseSurveysCredit">Percent of firms with a bank loan/line of credit</option>
+                            <option value="StartingBusinessRank">Starting a Business rank</option>
+                            <option value="DomesticCreditToPrivateSector">Domestic credit to private sector (% of GDP)</option>
+                            <option value="LaborForceTotal">Labor force, total</option>
+                            <option disabled="disabled">------ MSME Country Indicators by Firm Size -------------</option>
+                            <option value="Size Breakdown">Enterprises (% of total)</option>
+                            <option value="Density">Enterprises density (per 1000 people)</option>
+                            <option value="Employment">Employment (% of total)</option>
+                            <option value="Vallue added">Value added to the economy (% of total)</option>
+                            <option value="Firm Size by Number">Firm size definition by # of employees</option>
+                            <option value="Firm Size by Assets">Firm size definition by assets</option>
+                            <option value="Firm Size by Sales">Firm size definition by sales</option>
+                        </select>
                     </div>
+                    <div class="left">
+                        <input id="showLegend" name="showLegend" style="margin: 2px 0px 0px 30px;" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />
+                        Show Legend
+                    </div>
+                    <div class="left" style="height: 18px; "></div>
+                    <div class="clear"  style="margin-bottom: 5px"></div>
+                    <div class="title left" style="padding-top: 4px">Indicator: </div>
+                    <!--<div class="left">
+                            <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
+                                <option value="bubble">Bubble</option>
+                                <option value="chart">Chart</option>
+                            </select>
+                        </div>-->
+                    <div class="left" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
+
+                        <select id="bubbleIndicator" style="width: 387px;" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
+                            <option value="Number of Enterprises">Enterprises (absolute #)</option>
+                            <option value="Size Breakdown">Enterprises (% of total)</option>
+                            <option value="Density">Enterprises density (per 1000 people)</option>
+                            <option value="Number of Employees">Employment (absolute #)</option>
+                            <option value="Employment">Employment (% of total)</option>
+                            <option value="Vallue added">Value added to the economy (% of total)</option>
+                        </select>
+                    </div>
+                    <!--<div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
+
+                            <select id="chartIndicator" style="width: 387px;" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
+                                <option value="sectors">Sector Breakdown</option>
+                            </select>
+
+                        </div>-->
+
+                    <div class="clear"></div>
+                    <div style="margin-top: 5px" data-bind="visible: isChartSelectorVisible">
+                        <div id="legendserved">
+                            <div style="float: left; background-color: #FDBE85; color: white; padding: 2px 5px;">Manufacturing</div>
+                            <div style="float: left; background-color: #FD8D3C; color: white; margin-left: 5px; padding: 2px 5px;">Trade</div>
+                            <div style="float: left; background-color: #E6550D; color: white; margin-left: 5px; padding: 2px 5px;">Services</div>
+                            <div style="float: left; background-color: #A63603; color: white; margin-left: 5px; padding: 2px 5px;">Agri/Other</div>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                    <!--<div style="width: 100%;">
+                            <div class="up" data-bind="click: expandMenu"></div>
+                        </div>-->
+                    <div class="clear"></div>
+                </div>
+                <div style="padding: 10px 0; text-align: justify">
+                    The MSME Country Indicators Database 2014 records the number of formally registered micro, small, and medium enterprises (MSMEs) across 155 economies. The 2014 update includes the latest country MSME definitions, number of enterprises, employment figures, sectorial distribution, and historical data. In addition, the 2014 update kick-starts the collection of information regarding MSME contribution to the economies and includes information on multiple MSME definitions and data sources within a country. Data is also disaggregated by firm size.
+                </div>
                 <div id="map-canvas"></div>
-            
+                <div style="padding: 10px 0; text-align: justify; font-size:smaller;">
+                    Only clean data is presented on the data visualization maps (excluding economies whose information is not census data or not covering the whole countries/sectors in the economy or outliers). However, all data (clean and not clean) is included in the downloadable full database excel file.
+                </div>
                 
             
             </div>
