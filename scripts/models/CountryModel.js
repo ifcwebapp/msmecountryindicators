@@ -15,6 +15,7 @@ var models;
             this.isSourcesVisible = ko.observable(false);
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.name = ko.observable('');
+            this.cats = ['Number of Enterprises', 'Density', 'Employment', 'Vallue added', 'Number of Employees', 'Size Breakdown', 'Manufacturing', 'Trade', 'Agri/Other', 'Services'];
             this.url = ko.computed(function () {
                 return encodeURI('data/MSME Country Indicators - ' + _this.name() + ' Summary' + '.xlsx');
             });
@@ -108,13 +109,21 @@ var models;
             me.showSummary = function (obj, ev) {
                 var d = models.CountryData.rows[obj.code];
                 me.summaryData(d);
-
+                var availableSources = [];
                 var ed = $.grep(models.CountryIndicatorData.rows, function (e, i) {
                     return e["Key"] == obj.code;
                 });
                 if (ed.length > 0) {
                     var val = ed[0]["Value"];
+
                     for (var c in val) {
+                        for (var se in val[c]) {
+                            if (availableSources.indexOf(se[0]) < 0 && me.cats.indexOf(c) >= 0) {
+                                availableSources.push(se[0]);
+                            }
+                        }
+
+                        //debugger;
                         if (c != "Vallue added") {
                             var p;
                             for (var first in val[c]) {
@@ -132,6 +141,13 @@ var models;
                             }
                             me.enterpriseDataValueAddedSource(getVal(val[c], p, 6));
                             me.enterpriseDataValueAddedSourceYear(getVal(val[c], p, 3));
+                        }
+                    }
+
+                    var sourceSelect = $("#source");
+                    for (var op in sourceSelect[0]) {
+                        if (availableSources.indexOf(op) >= 0) {
+                            $(sourceSelect[0][op]).removeAttr("disabled");
                         }
                     }
 
