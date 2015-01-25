@@ -98,4 +98,10 @@ module.exports = function (grunt) {
             'assemble:all'
         ]
     );
+    grunt.registerTask(
+        'publish', [
+            'default',
+            'buildGhPages'
+        ]
+    );
 };
