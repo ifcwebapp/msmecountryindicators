@@ -1,0 +1,27 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "jquery/jquery.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    },
+    "jqueryui/jqueryui.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    },
+    "knockout/knockout.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    },
+    "highcharts/highcharts.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    },
+    "googlemaps/google.maps.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    },
+    "jquery.ui.layout/jquery.ui.layout.d.ts": {
+      "commit": "1c829808b649eb0c794ec8caf38177495a5d7630"
+    }
+  }
+}

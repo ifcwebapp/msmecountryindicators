@@ -1,0 +1,107 @@
+﻿<div id="infoData" style='width: 380px;'>
+    <h1 data-bind="text: countryName" style='white-space:nowrap; float: left; margin:0'></h1>
+    <a style='float: right' data-bind="attr: {href: 'country.html?country=' + info.Key + '&source=' + main.source()}" >Country Page</a>
+    <div class='clear'></div>
+    <!--<div><strong>Year: </strong><span data-bind="text: year"></span></div>-->
+    <div style="font-weight: bold" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+    <div style="margin-bottom: 20px">
+        <div style="" data-bind="visible: showEnterpriseCommonData">
+            <table style="width:350px">
+                <thead>
+                    <tr class="odd">
+                        <th></th>
+                        <th data-bind="text: main.enterprise()"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-bind="visible: enterpriseDataEnterpriseCount() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Enterprises (absolute #)</td>
+                        <td data-bind="text: enterpriseDataEnterpriseCount"></td>
+                    </tr>
+                    <tr data-bind="visible: enterpriseDataEnterprisePersent() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Enterprises (% of total)</td>
+                        <td data-bind="text: enterpriseDataEnterprisePersent() + '%'"></td>
+                    </tr>
+                    <tr data-bind="visible: enterpriseDataEnterpriseDensity() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Enterprises density (per 1000 people)</td>
+                        <td data-bind="text: enterpriseDataEnterpriseDensity"></td>
+                    </tr>
+
+                    <tr data-bind="visible: enterpriseDataEmploymentCount() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Employment (absolute #)</td>
+                        <td data-bind="text: enterpriseDataEmploymentCount"></td>
+                    </tr>
+                    <tr data-bind="visible: enterpriseDataEmploymentPersent() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Employment (% of total)</td>
+                        <td data-bind="text: enterpriseDataEmploymentPersent() + '%'"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="width: 350px">
+                <div class="infoSource" style="float:right">
+                    <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
+            <table style="width:350px">
+                <thead>
+                    <tr class="odd">
+                        <th></th>
+                        <th data-bind="text: main.enterprise()"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd">
+                        <td style="font-weight: bold">Value added to the economy (% of total)</td>
+                        <td data-bind="text: enterpriseDataValueAdded() + '%'"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div style="width: 350px">
+                <div class="infoSource" style="float:right">
+                    <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div style="font-weight: bold; margin-top: 20px" data-bind="visible: showSectorDistributionData">Sector Distribution</div>
+        <div data-bind="visible: showSectorDistributionData">
+            <table style="width:350px">
+                <thead>
+                    <tr class="odd">
+                        <th></th>
+                        <th data-bind="text: main.enterprise()"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-bind="visible: sectorBreakdownManufacturing() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Manufacturing</td>
+                        <td data-bind="text: sectorBreakdownManufacturing() + '%'"></td>
+                    </tr>
+                    <tr data-bind="visible: sectorBreakdownTrade() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Trade</td>
+                        <td data-bind="text: sectorBreakdownTrade() + '%'"></td>
+                    </tr>
+                    <tr data-bind="visible: sectorBreakdownAgri() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Agri/Other</td>
+                        <td data-bind="text: sectorBreakdownAgri() + '%'"></td>
+                    </tr>
+                    <tr data-bind="visible: sectorBreakdownServices() != 'No data'" class="odd">
+                        <td style="font-weight: bold">Services</td>
+                        <td data-bind="text: sectorBreakdownServices() + '%'"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <div style="width: 350px">
+                    <div class="infoSource" style="float:right">
+                        <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+    </div>
+</div>

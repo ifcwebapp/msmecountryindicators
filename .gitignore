@@ -1,0 +1,54 @@
+# generated website
+built/*
+
+lib-cov
+*.csv
+*.dat
+*.gz
+*.log
+*.out
+*.pid
+*.rar
+*.seed
+*.sublime-*
+*.zip
+
+# Visual Studio stuff
+obj
+bin
+PrecompiledApp.config
+Web.config
+packages.config
+*.user
+# Visual Studio generates *.js files right in that folder
+scripts/*.js
+
+# We don't need map files in the repository
+*.map
+
+pids
+logs
+results
+build
+npm-debug.log
+TODO.md
+
+node_modules
+_gh_pages
+vendor
+temp
+tmp
+
+#use `tsd install` to get typings
+typings
+
+#byproduct of grunt-ts
+.baseDir.ts
+.tscache
+
+# javascript from assets/scripts is supposed to be built from typescripts from scripts
+assets/scripts/
+
+# css is generated from less from styles
+assets/styles/
+
