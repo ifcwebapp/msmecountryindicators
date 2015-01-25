@@ -79,7 +79,7 @@ module.exports = function (grunt) {
             }
         },
         buildGhPages: {
-            ghPages: { /* all default */ }
+            ghPages: { dist: 'built' }
         }
     });
 
