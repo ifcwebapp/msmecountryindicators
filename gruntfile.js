@@ -103,7 +103,8 @@ module.exports = function (grunt) {
     );
     grunt.registerTask(
         'publish', [
-            'default'
+            'default',
+	    'gh-pages'
         ]
     );
 };
