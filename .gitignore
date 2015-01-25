@@ -20,6 +20,7 @@ PrecompiledApp.config
 Web.config
 packages.config
 *.user
+*.suo
 # Visual Studio generates *.js files right in that folder
 scripts/*.js
 
