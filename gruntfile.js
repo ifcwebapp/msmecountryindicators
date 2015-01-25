@@ -6,12 +6,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-build-gh-pages');
 
     grunt.initConfig({
         clean: {
             'all': [
-                'built/**/*',
+                'built/**/*', '!built/.git/**/*'
             ]
         },
         ts: {
@@ -78,8 +77,11 @@ module.exports = function (grunt) {
                 }
             }
         },
-        buildGhPages: {
-            ghPages: { dist: 'built' }
+        'gh-pages': {
+            options: {
+                base: 'built'
+            },
+            src: ['**/*']
         }
     });
 
@@ -101,8 +103,7 @@ module.exports = function (grunt) {
     );
     grunt.registerTask(
         'publish', [
-            'default',
-            'buildGhPages'
+            'default'
         ]
     );
 };
