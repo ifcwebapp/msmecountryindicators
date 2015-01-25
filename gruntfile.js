@@ -76,6 +76,9 @@ module.exports = function (grunt) {
                     debounceDelay: 100,
                 }
             }
+        },
+        buildGhPages: {
+            ghPages: { /* all default */ }
         }
     });
 
