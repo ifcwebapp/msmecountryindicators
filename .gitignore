@@ -4,3 +4,4 @@ obj
 Web.config
 PrecompiledApp.config
 packages.config
+typings
