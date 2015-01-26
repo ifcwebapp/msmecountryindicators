@@ -8,7 +8,7 @@ body {
   width: 1000px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 79%;
-  background-image: url('../Content/wrapper_bg.gif');
+  background-image: url('../content/wrapper_bg.gif');
   background-repeat: repeat-y;
   background-position: center 0;
   background-attachment: fixed;
@@ -60,7 +60,7 @@ body:before {
 #cme_logo {
   width: 110px;
   height: 40px;
-  background-image: url('../Content/sme_logo.png');
+  background-image: url('../content/sme_logo.png');
   background-repeat: no-repeat;
   float: left;
   cursor: pointer;
@@ -68,7 +68,7 @@ body:before {
 #twitter_logo {
   width: 19px;
   height: 19px;
-  background-image: url('../Content/tw_head.png');
+  background-image: url('../content/tw_head.png');
   background-repeat: no-repeat;
   float: left;
   cursor: pointer;
@@ -76,7 +76,7 @@ body:before {
 #linkedin_logo {
   width: 19px;
   height: 19px;
-  background-image: url('../Content/linked_head.png');
+  background-image: url('../content/linked_head.png');
   background-repeat: no-repeat;
   float: left;
   cursor: pointer;
@@ -85,7 +85,7 @@ body:before {
 #ifc_logo {
   width: 270px;
   height: 53px;
-  background-image: url('../Content/ifc_logo_new.jpg');
+  background-image: url('../content/ifc_logo_new.jpg');
   background-repeat: no-repeat;
   float: right;
   cursor: pointer;
@@ -134,14 +134,14 @@ td {
   cursor: pointer;
   width: 16px;
   height: 16px;
-  background-image: url('../Content/up_ico_16_16.png');
+  background-image: url('../content/up_ico_16_16.png');
   background-repeat: no-repeat;
 }
 .close {
   cursor: pointer;
   width: 13px;
   height: 13px;
-  background-image: url('../Content/close.png');
+  background-image: url('../content/close.png');
   background-repeat: no-repeat;
 }
 .noTitleDialog .ui-dialog-titlebar {
@@ -196,7 +196,7 @@ td {
   background: none !important;
 }
 #main-nav a {
-  background: url(../Content/seperator.gif) no-repeat left;
+  background: url(../content/seperator.gif) no-repeat left;
   color: #fff;
   display: block;
   line-height: 34px;
@@ -207,7 +207,7 @@ td {
   margin-left: -1px;
 }
 .home_icon {
-  background: url(../Content/home_icon.gif) no-repeat left;
+  background: url(../content/home_icon.gif) no-repeat left;
   background-position-y: 6px;
   width: 17px;
   height: 26px;
@@ -315,7 +315,7 @@ ul.dash {
   padding-left: 20px;
 }
 ul.dash > li {
-  list-style-image: url('../Content/dash.png');
+  list-style-image: url('../content/dash.png');
 }
 ul.circle li {
   list-style-image: none;
@@ -360,7 +360,7 @@ ul.none li > span {
   line-height: 15px;
 }
 .logo_title {
-  background-image: url(../Content/title_label.png);
+  background-image: url(../content/title_label.png);
   background-repeat: no-repeat;
   padding-left: 27px;
   color: #7D7D87;
