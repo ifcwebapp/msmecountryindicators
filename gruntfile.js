@@ -6,7 +6,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-gh-pages');
 
     grunt.initConfig({
         clean: {
@@ -24,14 +23,14 @@ module.exports = function (grunt) {
             },
             'all': {
                 sourceMap: false,
-                outDir: 'assets/scripts',
+                outDir: 'built/scripts',
                 src: ['scripts/*.ts', 'typings/*.ts']
             },
         },
         less: {
             all: {
                 files: {
-                    "assets/styles/main.css": "styles/main.less"
+                    "built/styles/main.css": "styles/main.less"
                 }
             }
         },
@@ -77,12 +76,6 @@ module.exports = function (grunt) {
                     debounceDelay: 100,
                 }
             }
-        },
-        'gh-pages': {
-            options: {
-                base: 'built'
-            },
-            src: ['**/*']
         }
     });
 
@@ -104,8 +97,7 @@ module.exports = function (grunt) {
     );
     grunt.registerTask(
         'publish', [
-            'default',
-	    'gh-pages'
+            'default'
         ]
     );
 };

@@ -23,7 +23,6 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-less": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-gh-pages": "^0.9.1",
     "grunt-shell": "^1.1.1",
     "grunt-ts": "^2.0.1",
     "tsd": "^0.5.7",
