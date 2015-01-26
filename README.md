@@ -55,7 +55,7 @@ The watcher will be running as long as the console is open.
 The following are the command you can use for building the website:
 
 - `grunt` or `grunt default` - slow/complete: cleans up, compiles typescript, compiles less, copies the assets, generates html
-- `grunt quick` - quick/dirty: compiles typescript, compiles less, generate html
+- `grunt quick` - quick/dirty: compiles typescript, compiles less, generates html
 - `grunt ts` - compiles typescript only
 - `grunt less` - compiles less only
 - `grunt assemble` - generates html only
