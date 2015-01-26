@@ -35,7 +35,7 @@
 - **README.md** - a file that you are currently reading
 - **msme-country-indicators.sln** - a visual studio solution file (contains a reference to the VS project file defined above)
 
-###Real time developing
+###Real time development
 You can enable a file watcher that would monitor `*.less` and `*.hbs` files for changes and run the built whenever a change is detected. Running a watcher while developing allows to see the reasults of your work immediatly without having to run a build.
 
 To enable the watcher first make sure you have `grunt-contrib-watch` module installed:
