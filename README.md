@@ -4,7 +4,7 @@
 ###Installing
 
 - Install [Node.js](http://nodejs.org/download/)
-- Clone this repository by running `git clone https://github.com/aleksey-bykov/msme-country-indicators.git`
+- Clone this repository by running `git clone https://github.com/ifcwebapp/msmecountryindicators.git`
 - Go to the root folder of the repository you just cloned
 - Run: `npm install`
 - Run: `npm install grunt -g`
