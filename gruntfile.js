@@ -76,6 +76,11 @@ module.exports = function (grunt) {
                     debounceDelay: 100,
                 }
             }
+        },
+        'if-changed': {
+            options: {
+                then: 'less'
+            }
         }
     });
 
@@ -99,5 +104,56 @@ module.exports = function (grunt) {
         'publish', [
             'default'
         ]
+    );
+
+    grunt.registerTask(
+        'if-changed', function () {
+            var options = this.options({
+                local: 'master',
+                remote: 'origin/master'
+            });
+            if (!options.then) { return grunt.fail.fatal('A taret to be run if changes are detected has to be specified as `then` parameter in options.'); }
+
+            var done = this.async();
+            grunt.util.spawn({
+                cmd: 'git',
+                args: 'fetch -q'.split(' ')
+            }, function doneFunction(error, result, code) {
+                if (error) { return grunt.fail.fatal(error); }
+                grunt.util.spawn({
+                    cmd: 'git',
+                    args: ('diff --shortstat ' + options.local + ' ' + options.remote).split(' ')
+                },
+                function doneFunction(error, result, code) {
+                    if (error) { return grunt.fail.fatal(error); }
+                    // result has: .stdout, .stderr, .code
+                    console.log(result.code);
+                    console.log('_' + String(result) + '_');
+                    var changes = String(result);
+                    if (changes) {
+                        console.info('Changes detected: ' + changes);
+                        grunt.task.run(options.then);
+                    }
+                    done();
+                });
+            });
+        }
+    );
+
+    grunt.registerTask(
+        'update', function () {
+            var options = this.options({
+                local: 'master',
+                remote: 'origin/master'
+            });
+            var done = this.async();
+            grunt.util.spawn({
+                cmd: 'git',
+                args: 'pull --rebase'.split(' ')
+            }, function doneFunction(error, result, code) {
+                if (error) { return grunt.fail.fatal(error); }
+                done();
+            });
+        }
     );
 };
