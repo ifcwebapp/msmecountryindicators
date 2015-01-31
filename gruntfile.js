@@ -105,13 +105,13 @@ module.exports = function (grunt) {
         ]
     );
     grunt.registerTask(
-        'build-if-changed', [
-            'if-changed:pull:build'
+        'build-if-remote-changed', [
+            'if-remote-changed:pull:build'
         ]
     );
 
     grunt.registerTask(
-        'if-changed', function () {
+        'if-remote-changed', function () {
             var options = this.options({
                 local: 'master',
                 remote: 'origin/master'
