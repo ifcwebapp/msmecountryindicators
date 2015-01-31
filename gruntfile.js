@@ -76,16 +76,15 @@ module.exports = function (grunt) {
                     debounceDelay: 100,
                 }
             }
-        },
-        'if-changed': {
-            options: {
-                then: 'less'
-            }
         }
     });
 
     grunt.registerTask(
-        'default', [
+        'default', ['build']
+    );
+
+    grunt.registerTask(
+        'build', [
             'clean:all',
             'ts:all',
             'less:all',
@@ -105,6 +104,11 @@ module.exports = function (grunt) {
             'default'
         ]
     );
+    grunt.registerTask(
+        'build-if-changed', [
+            'if-changed:pull:build'
+        ]
+    );
 
     grunt.registerTask(
         'if-changed', function () {
@@ -112,7 +116,8 @@ module.exports = function (grunt) {
                 local: 'master',
                 remote: 'origin/master'
             });
-            if (!options.then) { return grunt.fail.fatal('A taret to be run if changes are detected has to be specified as `then` parameter in options.'); }
+            var then = options.then || this.args;
+            if (!then || !then.length) { return grunt.fail.fatal('A taret to be run if changes are detected has to be specified as `then` parameter in options or as an argument in the target name `if-changed:then-do-this:then-do-that`.'); }
 
             var done = this.async();
             grunt.util.spawn({
@@ -127,12 +132,15 @@ module.exports = function (grunt) {
                 function doneFunction(error, result, code) {
                     if (error) { return grunt.fail.fatal(error); }
                     // result has: .stdout, .stderr, .code
-                    console.log(result.code);
-                    console.log('_' + String(result) + '_');
+                    // console.log(result.code);
+                    // console.log('_' + String(result) + '_');
                     var changes = String(result);
                     if (changes) {
-                        console.info('Changes detected: ' + changes);
-                        grunt.task.run(options.then);
+                        grunt.log.writeln('Changes detected: ' + changes);
+                        grunt.log.writeln('Next running: ' + String(then).split(',').join(', '));
+                        grunt.task.run(then);
+                    } else {
+                        grunt.log.writeln('No changes detected.');
                     }
                     done();
                 });
@@ -141,7 +149,7 @@ module.exports = function (grunt) {
     );
 
     grunt.registerTask(
-        'update', function () {
+        'pull', function () {
             var options = this.options({
                 local: 'master',
                 remote: 'origin/master'
@@ -152,6 +160,7 @@ module.exports = function (grunt) {
                 args: 'pull --rebase'.split(' ')
             }, function doneFunction(error, result, code) {
                 if (error) { return grunt.fail.fatal(error); }
+                grunt.log.writeln('Pulled: ' + String(result));
                 done();
             });
         }
