@@ -1,6 +1,5 @@
 #MSME Country Indicators
 
-
 ###Installing
 
 - Install [Node.js](http://nodejs.org/download/)
