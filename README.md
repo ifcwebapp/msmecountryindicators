@@ -60,3 +60,5 @@ The following are the command you can use for building the website:
 - `grunt less` - compiles less only
 - `grunt assemble` - generates html only
 - `grunt clean` - deletes everything from the `built` folder
+- `grunt build` - the same sa `grunt default` (see above)
+- `grunt build-if-remote-changed` - checks the remote repository for any changes, pulls them if any, and runs `build`
