@@ -7,6 +7,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    var destFolder = '../gh-pages';
+
     grunt.initConfig({
         clean: {
             'all': [
@@ -41,6 +43,14 @@ module.exports = function (grunt) {
                     cwd: 'assets/',
                     src: ['**/*'],
                     dest: 'built'
+                }]
+            },
+            'distributive': {
+                files: [{
+                    expand: true,
+                    cwd: 'built/',
+                    src: ['**/*'],
+                    dest: destFolder
                 }]
             }
         },
@@ -77,11 +87,46 @@ module.exports = function (grunt) {
                 }
             }
         },
+        'pull': {
+            'for-gh-pages': {
+                options: {
+                    dest: destFolder,
+                    branch: 'gh-pages'
+                }
+            },
+            'for-master': {
+                options: {
+                    dest: './',
+                    branch: 'master'
+                }
+            }
+        },
         'pull-or-clone': {
-            options: {
-                repository: 'https://github.com/ifcwebapp/msmecountryindicators.git',
-                dest: '../gh-pages',
-                branch: 'gh-pahes'
+            'for-gh-pages': {
+                options: {
+                    repository: 'https://github.com/ifcwebapp/msmecountryindicators.git',
+                    dest: destFolder,
+                    branch: 'gh-pages',
+                    pull: 'for-gh-pages'
+                }
+            }
+        },
+        'deploy': {
+            'gh-pages': {
+                options: {
+                    dest: destFolder,
+                    branch: 'gh-pages'
+                }
+            }
+        },
+        'if-remote-changed': {
+            'for-publish-latest': {
+                options: {
+                    local: 'master',
+                    remote: 'origin/master',
+                    dest: './',
+                    then: 'publish-latest'
+                }
             }
         }
     });
@@ -100,7 +145,7 @@ module.exports = function (grunt) {
         ]
     )
     grunt.registerTask(
-        'quick', [
+        'quick-build', [
             'ts:all',
             'less:all',
             'assemble:all'
@@ -108,28 +153,37 @@ module.exports = function (grunt) {
     );
     grunt.registerTask(
         'publish', [
-            'default'
+            'pull-or-clone:for-gh-pages', 'build', 'copy:distributive', 'deploy'
         ]
     );
     grunt.registerTask(
-        'build-if-remote-changed', [
-            'if-remote-changed:pull:build'
+        'build-latest', [
+            'pull:for-master', 'build'
+        ]
+    );
+    grunt.registerTask(
+        'publish-lastest', [
+            'pull:for-master', 'publish'
+        ]
+    );
+    grunt.registerTask(
+        'auto-publish-latest', [
+            'if-remote-changed:for-publish-latest'
         ]
     );
 
     grunt.registerTask(
         'if-remote-changed', function () {
             var run = runOver(grunt);
-            var options = this.options({
-                local: 'master',
-                remote: 'origin/master'
-            });
-            var then = options.then || this.args;
-            if (!then || !then.length) { return grunt.fail.fatal('A taret to be run if changes are detected has to be specified as `then` parameter in options or as an argument in the target name `if-changed:then-do-this:then-do-that`.'); }
+            var options = this.options({}) ;
+            var local = toParameter(options, 'local', 'the name of a local branch');
+            var remote = toParameter(options, 'remote', 'the name of a remote branch');
+            var then = toParameter(options, 'then', 'the name of a target to be run if any changes detected');
+            var dest = toParameter(options, 'dest', 'a root folder to pull to');
 
             var done = this.async();
             run('git fetch', function (result) {
-                run('git diff --shortstat ' + options.local + ' ' + options.remote, function (result) {
+                run('git diff --shortstat ' + local + ' ' + remote, function (result) {
                     var changes = String(result);
                     if (changes) {
                         grunt.log.writeln('Changes detected: ' + changes);
@@ -139,57 +193,50 @@ module.exports = function (grunt) {
                         grunt.log.writeln('No changes detected.');
                     }
                     done();
-                });
-            });
+                }, dest);
+            }, dest);
         }
     );
 
-    grunt.registerTask(
+    grunt.registerMultiTask(
         'pull', function () {
+            debugger;
             var run = runOver(grunt);
+
+            var options = this.options({});
+            var dest = toParameter(options, 'dest', 'a root folder to pull to');
+            var branch = toParameter(options, 'branch', 'a name of the branch to be pulled');
+
             var done = this.async();
             grunt.verbose.writeln('Fetching.');
             run('git fetch', function (result) {
                 grunt.verbose.writeln(String(result));
-                grunt.verbose.writeln('Checking out master.');
-                run('git checkout master', function (result) {
+                grunt.verbose.writeln('Checking out: ' + branch);
+                run('git checkout ' + branch, function (result) {
                     grunt.verbose.writeln(String(result));
-                    grunt.verbose.writeln('Pulling.');
                     run('git pull --rebase', function (result) {
-                        grunt.log.writeln('Pulled: ' + String(result));
+                        grunt.log.writeln(String(result));
                         done();
-                    });
-                });
-            });
+                    }, dest);
+                }, dest);
+            }, dest);
         }
     );
 
-    grunt.registerTask(
+    grunt.registerMultiTask(
         'pull-or-clone', function () {
             var run = runOver(grunt);
-            var options = this.options({ branch: 'master' });
-            var repository = options.repository;
-            if (!repository) { grunt.fail.fatal('The `repository` parameter with a URL of a git repository is missing in options.'); }
-            var dest = options.dest;
-            if (!dest) { grunt.fail.fatal('The `dest` parameter with a root folder for a cloned repository is missing in options.'); }
-            var branch = options.branch;
+
+            var options = this.options({});
+            var dest = toParameter(options, 'dest', 'a root folder to clone or pull to');
+            var repository = toParameter(options, 'repository', 'a URL of a git repository');
+            var branch = toParameter(options, 'branch', 'a name of the branch to be cloned or pulled');
 
             var done = this.async();
             if (grunt.file.exists(dest)) {
                 // pulling
-                grunt.verbose.writeln('Fetching to: ' + dest);
-                run('git fetch', function (result) {
-                    grunt.verbose.writeln(String(result));
-                    grunt.verbose.writeln('Checking out: ' + branch);
-                    run('git checkout ' + branch, function (result) {
-                        grunt.verbose.writeln(String(result));
-                        run('git pull --rebase', function (result) {
-                            grunt.log.writeln('A local repository at `' + dest + '` has been updated from the remote.');
-                            grunt.log.writeln(String(result));
-                            done();
-                        }, dest);
-                    }, dest);
-                }, dest);
+                var target = toParameter(options, 'pull', 'a target of the `pull` task');
+                grunt.task.run('pull:' + target);
             } else {
                 // clonning
                 grunt.verbose.writeln('Cloning a repository from ' + repository + ' to: ' + dest);
@@ -197,7 +244,6 @@ module.exports = function (grunt) {
                     grunt.verbose.writeln(String(result));
                     grunt.verbose.writeln('Checking out: ' + branch);
                     run('git checkout ' + branch, function (result) {
-                        grunt.log.writeln('A repository from ' + repository + ' has been cloned to: ' + dest);
                         grunt.log.writeln(String(result));
                         done();
                     }, dest);
@@ -205,6 +251,31 @@ module.exports = function (grunt) {
             }
         }
     );
+
+    grunt.registerMultiTask('deploy', function () {
+        var run = runOver(grunt);
+        var options = this.options({});
+        var dest = toParameter(options, 'dest', 'a root folder to clone or pull to');
+        var branch = toParameter(options, 'branch', 'a name of the branch to be cloned or pulled');
+
+        var done = this.async();
+        grunt.verbose.writeln('Checking out: ' + branch);
+        run('git checkout ' + branch, function (result) {
+            grunt.verbose.writeln('Staging.');
+            run('git add -all', function (result) {
+                grunt.verbose.writeln(String(result));
+                grunt.verbose.writeln('Commiting.');
+                run('git commit -a -m', function (result) {
+                    grunt.verbose.writeln(String(result));
+                    grunt.verbose.writeln('Pushing.');
+                    run('git push', function (result) {
+                        grunt.log.writeln(String(result));
+                        done();
+                    }, dest);
+                }, dest);
+            }, dest);
+        }, dest);
+    });
 };
 
 function runOver(grunt) {
@@ -216,7 +287,13 @@ function runOver(grunt) {
             opts: { cwd: cwd }
         }, function doneFunction(error, result, code) {
             if (error) { return grunt.fail.fatal(error); }
-            then(result);
+            else { then(result); }
         });
     }
+}
+
+function toParameter(options, name, description) {
+    var result = options[name];
+    if (!result) { grunt.fail.fatal('The `' + name + '` parameter with ' + description + ' is missing in options.'); }
+    return result;
 }
