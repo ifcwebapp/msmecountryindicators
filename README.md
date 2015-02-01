@@ -1,5 +1,8 @@
 #MSME Country Indicators
 
+This is the source code for generating a static website at: http://ifcwebapp.github.io/msmecountryindicators/
+
+
 ###Installing
 
 
