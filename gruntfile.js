@@ -157,6 +157,11 @@ module.exports = function (grunt) {
         ]
     );
     grunt.registerTask(
+        'dry-run', [
+            'pull-or-clone:for-gh-pages', 'build', 'copy:distributive'
+        ]
+    );
+    grunt.registerTask(
         'build-latest', [
             'pull:for-master', 'build'
         ]
@@ -237,6 +242,7 @@ module.exports = function (grunt) {
                 // pulling
                 var target = toParameter(options, 'pull', 'a target of the `pull` task');
                 grunt.task.run('pull:' + target);
+                done();
             } else {
                 // clonning
                 grunt.verbose.writeln('Cloning a repository from ' + repository + ' to: ' + dest);
