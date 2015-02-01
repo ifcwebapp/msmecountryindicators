@@ -32,7 +32,8 @@ module.exports = function (grunt) {
         less: {
             all: {
                 files: {
-                    "built/styles/main.css": "styles/root.less"
+                    "built/styles/main.css": "styles/root.less",    // for real time development
+                    "assets/styles/main.css": "styles/root.less"    // for build (cannot rely on css generated in real time because it gets deleted as a part of cleaning up the built folder by assemble)
                 },
                 options: {
                     sourceMap: true,
@@ -177,7 +178,7 @@ module.exports = function (grunt) {
         ]
     );
     grunt.registerTask(
-        'publish-lastest', [
+        'publish-latest', [
             'pull:for-master', 'publish'
         ]
     );
@@ -187,7 +188,7 @@ module.exports = function (grunt) {
         ]
     );
 
-    grunt.registerTask('if-remote-changed', function () {
+    grunt.registerMultiTask('if-remote-changed', function () {
         var run = runOver(grunt);
         var options = this.options({});
         var local = toParameter(options, 'local', 'the name of a local branch');
@@ -203,10 +204,11 @@ module.exports = function (grunt) {
                     grunt.log.writeln('Changes detected: ' + changes);
                     grunt.log.writeln('Next running: ' + String(then).split(',').join(', '));
                     grunt.task.run(then);
+                    done();
                 } else {
                     grunt.log.writeln('No changes detected.');
+                    done();
                 }
-                done();
             }, dest);
         }, dest);
     }
