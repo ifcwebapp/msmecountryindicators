@@ -1,0 +1,70 @@
+﻿@import 'mixins';
+
+// SELECT BOXES
+
+.select {
+    select {
+        vertical-align: baseline;
+        font-family: @font-family;
+        font-size: @font-size;
+        padding: 2px 0px;
+    }
+}
+
+// RADIO BUTTONS
+
+.radios {
+    .radio + .radio {
+        margin-left: @listed-items-spacing;
+    }
+}
+
+.radio {
+    input {
+        position: relative;
+        top: 1px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    cursor: pointer;
+}
+
+// CHEKBOXES
+
+.checkbox {
+    cursor: pointer;
+    
+    input {
+        margin-right: 5px;
+        cursor: pointer;
+        position: relative;
+        top: 1px;
+    }
+}
+
+// FIELDS
+
+.field {
+    .mix-clearfix();
+    .field-name {
+        width: 120px;
+        float: left;
+        display: block;
+    }
+    .field-value {
+        float: left;
+        display: block;
+    }
+    line-height: 40px;
+}
+
+.field-value + .field-value {
+    margin-left: @listed-items-spacing;
+}
+
+.fields.as-compact {
+    .field {
+        line-height: 30px;
+    }
+}

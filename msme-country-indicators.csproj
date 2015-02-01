@@ -3389,6 +3389,24 @@
   <ItemGroup>
     <Content Include="styles\variables.less" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\misc.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\only-countries.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\only-country.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\grid.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\forms.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\only-index.less" />
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES3</TypeScriptTarget>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>

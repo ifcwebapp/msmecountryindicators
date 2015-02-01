@@ -8,7 +8,7 @@ html, body {
 body {
     margin: 0 auto;
     width: 1000px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: @font-family;
     background-image: url('../content/wrapper_bg.gif');
     background-repeat: repeat-y;
     background-position: center 0;
@@ -120,7 +120,6 @@ body {
     position: relative;
     z-index: 5;
     padding: 5px 0px;
-    font-size: 1.1em;
 }
 
 #shortPanel {
@@ -129,14 +128,6 @@ body {
 
 td {
     padding: 2px 5px;
-}
-
-.odd {
-    background-color: #C4D4E1;
-}
-
-.even {
-    background-color: #ffffff;
 }
 
 .clear {
@@ -227,8 +218,8 @@ td {
             padding-left: 14px;
             width: 30px;
             background: none;
-
             i {
+                margin-top: 2px;
                 display: inline-block;
                 background: url(../content/home_icon.gif) no-repeat left;
                 background-position-y: 6px;

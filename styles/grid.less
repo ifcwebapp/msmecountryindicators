@@ -1,0 +1,48 @@
+﻿@import 'mixins';
+
+.grid {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+
+    td, th {
+        padding: 2px 5px;
+        vertical-align: top;
+    }
+
+    &.as-inverted-alternating {
+        .grid-row {
+
+            &.as-odd {
+                background-color: #f5f5f5;
+            }
+
+            &.as-even {
+                background-color: inherit;
+            }
+        }
+    }
+}
+
+.grid-row {
+    &.as-subtotal {
+        background-color: @grid-subtotal-row-backgdound;
+
+        td {
+            font-weight: bold;
+        }
+    }
+
+    &.as-odd {
+    }
+
+    &.as-even {
+        background-color: #f5f5f5;
+    }
+}
+
+.grid-cell {
+    &.as-numeric {
+        text-align: right;
+    }
+}
