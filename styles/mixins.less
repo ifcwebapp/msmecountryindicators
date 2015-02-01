@@ -1,0 +1,17 @@
+﻿@import 'variables';
+
+.mix-clearfix() {
+    // AB: http://css-tricks.com/all-about-floats/
+    &:after {
+        clear: both;
+        content: ".";
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+}
+
+.mix-sub-header() {
+    font-size: @font-size-l;
+    color: #444;
+}

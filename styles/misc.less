@@ -1,0 +1,24 @@
+﻿@import 'mixins';
+
+.quieter {
+    font-size: @font-size-s;
+    line-height: @line-height-s;
+    color: #444;
+}
+
+.radios {
+    .radio + .radio {
+        margin-left: 15px;
+    }
+}
+
+.radio {
+    input {
+        position: relative;
+        top: 1px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    cursor: pointer;
+}
+

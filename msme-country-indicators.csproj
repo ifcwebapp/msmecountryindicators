@@ -3377,6 +3377,18 @@
     <Content Include="layouts\right-column.hbs" />
     <Content Include="layouts\right.hbs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\root.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\tabs.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\mixins.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\variables.less" />
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES3</TypeScriptTarget>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>

@@ -1,0 +1,29 @@
+﻿@import 'mixins';
+
+.only-countries {
+
+    .regions {
+    }
+
+    .region {
+    }
+
+    .region .region-header {
+        .mix-sub-header();
+    }
+
+    .columns {
+        .mix-clearfix();
+    }
+
+    .columns .column {
+        float: left;
+        margin-left: 40px;
+    }
+
+    .columns {
+        .column + .column {
+            margin-left: 80px;
+        }
+    }
+}
