@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript">
+    // AB: Helper functions
+    function hasAny(value) { return value != null && value.length; }
+    </script>
     <title>Data</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="content/themes/base/jquery-ui.css" />
+    
 </head>
 <body>
     <div id="wrap">
@@ -39,7 +44,7 @@
     
 
 
-<h2>Explore the data</h2>
+<div class="page-header">Explore the data</div>
 <p>Micro, Small and Medium Enterprise Country Indicators (MSME-CI) provides both the latest global snapshot and historic data back 25 years on the number of MSMEs (disaggregated by firm size) in 155 world economies.</p>
 <p>
     These datasets can help you find the answers to questions such as:
@@ -59,7 +64,7 @@
     <div class="tabs">
         <a href="#" class="tab" data-bind="css: { 'as-active': active() == 'about' }, click: function() { active('about'); }">About the Data</a>
         <a href="#" class="tab" data-bind="css: { 'as-active': active() == 'data' }, click: function() { active('data'); }">Data</a>
-        <a href="#" class="tab" data-bind="css: { 'as-active': active() == 'sources' }, click: function() { active('sources'); }"><span class="as-multiline">MME Country Indicators Data Sources</span></a>
+        <a href="#" class="tab" data-bind="css: { 'as-active': active() == 'sources' }, click: function() { active('sources'); }"><span class="as-multiline">MSME Country Indicators Data Sources</span></a>
         <a href="#" class="tab" data-bind="css: { 'as-active': active() == 'historical-data' }, click: function() { active('historical-data'); }">Historical data</a>
     </div>
     <div class="tab-content" data-bind="
