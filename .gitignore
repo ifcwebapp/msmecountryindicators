@@ -46,6 +46,7 @@ typings
 #byproduct of grunt-ts
 .baseDir.ts
 .tscache
+*.tmp.txt
 
 # javascript from assets/scripts is supposed to be built from typescripts from scripts
 assets/scripts/
