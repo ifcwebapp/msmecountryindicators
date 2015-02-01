@@ -7,11 +7,12 @@ body {
   margin: 0 auto;
   width: 1000px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 79%;
   background-image: url('../content/wrapper_bg.gif');
   background-repeat: repeat-y;
   background-position: center 0;
   background-attachment: fixed;
+  line-height: 20px;
+  font-size: 15px;
 }
 body:before {
   content: "";
@@ -102,19 +103,12 @@ body:before {
   position: relative;
   z-index: 5;
   padding: 5px 0px;
-  font-size: 1.1em;
 }
 #shortPanel {
   cursor: pointer;
 }
 td {
   padding: 2px 5px;
-}
-.odd {
-  background-color: #C4D4E1;
-}
-.even {
-  background-color: #ffffff;
 }
 .clear {
   clear: both;
@@ -150,22 +144,10 @@ td {
 #main-nav {
   margin: 5px 0px;
 }
-#main-nav ul {
+#main-nav {
   background-color: #487192;
-  margin: 0;
-  padding: 0;
-}
-#main-nav ul li:hover {
-  background-color: #A1BCD1;
-}
-#main-nav ul li:hover a {
-  color: #fff;
-  border-top: 2px solid #487192;
-  line-height: 26px;
-  background: none !important;
-}
-#main-nav ul li:first-child a {
-  border-left: 0;
+  margin: 0px;
+  padding: 0px;
 }
 #main-nav li {
   float: left;
@@ -173,27 +155,41 @@ td {
   font-weight: bold;
   list-style: none none;
   padding: 0;
+  /*  AB: TODO: Not used due to not being able to set this flag according to the current page.
+        &.active {
+            background-color: #d9dccf;
+
+            a {
+                color: #555;
+                border-top: 2px solid #4D5146;
+                line-height: 26px;
+                background: none !important;
+            }
+        }
+    */
 }
-#main-nav li.home a {
-  overflow: hidden;
-  text-indent: -12345px;
-  width: 50px;
-  border-left: none;
+#main-nav li:hover {
+  background-color: #A1BCD1;
 }
-#main-nav li.active {
-  background-color: #d9dccf;
-}
-#main-nav li.active a {
-  color: #555;
-  border-top: 2px solid #4D5146;
-  line-height: 26px;
+#main-nav li:hover a {
+  color: #fff;
   background: none !important;
 }
-#main-nav li.menuimage a {
-  overflow: hidden;
-  padding: 0 0 0 1em;
+#main-nav li.home-link a {
+  display: block;
+  height: 34px;
+  padding: 0px;
+  padding-left: 14px;
   width: 30px;
-  background: none !important;
+  background: none;
+}
+#main-nav li.home-link a i {
+  margin-top: 2px;
+  display: inline-block;
+  background: url(../content/home_icon.gif) no-repeat left;
+  background-position-y: 6px;
+  width: 17px;
+  height: 26px;
 }
 #main-nav a {
   background: url(../content/seperator.gif) no-repeat left;
@@ -201,16 +197,8 @@ td {
   display: block;
   line-height: 34px;
   padding: 0 16px 0 17px;
-  text-transform: uppercase;
-  font-size: 12px;
   vertical-align: middle;
   margin-left: -1px;
-}
-.home_icon {
-  background: url(../content/home_icon.gif) no-repeat left;
-  background-position-y: 6px;
-  width: 17px;
-  height: 26px;
 }
 .clearfix:after {
   clear: both;
@@ -308,8 +296,7 @@ a:focus {
 }
 .report_description {
   margin-top: 20px;
-  font-size: 1.2em;
-  line-height: 20px;
+  padding: 20px;
 }
 ul.dash {
   padding-left: 20px;
@@ -373,3 +360,196 @@ ul.none li > span {
   font-size: 0.9em;
   color: grey;
 }
+.tabs {
+  position: relative;
+  border-bottom: solid 1px #cccccc;
+}
+.tabs:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.tabs .tab {
+  text-align: center;
+  position: relative;
+  top: 1px;
+  display: block;
+  float: left;
+  background-color: #eeeeee;
+  margin-left: 20px;
+  border: solid 1px #cccccc;
+  width: 150px;
+  line-height: 60px;
+}
+.tabs .tab span.as-multiline {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+.tabs .tab.as-active {
+  background-color: white;
+  border-bottom: solid 1px white;
+  padding-bottom: 0px;
+}
+.tab-content {
+  padding: 10px;
+}
+.quieter {
+  font-size: 12px;
+  line-height: 16px;
+  color: #444;
+}
+.page-header {
+  padding-top: 10px;
+  font-size: 24px;
+  color: #555;
+  line-height: 60px;
+}
+.page-header-container {
+  padding-top: 20px;
+  line-height: 60px;
+  position: relative;
+}
+.page-header-container:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.page-header-container .page-header {
+  padding-top: 0px;
+}
+.page-header + p {
+  margin-top: 0px;
+}
+.header {
+  padding-top: 20px;
+  line-height: 40px;
+  font-size: 20px;
+}
+.header.as-snugly {
+  margin-bottom: -20px;
+}
+.sub-header {
+  font-size: 16px;
+  color: #444;
+}
+.links .link + .link {
+  margin-left: 15px;
+}
+.link img {
+  margin-left: 5px;
+  border: none;
+  vertical-align: middle;
+}
+.only-countries .region .region-header {
+  font-size: 16px;
+  color: #444;
+}
+.only-countries .columns:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.only-countries .columns .column {
+  float: left;
+  margin-left: 40px;
+}
+.only-countries .columns .column + .column {
+  margin-left: 80px;
+}
+.only-country .grid-cell.as-numeric {
+  width: 80px;
+}
+.grid {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+}
+.grid td,
+.grid th {
+  padding: 2px 5px;
+  vertical-align: top;
+}
+.grid.as-inverted-alternating .grid-row.as-odd {
+  background-color: #f5f5f5;
+}
+.grid.as-inverted-alternating .grid-row.as-even {
+  background-color: inherit;
+}
+.grid-row.as-subtotal {
+  background-color: #c4d4e1;
+}
+.grid-row.as-subtotal td {
+  font-weight: bold;
+}
+.grid-row.as-even {
+  background-color: #f5f5f5;
+}
+.grid-cell.as-numeric {
+  text-align: right;
+}
+.select select {
+  vertical-align: baseline;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  padding: 2px 0px;
+}
+.radios .radio + .radio {
+  margin-left: 15px;
+}
+.radio {
+  cursor: pointer;
+}
+.radio input {
+  position: relative;
+  top: 1px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.checkbox {
+  cursor: pointer;
+}
+.checkbox input {
+  margin-right: 5px;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+}
+.field {
+  line-height: 40px;
+}
+.field:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.field .field-name {
+  width: 120px;
+  float: left;
+  display: block;
+}
+.field .field-value {
+  float: left;
+  display: block;
+}
+.field-value + .field-value {
+  margin-left: 15px;
+}
+.fields.as-compact .field {
+  line-height: 30px;
+}
+.only-index .fields .field-name {
+  width: 100px;
+}
+.only-index .fields .select select {
+  width: 400px;
+}
+/*# sourceMappingURL=main.css.map */
