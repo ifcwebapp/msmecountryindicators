@@ -1,0 +1,31 @@
+﻿
+.links {
+    .link + .link {
+        margin-left: @listed-items-spacing;
+    }
+}
+
+.link {
+    img {
+        margin-left: 5px;
+        border: none;
+        vertical-align: middle;
+    }
+}
+
+.link.as-icon i {
+    vertical-align: middle;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+
+.link.as-icon {
+    &.as-question-mark {
+        i {
+            position: relative;
+            top: -2px;
+            background-image: url(icons/material-design-icons/ic_help_grey600_18dp.png);
+        }
+    }
+}

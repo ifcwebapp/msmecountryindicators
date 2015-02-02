@@ -1,0 +1,17 @@
+{
+  "name": "msmecountryindicators",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ifcwebapp/msmecountryindicators",
+  "authors": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "material-design-icons": "~1.0.1"
+  }
+}

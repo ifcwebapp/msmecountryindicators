@@ -40,6 +40,10 @@ vendor
 temp
 tmp
 
+#bower stuff
+bower_components
+
+
 #use `tsd install` to get typings
 typings
 
