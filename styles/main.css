@@ -437,14 +437,6 @@ ul.none li > span {
   font-size: 16px;
   color: #444;
 }
-.links .link + .link {
-  margin-left: 15px;
-}
-.link img {
-  margin-left: 5px;
-  border: none;
-  vertical-align: middle;
-}
 .only-countries .region .region-header {
   font-size: 16px;
   color: #444;
@@ -551,5 +543,27 @@ ul.none li > span {
 }
 .only-index .fields .select select {
   width: 400px;
+}
+.only-index .field-value .link.as-question-mark {
+  cursor: help;
+}
+.links .link + .link {
+  margin-left: 15px;
+}
+.link img {
+  margin-left: 5px;
+  border: none;
+  vertical-align: middle;
+}
+.link.as-icon i {
+  vertical-align: middle;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+.link.as-icon.as-question-mark i {
+  position: relative;
+  top: -2px;
+  background-image: url(icons/material-design-icons/ic_help_grey600_18dp.png);
 }
 /*# sourceMappingURL=main.css.map */
