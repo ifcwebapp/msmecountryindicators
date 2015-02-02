@@ -32,8 +32,7 @@ module.exports = function (grunt) {
         less: {
             all: {
                 files: {
-                    "built/styles/main.css": "styles/root.less",    // for real time development
-                    "assets/styles/main.css": "styles/root.less"    // for build (cannot rely on css generated in real time because it gets deleted as a part of cleaning up the built folder by assemble)
+                    "built/styles/main.css": "styles/root.less"
                 },
                 options: {
                     sourceMap: true,
@@ -49,6 +48,19 @@ module.exports = function (grunt) {
                     cwd: 'assets/',
                     src: ['**/*'],
                     dest: 'built'
+                }]
+            },
+            'styles': {
+                files: [{
+                    expand: true,
+                    cwd: 'styles',
+                    src: ['**/*', '!**/*.less'],
+                    dest: 'built/styles'
+                }, {
+                    expand: true,
+                    cwd: 'styles',
+                    src: ['**/*', '!**/*.less'],
+                    dest: 'assets/styles'
                 }]
             },
             'distributive': {
@@ -143,7 +155,8 @@ module.exports = function (grunt) {
     );
     grunt.registerTask(
         'less-being-watched', [
-            'less:all'
+            'less:all',
+            'copy:styles'
         ]
     );
     grunt.registerTask(

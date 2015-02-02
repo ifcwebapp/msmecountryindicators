@@ -5,7 +5,7 @@ This is the source code for generating a static website at: http://ifcwebapp.git
 
 ###Installing
 
-
+- Install [Git](https://www.google.com/?query=git#q=git)
 - Install [Node.js](http://nodejs.org/download/)
 - Clone this repository by running `git clone https://github.com/ifcwebapp/msmecountryindicators.git`
 - Go to the root folder of the repository you just cloned
@@ -58,10 +58,13 @@ The watcher will be running as long as the console is open.
 The following are the command you can use for building the website:
 
 - `grunt` or `grunt default` - slow/complete: cleans up, compiles typescript, compiles less, copies the assets, generates html
-- `grunt quick` - quick/dirty: compiles typescript, compiles less, generates html
+- `grunt quick-build` - quick/dirty: compiles typescript, compiles less, generates html
 - `grunt ts` - compiles typescript only
 - `grunt less` - compiles less only
 - `grunt assemble` - generates html only
 - `grunt clean` - deletes everything from the `built` folder
 - `grunt build` - the same sa `grunt default` (see above)
 - `grunt build-if-remote-changed` - checks the remote repository for any changes, pulls them if any, and runs `build`
+- `grunt publish` - builds and deploys generated content
+- `grunt publish-latest` - pulls the latest changes from the remote source code repository and does `publish`
+- `grunt auto-publish-latest` - checks whether the remote source code repository has any changes, if so does `publish-latest`
