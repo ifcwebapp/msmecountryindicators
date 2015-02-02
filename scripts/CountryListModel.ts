@@ -50,13 +50,13 @@ module models {
             var regions1 = na.removeFirstFewAsMappedLikeOrDie(
                 regions,
                 region => region.region,
-                ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa', 'Europe & Central Asia', 'East Asia & Pacific'],
+                ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa'],
                 na.areSame
             );
             var regions2 = na.removeFirstFewAsMappedLikeOrDie(
                 regions,
                 region => region.region,
-                ['Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'],
+                ['Europe & Central Asia', 'East Asia & Pacific', 'Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'],
                 na.areSame
             );
 

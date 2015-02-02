@@ -21,24 +21,60 @@ layout: right-column.hbs
 {{/section}}
 
 <div class="only-countries">
-    <div style="margin-top: 10px; margin-bottom: 20px" class="radios">
+    <div style="margin-top: 10px;" class="radios">
         <label class="radio"><input type="radio" name="sotrby" value="Region" data-bind="checked: sortby " />Group by region</label>
         <label class="radio"><input type="radio" name="sotrby" value="Country" data-bind="checked: sortby " />Group alphabetically</label>
     </div>
-    <div>
-        <div class="columns" data-bind="visible: sortby() == 'Country'">
-            <div class="column">
-                <ul data-bind="foreach: countries1">
-                    <li>
-                        <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
-                        <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                            <img alt="Download country summary data" src="content/excel.png" border="0" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="column">
-                <ul data-bind="foreach: countries2">
+    <p class="quieter">Non-emerging economies are listed under High income OECD and non-OECED sections towards the end of the page.</p>
+    <div data-bind="
+        template: {
+            name: function() {
+                return {
+                    'Country': 'sorted-by-country',
+                    'Region': 'sorted-by-region'
+                }[sortby()];
+            }
+        }
+    ">
+    </div>
+</div>
+
+<script type="text/html" id="sorted-by-country">
+    <div class="columns">
+        <div class="column">
+            <ul data-bind="foreach: countries1">
+                <li>
+                    <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
+                    <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                        <img alt="Download country summary data" src="content/excel.png" border="0" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <ul data-bind="foreach: countries2">
+                <li>
+                    <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
+                    <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                        <img alt="Download country summary data" src="content/excel.png" border="0" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="sorted-by-region">
+    <div class="columns">
+        <div class="column">
+            <div class="regions" data-bind="foreach: regions1">
+                <div class="region">
+                    <span class="region-header" data-bind="text: region"></span>
+                    <!--<a title="Download region summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                        <img alt="Download region summary data" src="content/excel.png" border="0" />
+                    </a>-->
+                </div>
+                <ul data-bind="foreach: countries">
                     <li>
                         <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
                         <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
@@ -48,43 +84,23 @@ layout: right-column.hbs
                 </ul>
             </div>
         </div>
-        <div class="columns" data-bind="visible: sortby() == 'Region'">
-            <div class="column">
-                <div class="regions" data-bind="foreach: regions1">
-                    <div class="region">
-                        <span class="region-header" data-bind="text: region"></span>
-                        <!--<a title="Download region summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+        <div class="column">
+            <div class="regions" data-bind="foreach: regions2">
+                <div class="region">
+                    <span class="region-header" data-bind="text: region"></span>
+                    <!--<a title="Download region summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
                         <img alt="Download region summary data" src="content/excel.png" border="0" />
                     </a>-->
-                    </div>
-                    <ul data-bind="foreach: countries">
-                        <li>
-                            <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
-                            <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                                <img alt="Download country summary data" src="content/excel.png" border="0" />
-                            </a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
-            <div class="column">
-                <div class="regions" data-bind="foreach: regions2">
-                    <div class="region">
-                        <span class="region-header" data-bind="text: region"></span>
-                        <!--<a title="Download region summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                    <img alt="Download region summary data" src="content/excel.png" border="0" />
-                </a>-->
-                    </div>
-                    <ul data-bind="foreach: countries">
-                        <li>
-                            <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
-                            <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                                <img alt="Download country summary data" src="content/excel.png" border="0" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <ul data-bind="foreach: countries">
+                    <li>
+                        <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
+                        <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                            <img alt="Download country summary data" src="content/excel.png" border="0" />
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-</div>
+</script>
