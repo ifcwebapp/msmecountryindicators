@@ -7,3 +7,6 @@
 *.gif binary
 *.png binary
 *.jpeg binary
+
+*.kmz binary
+*.xlsx binary
