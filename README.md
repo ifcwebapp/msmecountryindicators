@@ -5,7 +5,7 @@ This is the source code for generating a static website at: http://ifcwebapp.git
 
 ###Installing
 
-
+- Install [Git](https://www.google.com/?query=git#q=git)
 - Install [Node.js](http://nodejs.org/download/)
 - Clone this repository by running `git clone https://github.com/ifcwebapp/msmecountryindicators.git`
 - Go to the root folder of the repository you just cloned
