@@ -3097,12 +3097,12 @@
     <Content Include="pages\definitions.hbs" />
     <Content Include="pages\index.hbs" />
     <Content Include="pages\media.hbs" />
-    <Content Include="pages\methodology.hbs" />
-    <Content Include="pages\report.hbs" />
+    <Content Include="pages\description.hbs" />
     <Content Include="partials\footer.hbs" />
     <Content Include="partials\header.hbs" />
     <Content Include="partials\right-column.hbs" />
     <Content Include="README.md" />
+    <Content Include="styles\icons\material-design-icons\ic_help_black_18dp.png" />
     <Content Include="styles\main.less" />
     <Content Include="tsd.json" />
   </ItemGroup>
@@ -3110,6 +3110,7 @@
     <TypeScriptCompile Include="scripts\.baseDir.ts" />
     <TypeScriptCompile Include="scripts\AdditionalIndicatorData.ts" />
     <TypeScriptCompile Include="scripts\arrays.ts" />
+    <TypeScriptCompile Include="scripts\core.ts" />
     <TypeScriptCompile Include="scripts\CountriesInfo.ts" />
     <TypeScriptCompile Include="scripts\CountryData.ts" />
     <TypeScriptCompile Include="scripts\CountryIndicatorData.ts" />
@@ -3121,7 +3122,9 @@
     <TypeScriptCompile Include="scripts\knockout-helpers.ts" />
     <TypeScriptCompile Include="scripts\MainModel.ts" />
     <TypeScriptCompile Include="scripts\MapInfoModel.ts" />
+    <TypeScriptCompile Include="scripts\maps.ts" />
     <TypeScriptCompile Include="scripts\sprintf.d.ts" />
+    <TypeScriptCompile Include="scripts\text.ts" />
     <TypeScriptCompile Include="typings\googlemaps\google.maps.d.ts" />
     <TypeScriptCompile Include="typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="typings\jquery.ui.layout\jquery.ui.layout.d.ts" />
@@ -3408,6 +3411,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="styles\only-index.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\links.less" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES3</TypeScriptTarget>

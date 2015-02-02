@@ -1,6 +1,6 @@
 module models {
     export class CountryRegionMap {
-        public static map: any = {
+        public static map: { [regionName: string]: { [countryCode: string]: string; } } = {
             "South Asia": {
                 "AFG": "Afghanistan",
                 "BGD": "Bangladesh",
