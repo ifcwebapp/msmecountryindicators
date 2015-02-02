@@ -25,7 +25,7 @@ module.exports = function (grunt) {
             },
             'all': {
                 sourceMap: false,
-                outDir: 'built/scripts',
+                outDir: 'assets/scripts',
                 src: ['scripts/*.ts', 'typings/*.ts']
             },
         },
