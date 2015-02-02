@@ -3,7 +3,8 @@
 ///<reference path='../typings/jqueryui/jqueryui.d.ts' />
 ///<reference path='../typings/highcharts/highcharts.d.ts' />
 ///<reference path='./sprintf.d.ts' />
-
+///<reference path='arrays.ts' />
+///<reference path='knockout-helpers.ts' />
 module models {
     export class CountryListModel {
         host: string;
@@ -45,6 +46,19 @@ module models {
 
             regions.sort();
             countries.sort(sorting);
+            
+            var regions1 = na.removeFirstFewAsMappedLikeOrDie(
+                regions,
+                region => region.region,
+                ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa', 'Europe & Central Asia', 'East Asia & Pacific'],
+                na.areSame
+            );
+            var regions2 = na.removeFirstFewAsMappedLikeOrDie(
+                regions,
+                region => region.region,
+                ['Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'],
+                na.areSame
+            );
 
             for (var i = 0; i < regions.length; i++) {
                 if (i % 2 == 0) {
@@ -53,6 +67,9 @@ module models {
                     me.regions2.push(regions[i]);
                 };
             }
+
+            koh.appendFew(me.regions1, regions1);
+            koh.appendFew(me.regions2, regions2);
 
             for (var i = 0; i < countries.length; i++) {
                 if (i % 2 == 0) {

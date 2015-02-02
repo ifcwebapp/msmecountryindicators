@@ -3109,6 +3109,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="scripts\.baseDir.ts" />
     <TypeScriptCompile Include="scripts\AdditionalIndicatorData.ts" />
+    <TypeScriptCompile Include="scripts\arrays.ts" />
     <TypeScriptCompile Include="scripts\CountriesInfo.ts" />
     <TypeScriptCompile Include="scripts\CountryData.ts" />
     <TypeScriptCompile Include="scripts\CountryIndicatorData.ts" />
@@ -3117,6 +3118,7 @@
     <TypeScriptCompile Include="scripts\CountryListModel.ts" />
     <TypeScriptCompile Include="scripts\CountryModel.ts" />
     <TypeScriptCompile Include="scripts\CountryRegionMap.ts" />
+    <TypeScriptCompile Include="scripts\knockout-helpers.ts" />
     <TypeScriptCompile Include="scripts\MainModel.ts" />
     <TypeScriptCompile Include="scripts\MapInfoModel.ts" />
     <TypeScriptCompile Include="scripts\sprintf.d.ts" />
