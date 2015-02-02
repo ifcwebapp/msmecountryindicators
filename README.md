@@ -65,3 +65,6 @@ The following are the command you can use for building the website:
 - `grunt clean` - deletes everything from the `built` folder
 - `grunt build` - the same sa `grunt default` (see above)
 - `grunt build-if-remote-changed` - checks the remote repository for any changes, pulls them if any, and runs `build`
+- `grunt publish` - builds and deploys generated content
+- `grunt publish-latest` - pulls the latest changes from the remote source code repository and does `publish`
+- `grunt auto-publish-latest` - checks whether the remote source code repository has any changes, if so does `publish-latest`
