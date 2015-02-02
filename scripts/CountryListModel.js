@@ -28,8 +28,6 @@ var models;
             };
             regions.sort();
             countries.sort(sorting);
-            var regions1 = na.removeFirstFewAsMappedLikeOrDie(regions, function (region) { return region.region; }, ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa'], na.areSame);
-            var regions2 = na.removeFirstFewAsMappedLikeOrDie(regions, function (region) { return region.region; }, ['Europe & Central Asia', 'East Asia & Pacific', 'Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'], na.areSame);
             for (var i = 0; i < regions.length; i++) {
                 if (i % 2 == 0) {
                     me.regions1.push(regions[i]);
@@ -39,8 +37,6 @@ var models;
                 }
                 ;
             }
-            koh.appendFew(me.regions1, regions1);
-            koh.appendFew(me.regions2, regions2);
             for (var i = 0; i < countries.length; i++) {
                 if (i % 2 == 0) {
                     me.countries1.push(countries[i]);
