@@ -15,6 +15,8 @@ module models {
 
         //db: TaffyInterface = TAFFY(models.CountryIndicatorData.rows);
 
+        legend = ko.observable({});
+
         source: KnockoutObservable<number> = ko.observable(0);
         enterprise: KnockoutObservable<string> = ko.observable('MSMEs');
         category: KnockoutObservable<string> = ko.observable('Density');
@@ -378,7 +380,7 @@ module models {
                 clickable: false
             });
             this.ctaLayer.setMap(this.map);
-
+            this.legend(KmlLegendData.rows["Density_Micro_0"]);
             return true;
         }
 

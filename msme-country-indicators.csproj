@@ -3119,6 +3119,7 @@
     <TypeScriptCompile Include="scripts\CountryListModel.ts" />
     <TypeScriptCompile Include="scripts\CountryModel.ts" />
     <TypeScriptCompile Include="scripts\CountryRegionMap.ts" />
+    <TypeScriptCompile Include="scripts\KmlLegendData.ts" />
     <TypeScriptCompile Include="scripts\knockout-helpers.ts" />
     <TypeScriptCompile Include="scripts\MainModel.ts" />
     <TypeScriptCompile Include="scripts\MapInfoModel.ts" />
@@ -3421,4 +3422,7 @@
     <TypeScriptOutDir>built\scripts\</TypeScriptOutDir>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>grunt quick-build</PreBuildEvent>
+  </PropertyGroup>
 </Project>
