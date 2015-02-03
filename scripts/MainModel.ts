@@ -44,16 +44,16 @@ module models {
 
 
         constructor(host: string) {
-            var _this = this;
+            var me = this;
 
-            _this.host = host;
-            var enterpriseParam = _this.getUrlParameter('enterprise');
+            me.host = host;
+            var enterpriseParam = me.getUrlParameter('enterprise');
             if (enterpriseParam != "null") {
-                _this.enterprise(enterpriseParam);
+                me.enterprise(enterpriseParam);
             }
-            var sourceParam = _this.getUrlParameter('source');
+            var sourceParam = me.getUrlParameter('source');
             if (sourceParam != "null") {
-                _this.source(parseInt(sourceParam));
+                me.source(parseInt(sourceParam));
             }
 
             var mapOptions: google.maps.MapOptions = {
@@ -68,18 +68,18 @@ module models {
                 minZoom: 1
             }
 
-            _this.map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+            me.map = new google.maps.Map($('#map-canvas')[0], mapOptions);
 
-            google.maps.event.addListener(_this.map, 'zoom_changed', function () {
-                _this.zoomChanged(_this.map);
+            google.maps.event.addListener(me.map, 'zoom_changed', function () {
+                me.zoomChanged(me.map);
             });
 
-            _this.getKml();
-            _this.initiateBubbles(_this);
-            _this.showBubbles(this.map.getZoom(), this.map);
+            me.getKml();
+            me.initiateBubbles(me);
+            me.showBubbles(this.map.getZoom(), this.map, this.category());
 
             $('#scrollablePart').height($(window).height() - 110);
-            _this.summaryDialog = $('#summary').dialog({
+            me.summaryDialog = $('#summary').dialog({
                 autoOpen: false,
                 modal: true,
                 height: $(window).height() - 50,
@@ -87,16 +87,18 @@ module models {
                 dialogClass: 'noTitleDialog'
             });
 
-            _this.shortPanelText = ko.computed(() => {
-                var b = _this.bubbleIndicatorValue();
-                var c = _this.chartIndicatorValue();
-                var k = _this.kmlValue();
-                return '<strong>Layer:</strong> ' + $('#colorIndicator option:selected').text() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Indicator:</strong>' + (!_this.isChartSelectorVisible() ? $('#bubbleIndicator option:selected').text() : $('#chartIndicator option:selected').text());
+            me.shortPanelText = ko.computed(() => {
+                var b = me.bubbleIndicatorValue();
+                var c = me.chartIndicatorValue();
+                var k = me.kmlValue();
+                return '<strong>Layer:</strong> ' + $('#colorIndicator option:selected').text() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Indicator:</strong>' + (!me.isChartSelectorVisible() ? $('#bubbleIndicator option:selected').text() : $('#chartIndicator option:selected').text());
             });
 
-            _this.link = ko.computed(() => {
+            me.link = ko.computed(() => {
                 return "";//_this.host + '?country1=' + encodeURIComponent(_this.selectedValues()[0]().Name) + '&country2=' + encodeURIComponent(_this.selectedValues()[1]().Name) + '&country3=' + encodeURIComponent( _this.selectedValues()[2]().Name);
             });
+
+            this.category.subscribe(category => this.updateAllBubblesTitles(category));
         }
 
         private getUrlParameter(name) {
@@ -134,10 +136,7 @@ module models {
 
         showSelectors() {
             this.isChartSelectorVisible(this.indicatorStyleValue() == "chart");
-            
-            //if (this.map.getZoom() > 3) {
-            this.showBubbles(this.map.getZoom(), this.map);
-            //}
+            this.showBubbles(this.map.getZoom(), this.map, this.category());
         }
 
         showLegend() {
@@ -150,9 +149,9 @@ module models {
             data.isExpanded(!data.isExpanded());
         }
 
-        showBubbles(zoom: number, map: google.maps.Map) {
+        showBubbles(zoom: number, map: google.maps.Map, category: string) {
 
-            var _this = this;
+            var me = this;
 
             var isCountry = true;
             var id = this.bubbleIndicatorValue();
@@ -194,14 +193,13 @@ module models {
             }
 
 
-            for (var i = 0; i < this.bubbles.length; i++) {
-                var info = models.CountryIndicatorData.rows[i];
-                var bubble = this.bubbles[i];
-                this.updateBubbleTitle(_this, info, bubble);
+            this.useBubbles((bubble, info, i) => {
+                
+                this.updateBubbleTitle(me, info, bubble, category);
 
                 if (isBubble) {
-                    if (bubble.data.Value[id] != undefined && bubble.data.Value[id][_this.source() + _this.enterprise()] != undefined) {
-                        var record = bubble.data.Value[id][_this.source() + _this.enterprise()];
+                    if (bubble.data.Value[id] != undefined && bubble.data.Value[id][me.source() + me.enterprise()] != undefined) {
+                        var record = bubble.data.Value[id][me.source() + me.enterprise()];
                         bubble.setIcon(
                             {
                                 path: google.maps.SymbolPath.CIRCLE,
@@ -221,7 +219,7 @@ module models {
                     for (var j = 0; j < betta.categories.length; j++) {
                         var c = betta.categories[j];
                         try {
-                            var d = bubble.data.Value[c][_this.source() + _this.enterprise()];
+                            var d = bubble.data.Value[c][me.source() + me.enterprise()];
                             categoryData[j] = { category: c, year: d[3], value: d[13] };
                         } catch (e) {
                             categoryData[j] = { category: c, year: 0, value: 0 };
@@ -234,7 +232,7 @@ module models {
                     if (categoryData.filter((v: any, n: number) => v.year != 0).length > 0) {
                         var dims = { width: 0, height: 0 };
                         try {
-                            dims = CountryIndicatorDataDimensions.rows[_this.source() + _this.enterprise()][bubble.data.Key]["sectors"];
+                            dims = CountryIndicatorDataDimensions.rows[me.source() + me.enterprise()][bubble.data.Key]["sectors"];
                         } catch (e) {
 
                         }
@@ -242,7 +240,7 @@ module models {
                         bubble.setIcon(
                             {
                                 //url: this.host + "images/" + chartData + "/" + bubble.data[1] + ".png",
-                                url: this.host + "images/" + _this.source() + _this.enterprise() + "/" + bubble.data.Key + ".png",
+                                url: this.host + "images/" + me.source() + me.enterprise() + "/" + bubble.data.Key + ".png",
                                 //scaledSize: new google.maps.Size(bubble.data[betta.index - 1] / 4 * scaledZoom, bubble.data[betta.index] / 4 * scaledZoom)
                                 scaledSize: new google.maps.Size(dims.width / 4 * scaledZoom, dims.height / 4 * scaledZoom)
                             }
@@ -263,11 +261,11 @@ module models {
                     }
 
                 }
-            }
+            });
 
         }
 
-        updateBubbleTitle(main: MainModel, info: any, bubble: google.maps.Marker) {
+        updateBubbleTitle(main: MainModel, info: any, bubble: google.maps.Marker, category: string) {
             var id = main.bubbleIndicatorValue();
             var selectedText = $('#bubbleIndicator option:selected').text().trim();
             var selectedTextMap = $('#category option:selected').text().trim();
@@ -277,7 +275,7 @@ module models {
                 if (selectedText != selectedTextMap) {
                     var r = { val: null, year: null };
                     var postfix = "";
-                    switch (main.category()) {
+                    switch (category) {
                         case "PopulationTotal":
                             r = main.getFirstRecord(record, info.Value, 5, 3);
                             break;
@@ -288,26 +286,26 @@ module models {
                             r = main.getFirstRecord(record, info.Value, 7, 3);
                             break;
                         case "Size Breakdown":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             postfix = "%";
                             break;
                         case "Density":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Employment":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Vallue added":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Number":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Assets":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Sales":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "EnterpriseSurveysChecking":
                             r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
@@ -334,6 +332,22 @@ module models {
             }
         }
 
+        private updateAllBubblesTitles(category: string) : void {
+            this.useBubbles((bubble, info) => {
+                this.updateBubbleTitle(this, info, bubble, category);
+            })
+        }
+
+        private useBubbles(use: (bubble: any, info: any, index: number) => void) : void {
+            for (var index = 0, length = this.bubbles.length; index < length; index++) {
+                use(
+                    this.bubbles[index], 
+                    models.CountryIndicatorData.rows[index],
+                    index
+                );
+            }
+        }
+
         hideBubbles() {
             for (var i = 0; i < this.bubbles.length; i++) {
                 var bubble = this.bubbles[i];
@@ -344,8 +358,7 @@ module models {
         zoomChanged(map: google.maps.Map) {
             var zoomLevel = map.getZoom();
             this.hideBubbles();
-            this.showBubbles(zoomLevel, map);
-
+            this.showBubbles(zoomLevel, map, this.category());
         }
 
         refreshData() {
@@ -359,17 +372,18 @@ module models {
                 this.ctaLayer.setMap(null);
             }
             var kmlName = "";
-            if (this.category() == "Density" ||
-                this.category() == "Employment" ||
-                this.category() == "Vallue added" ||
-                this.category() == "Size Breakdown" ||
-                this.category() == "Firm Size by Number" ||
-                this.category() == "Firm Size by Assets" ||
-                this.category() == "Firm Size by Sales") {
-                kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() /* + "_" + this.year()*/ + ".kmz?v=1";
+            var category = this.category();
+            if (category == "Density" ||
+                category == "Employment" ||
+                category == "Vallue added" ||
+                category == "Size Breakdown" ||
+                category == "Firm Size by Number" ||
+                category == "Firm Size by Assets" ||
+                category == "Firm Size by Sales") {
+                kmlName = category + "_" + this.enterprise() + "_" + this.source() /* + "_" + this.year()*/ + ".kmz?v=1";
                 kmlName = kmlName.replace(/\s/g, '_');
             } else {
-                kmlName = this.category() + ".kmz";
+                kmlName = category + ".kmz";
             }
             this.ctaLayer = new google.maps.KmlLayer(this.host + "kml/" + kmlName, {
                 preserveViewport: true,
@@ -446,7 +460,7 @@ module models {
 
                         google.maps.event.addListener(bubble, 'click', function () {
                             var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
-                            openUrlInNewWindow(countryPageUrl);
+                            navigateToUrl(countryPageUrl);
                         });
 
 
@@ -463,6 +477,9 @@ module models {
 
         }
 
+    }
+    function navigateToUrl(url: string): void {
+        window.location.href = url;
     }
 
     function openUrlInNewWindow(url: string): void {
