@@ -2,6 +2,7 @@ var models;
 (function (models) {
     var MainModel = (function () {
         function MainModel(host) {
+            var _this = this;
             this.bubbles = [];
             this.windows = [];
             this.ctaLayer = null;
@@ -21,15 +22,15 @@ var models;
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.linkText = ko.observable('Show link to this page');
             this.isLinkVisible = ko.observable(false);
-            var _this = this;
-            _this.host = host;
-            var enterpriseParam = _this.getUrlParameter('enterprise');
+            var me = this;
+            me.host = host;
+            var enterpriseParam = me.getUrlParameter('enterprise');
             if (enterpriseParam != "null") {
-                _this.enterprise(enterpriseParam);
+                me.enterprise(enterpriseParam);
             }
-            var sourceParam = _this.getUrlParameter('source');
+            var sourceParam = me.getUrlParameter('source');
             if (sourceParam != "null") {
-                _this.source(parseInt(sourceParam));
+                me.source(parseInt(sourceParam));
             }
             var mapOptions = {
                 zoom: 3,
@@ -42,30 +43,31 @@ var models;
                 scrollwheel: false,
                 minZoom: 1
             };
-            _this.map = new google.maps.Map($('#map-canvas')[0], mapOptions);
-            google.maps.event.addListener(_this.map, 'zoom_changed', function () {
-                _this.zoomChanged(_this.map);
+            me.map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+            google.maps.event.addListener(me.map, 'zoom_changed', function () {
+                me.zoomChanged(me.map);
             });
-            _this.getKml();
-            _this.initiateBubbles(_this);
-            _this.showBubbles(this.map.getZoom(), this.map);
+            me.getKml();
+            me.initiateBubbles(me);
+            me.showBubbles(this.map.getZoom(), this.map, this.category());
             $('#scrollablePart').height($(window).height() - 110);
-            _this.summaryDialog = $('#summary').dialog({
+            me.summaryDialog = $('#summary').dialog({
                 autoOpen: false,
                 modal: true,
                 height: $(window).height() - 50,
                 width: 1000,
                 dialogClass: 'noTitleDialog'
             });
-            _this.shortPanelText = ko.computed(function () {
-                var b = _this.bubbleIndicatorValue();
-                var c = _this.chartIndicatorValue();
-                var k = _this.kmlValue();
-                return '<strong>Layer:</strong> ' + $('#colorIndicator option:selected').text() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Indicator:</strong>' + (!_this.isChartSelectorVisible() ? $('#bubbleIndicator option:selected').text() : $('#chartIndicator option:selected').text());
+            me.shortPanelText = ko.computed(function () {
+                var b = me.bubbleIndicatorValue();
+                var c = me.chartIndicatorValue();
+                var k = me.kmlValue();
+                return '<strong>Layer:</strong> ' + $('#colorIndicator option:selected').text() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Indicator:</strong>' + (!me.isChartSelectorVisible() ? $('#bubbleIndicator option:selected').text() : $('#chartIndicator option:selected').text());
             });
-            _this.link = ko.computed(function () {
+            me.link = ko.computed(function () {
                 return "";
             });
+            this.category.subscribe(function (category) { return _this.updateAllBubblesTitles(category); });
         }
         MainModel.prototype.getUrlParameter = function (name) {
             return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]);
@@ -89,7 +91,7 @@ var models;
         };
         MainModel.prototype.showSelectors = function () {
             this.isChartSelectorVisible(this.indicatorStyleValue() == "chart");
-            this.showBubbles(this.map.getZoom(), this.map);
+            this.showBubbles(this.map.getZoom(), this.map, this.category());
         };
         MainModel.prototype.showLegend = function () {
             $('div[id*="legend"]').hide();
@@ -99,8 +101,9 @@ var models;
         MainModel.prototype.expandMenu = function (data) {
             data.isExpanded(!data.isExpanded());
         };
-        MainModel.prototype.showBubbles = function (zoom, map) {
+        MainModel.prototype.showBubbles = function (zoom, map, category) {
             var _this = this;
+            var me = this;
             var isCountry = true;
             var id = this.bubbleIndicatorValue();
             var isBubble = (this.indicatorStyleValue() == "bubble");
@@ -137,13 +140,11 @@ var models;
                         break;
                 }
             }
-            for (var i = 0; i < this.bubbles.length; i++) {
-                var info = models.CountryIndicatorData.rows[i];
-                var bubble = this.bubbles[i];
-                this.updateBubbleTitle(_this, info, bubble);
+            this.useBubbles(function (bubble, info, i) {
+                _this.updateBubbleTitle(me, info, bubble, category);
                 if (isBubble) {
-                    if (bubble.data.Value[id] != undefined && bubble.data.Value[id][_this.source() + _this.enterprise()] != undefined) {
-                        var record = bubble.data.Value[id][_this.source() + _this.enterprise()];
+                    if (bubble.data.Value[id] != undefined && bubble.data.Value[id][me.source() + me.enterprise()] != undefined) {
+                        var record = bubble.data.Value[id][me.source() + me.enterprise()];
                         bubble.setIcon({
                             path: google.maps.SymbolPath.CIRCLE,
                             fillOpacity: 1,
@@ -162,7 +163,7 @@ var models;
                     for (var j = 0; j < betta.categories.length; j++) {
                         var c = betta.categories[j];
                         try {
-                            var d = bubble.data.Value[c][_this.source() + _this.enterprise()];
+                            var d = bubble.data.Value[c][me.source() + me.enterprise()];
                             categoryData[j] = { category: c, year: d[3], value: d[13] };
                         }
                         catch (e) {
@@ -174,12 +175,12 @@ var models;
                     if (categoryData.filter(function (v, n) { return v.year != 0; }).length > 0) {
                         var dims = { width: 0, height: 0 };
                         try {
-                            dims = models.CountryIndicatorDataDimensions.rows[_this.source() + _this.enterprise()][bubble.data.Key]["sectors"];
+                            dims = models.CountryIndicatorDataDimensions.rows[me.source() + me.enterprise()][bubble.data.Key]["sectors"];
                         }
                         catch (e) {
                         }
                         bubble.setIcon({
-                            url: this.host + "images/" + _this.source() + _this.enterprise() + "/" + bubble.data.Key + ".png",
+                            url: _this.host + "images/" + me.source() + me.enterprise() + "/" + bubble.data.Key + ".png",
                             scaledSize: new google.maps.Size(dims.width / 4 * scaledZoom, dims.height / 4 * scaledZoom)
                         });
                         var title = '';
@@ -193,9 +194,9 @@ var models;
                         bubble.setMap(null);
                     }
                 }
-            }
+            });
         };
-        MainModel.prototype.updateBubbleTitle = function (main, info, bubble) {
+        MainModel.prototype.updateBubbleTitle = function (main, info, bubble, category) {
             var id = main.bubbleIndicatorValue();
             var selectedText = $('#bubbleIndicator option:selected').text().trim();
             var selectedTextMap = $('#category option:selected').text().trim();
@@ -205,7 +206,7 @@ var models;
                 if (selectedText != selectedTextMap) {
                     var r = { val: null, year: null };
                     var postfix = "";
-                    switch (main.category()) {
+                    switch (category) {
                         case "PopulationTotal":
                             r = main.getFirstRecord(record, info.Value, 5, 3);
                             break;
@@ -216,26 +217,26 @@ var models;
                             r = main.getFirstRecord(record, info.Value, 7, 3);
                             break;
                         case "Size Breakdown":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             postfix = "%";
                             break;
                         case "Density":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Employment":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Vallue added":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Number":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Assets":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "Firm Size by Sales":
-                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            r = main.getRecord(main, info.Value, category, 13, 3);
                             break;
                         case "EnterpriseSurveysChecking":
                             r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
@@ -260,6 +261,17 @@ var models;
                 bubble.setTitle(bubbleTitle);
             }
         };
+        MainModel.prototype.updateAllBubblesTitles = function (category) {
+            var _this = this;
+            this.useBubbles(function (bubble, info) {
+                _this.updateBubbleTitle(_this, info, bubble, category);
+            });
+        };
+        MainModel.prototype.useBubbles = function (use) {
+            for (var index = 0, length = this.bubbles.length; index < length; index++) {
+                use(this.bubbles[index], models.CountryIndicatorData.rows[index], index);
+            }
+        };
         MainModel.prototype.hideBubbles = function () {
             for (var i = 0; i < this.bubbles.length; i++) {
                 var bubble = this.bubbles[i];
@@ -269,7 +281,7 @@ var models;
         MainModel.prototype.zoomChanged = function (map) {
             var zoomLevel = map.getZoom();
             this.hideBubbles();
-            this.showBubbles(zoomLevel, map);
+            this.showBubbles(zoomLevel, map, this.category());
         };
         MainModel.prototype.refreshData = function () {
             this.getKml();
@@ -281,12 +293,13 @@ var models;
                 this.ctaLayer.setMap(null);
             }
             var kmlName = "";
-            if (this.category() == "Density" || this.category() == "Employment" || this.category() == "Vallue added" || this.category() == "Size Breakdown" || this.category() == "Firm Size by Number" || this.category() == "Firm Size by Assets" || this.category() == "Firm Size by Sales") {
-                kmlName = this.category() + "_" + this.enterprise() + "_" + this.source() + ".kmz?v=1";
+            var category = this.category();
+            if (category == "Density" || category == "Employment" || category == "Vallue added" || category == "Size Breakdown" || category == "Firm Size by Number" || category == "Firm Size by Assets" || category == "Firm Size by Sales") {
+                kmlName = category + "_" + this.enterprise() + "_" + this.source() + ".kmz?v=1";
                 kmlName = kmlName.replace(/\s/g, '_');
             }
             else {
-                kmlName = this.category() + ".kmz";
+                kmlName = category + ".kmz";
             }
             this.ctaLayer = new google.maps.KmlLayer(this.host + "kml/" + kmlName, {
                 preserveViewport: true,
@@ -344,7 +357,7 @@ var models;
                         });
                         google.maps.event.addListener(bubble, 'click', function () {
                             var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
-                            openUrlInNewWindow(countryPageUrl);
+                            navigateToUrl(countryPageUrl);
                         });
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
@@ -355,6 +368,9 @@ var models;
         return MainModel;
     })();
     models.MainModel = MainModel;
+    function navigateToUrl(url) {
+        window.location.href = url;
+    }
     function openUrlInNewWindow(url) {
         var a = document.createElement('a');
         a.href = url;
