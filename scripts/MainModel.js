@@ -138,7 +138,9 @@ var models;
                 }
             }
             for (var i = 0; i < this.bubbles.length; i++) {
+                var info = models.CountryIndicatorData.rows[i];
                 var bubble = this.bubbles[i];
+                this.updateBubbleTitle(_this, info, bubble);
                 if (isBubble) {
                     if (bubble.data.Value[id] != undefined && bubble.data.Value[id][_this.source() + _this.enterprise()] != undefined) {
                         var record = bubble.data.Value[id][_this.source() + _this.enterprise()];
@@ -191,6 +193,71 @@ var models;
                         bubble.setMap(null);
                     }
                 }
+            }
+        };
+        MainModel.prototype.updateBubbleTitle = function (main, info, bubble) {
+            var id = main.bubbleIndicatorValue();
+            var selectedText = $('#bubbleIndicator option:selected').text().trim();
+            var selectedTextMap = $('#category option:selected').text().trim();
+            if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
+                var record = info.Value[id][main.source() + main.enterprise()];
+                var bubbleTitle = selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
+                if (selectedText != selectedTextMap) {
+                    var r = { val: null, year: null };
+                    var postfix = "";
+                    switch (main.category()) {
+                        case "PopulationTotal":
+                            r = main.getFirstRecord(record, info.Value, 5, 3);
+                            break;
+                        case "GNI":
+                            r = main.getFirstRecord(record, info.Value, 4, 3);
+                            break;
+                        case "IncomeGroup":
+                            r = main.getFirstRecord(record, info.Value, 7, 3);
+                            break;
+                        case "Size Breakdown":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            postfix = "%";
+                            break;
+                        case "Density":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "Employment":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "Vallue added":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "Firm Size by Number":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "Firm Size by Assets":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "Firm Size by Sales":
+                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
+                            break;
+                        case "EnterpriseSurveysChecking":
+                            r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
+                            break;
+                        case "EnterpriseSurveysCredit":
+                            r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
+                            break;
+                        case "StartingBusinessRank":
+                            r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
+                            break;
+                        case "DomesticCreditToPrivateSector":
+                            r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
+                            break;
+                        case "LaborForceTotal":
+                            r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
+                            break;
+                    }
+                    if (r != null && r.val != null) {
+                        bubbleTitle += ", " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
+                    }
+                }
+                bubble.setTitle(bubbleTitle);
             }
         };
         MainModel.prototype.hideBubbles = function () {
@@ -276,83 +343,8 @@ var models;
                             content: ''
                         });
                         google.maps.event.addListener(bubble, 'click', function () {
-                            for (var j = 0; j < main.windows.length; j++) {
-                                main.windows[j].close();
-                            }
-                            $.get('mapInfo.html', function (data) {
-                                var node = $("#temp");
-                                node.html(data);
-                                var infoData = $("#infoData");
-                                ko.applyBindings(main.getCountryInfoModel(info, main), infoData[0]);
-                                var html = node.html();
-                                main.windows[i].setContent(html);
-                                main.windows[i].open(main.map, main.bubbles[i]);
-                            });
-                        });
-                        google.maps.event.addListener(bubble, 'mouseover', function () {
-                            var id = main.bubbleIndicatorValue();
-                            var selectedText = $('#bubbleIndicator option:selected').text().trim();
-                            var selectedTextMap = $('#category option:selected').text().trim();
-                            if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
-                                var record = info.Value[id][main.source() + main.enterprise()];
-                                var bubbleTitle = selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
-                                if (selectedText != selectedTextMap) {
-                                    var r = { val: null, year: null };
-                                    var postfix = "";
-                                    switch (main.category()) {
-                                        case "PopulationTotal":
-                                            r = main.getFirstRecord(record, info.Value, 5, 3);
-                                            break;
-                                        case "GNI":
-                                            r = main.getFirstRecord(record, info.Value, 4, 3);
-                                            break;
-                                        case "IncomeGroup":
-                                            r = main.getFirstRecord(record, info.Value, 7, 3);
-                                            break;
-                                        case "Size Breakdown":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            postfix = "%";
-                                            break;
-                                        case "Density":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "Employment":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "Vallue added":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "Firm Size by Number":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "Firm Size by Assets":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "Firm Size by Sales":
-                                            r = main.getRecord(main, info.Value, main.category(), 13, 3);
-                                            break;
-                                        case "EnterpriseSurveysChecking":
-                                            r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
-                                            break;
-                                        case "EnterpriseSurveysCredit":
-                                            r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
-                                            break;
-                                        case "StartingBusinessRank":
-                                            r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
-                                            break;
-                                        case "DomesticCreditToPrivateSector":
-                                            r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
-                                            break;
-                                        case "LaborForceTotal":
-                                            r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
-                                            break;
-                                    }
-                                    if (r != null && r.val != null) {
-                                        bubbleTitle += ", " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
-                                    }
-                                }
-                                bubble.setTitle(bubbleTitle);
-                            }
+                            var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
+                            openUrlInNewWindow(countryPageUrl);
                         });
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
@@ -363,5 +355,13 @@ var models;
         return MainModel;
     })();
     models.MainModel = MainModel;
+    function openUrlInNewWindow(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
 })(models || (models = {}));
 //# sourceMappingURL=MainModel.js.map
