@@ -550,6 +550,32 @@ ul.none li > span {
 .only-index .field-value .link.as-question-mark {
   cursor: help;
 }
+.only-index .field-value.as-map-layer svg {
+  display: inline;
+  vertical-align: middle;
+}
+.only-index .field-value.as-map-layer svg rect:nth-child(1) {
+  fill: #246F4D;
+}
+.only-index .field-value.as-map-layer svg rect:nth-child(2) {
+  fill: #40965C;
+}
+.only-index .field-value.as-map-layer svg rect:nth-child(3) {
+  fill: #58B06F;
+}
+.only-index .field-value.as-map-layer svg rect:nth-child(4) {
+  fill: #82C483;
+}
+.only-index .field-value.as-map-layer svg rect:nth-child(5) {
+  fill: #A8D5A5;
+}
+.only-index .field-value.as-indicator svg {
+  display: inline;
+  vertical-align: middle;
+}
+.only-index .field-value.as-indicator svg circle {
+  fill: #E6550D;
+}
 .links .link + .link {
   margin-left: 15px;
 }
