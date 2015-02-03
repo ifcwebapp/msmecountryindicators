@@ -37,6 +37,8 @@ module models {
         isLinkVisible: KnockoutObservable<boolean> = ko.observable(false);
         link: KnockoutComputed<string>;
 
+        legend = ko.observable({});
+
         accChart: any;
         srvChart: any;
         srcChart: any;
@@ -392,7 +394,9 @@ module models {
                 clickable: false
             });
             this.ctaLayer.setMap(this.map);
-
+            var legendId = kmlName.replace(/.kmz\?v=1/g, '').replace(/.kmz/g, '');
+            debugger;
+            this.legend(KmlLegendData.rows[legendId]);
             return true;
         }
 
