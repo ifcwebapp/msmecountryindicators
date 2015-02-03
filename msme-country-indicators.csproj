@@ -3103,6 +3103,7 @@
     <Content Include="partials\right-column.hbs" />
     <Content Include="README.md" />
     <Content Include="styles\icons\material-design-icons\ic_help_black_18dp.png" />
+    <Content Include="styles\icons\material-design-icons\ic_help_grey600_18dp.png" />
     <Content Include="styles\main.less" />
     <Content Include="tsd.json" />
   </ItemGroup>

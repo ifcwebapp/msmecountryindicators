@@ -23,8 +23,7 @@ module models {
         host: string;
         countries1: KnockoutObservableArray<any> = ko.observableArray([]);
         countries2: KnockoutObservableArray<any> = ko.observableArray([]);
-        regions1: KnockoutObservableArray<any> = ko.observableArray([]);
-        regions2: KnockoutObservableArray<any> = ko.observableArray([]);
+        regions: KnockoutObservableArray<any[][]> = ko.observableArray(<any[][][]>[]); // regions x columns x blocks
         sortby = ko.observable('Region');
 
         constructor(host: string) {
@@ -79,19 +78,37 @@ module models {
                     : ({ count: draft.count + group.countries.length, current: na.append(draft.current, group), final: draft.final })
             ), draft => na.append(draft.final, draft.current));
 
-            koh.appendFew(me.regions1, na.removeFirstFewAsMappedLikeUnsafe(
-                regions,
-                region => region.region,
-                ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa'],
-                na.areSame
-            ));
+            // top 2 columns of regions
+            me.regions.push([
+                na.removeFirstFewAsMappedLikeUnsafe(
+                    regions,
+                    region => region.region,
+                    ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa', 'East Asia & Pacific'],
+                    na.areSame
+                ),
+                na.removeFirstFewAsMappedLikeUnsafe(
+                    regions,
+                    region => region.region,
+                    ['Europe & Central Asia', 'Latin America & Caribbean'],
+                    na.areSame
+                )
+            ]);
 
-            koh.appendFew(me.regions2, na.removeFirstFewAsMappedLikeUnsafe(
-                regions,
-                region => region.region,
-                ['Europe & Central Asia', 'East Asia & Pacific', 'Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'],
-                na.areSame
-            ));
+            // bottom 2 columns of regions
+            me.regions.push([
+                na.removeFirstFewAsMappedLikeUnsafe(
+                    regions,
+                    region => region.region,
+                    ['High income: OECD'],
+                    na.areSame
+                ),
+                na.removeFirstFewAsMappedLikeUnsafe(
+                    regions,
+                    region => region.region,
+                    ['High income: non-OECD'],
+                    na.areSame
+                )
+            ]);
 
             koh.appendFew(me.countries1, choppedGrouppedCountries[0]);
             koh.appendFew(me.countries2, choppedGrouppedCountries[1]);

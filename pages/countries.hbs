@@ -8,9 +8,6 @@ layout: right-column.hbs
 <script src="libs/knockout-3.2.0.js"></script>
 <script src="libs/highcharts.js"></script>
 <script src="libs/sprintf.js"></script>
-<!--<script src="scripts/CountryIndicatorDataDimensions.js" type="text/javascript"></script>
-<script src="scripts/CountryIndicatorData.js" type="text/javascript"></script>
-<script src="scripts/CountriesInfo.js" type="text/javascript"></script>-->
 <script src="scripts/CountryRegionMap.js" type="text/javascript"></script>
 <script src="scripts/CountryListModel.js" type="text/javascript"></script>
 <script src="scripts/core.js" type="text/javascript"></script>
@@ -22,7 +19,6 @@ layout: right-column.hbs
     ko.applyBindings(new models.CountryListModel('http://ifcwebapp.github.io/msmecountryindicators/'));
 </script>
 {{/section}}
-
 <div class="only-countries">
     <div style="margin-top: 10px;" class="radios">
         <label class="radio"><input type="radio" name="sotrby" value="Region" data-bind="checked: sortby " />Group by region</label>
@@ -76,35 +72,24 @@ layout: right-column.hbs
     </div>
 </script>
 <script type="text/html" id="sorted-by-region">
-    <div class="columns">
-        <div class="column">
-            <div class="regions" data-bind="foreach: regions1">
-                <div class="region">
-                    <span class="region-header" data-bind="text: region"></span>
+    <div class="blocks" data-bind="foreach: regions">
+        <div class="block">
+            <div class="columns" data-bind="foreach: $data">
+                <div class="column">
+                    <div class="regions" data-bind="foreach: $data">
+                        <div class="region">
+                            <span class="region-header" data-bind="text: region"></span>
+                        </div>
+                        <ul data-bind="foreach: countries">
+                            <li>
+                                <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
+                                <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
+                                    <img alt="Download country summary data" src="content/excel.png" border="0" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul data-bind="foreach: countries">
-                    <li>
-                        <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
-                        <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                            <img alt="Download country summary data" src="content/excel.png" border="0" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="column">
-            <div class="regions" data-bind="foreach: regions2">
-                <div class="region">
-                    <span class="region-header" data-bind="text: region"></span>
-                </div>
-                <ul data-bind="foreach: countries">
-                    <li>
-                        <a href="#" data-bind="text: name, attr: {href: 'country.html?country=' + code}"></a>
-                        <a title="Download country summary data" style="margin-left:10px" href="#" data-bind="attr: {href: url}">
-                            <img alt="Download country summary data" src="content/excel.png" border="0" />
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
