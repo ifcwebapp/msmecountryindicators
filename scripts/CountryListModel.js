@@ -4,8 +4,7 @@ var models;
         function CountryListModel(host) {
             this.countries1 = ko.observableArray([]);
             this.countries2 = ko.observableArray([]);
-            this.regions1 = ko.observableArray([]);
-            this.regions2 = ko.observableArray([]);
+            this.regions = ko.observableArray([]);
             this.sortby = ko.observable('Region');
             var me = this;
             me.host = host;
@@ -31,8 +30,14 @@ var models;
             }); });
             var totalCountriesCount = na.fold(grouppedCountries, 0, function (group, result) { return group.countries.length + result; });
             var choppedGrouppedCountries = nc.map(na.fold(grouppedCountries, { count: 0, current: [], final: [] }, function (group, draft) { return draft.count + group.countries.length > totalCountriesCount / 1.8 ? ({ count: group.countries.length, current: [group], final: na.append(draft.final, draft.current) }) : ({ count: draft.count + group.countries.length, current: na.append(draft.current, group), final: draft.final }); }), function (draft) { return na.append(draft.final, draft.current); });
-            koh.appendFew(me.regions1, na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa'], na.areSame));
-            koh.appendFew(me.regions2, na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['Europe & Central Asia', 'East Asia & Pacific', 'Latin America & Caribbean', 'High income: OECD', 'High income: non-OECD'], na.areSame));
+            me.regions.push([
+                na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['South Asia', 'Middle East & North Africa', 'Sub-Saharan Africa', 'East Asia & Pacific'], na.areSame),
+                na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['Europe & Central Asia', 'Latin America & Caribbean'], na.areSame)
+            ]);
+            me.regions.push([
+                na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['High income: OECD'], na.areSame),
+                na.removeFirstFewAsMappedLikeUnsafe(regions, function (region) { return region.region; }, ['High income: non-OECD'], na.areSame)
+            ]);
             koh.appendFew(me.countries1, choppedGrouppedCountries[0]);
             koh.appendFew(me.countries2, choppedGrouppedCountries[1]);
         }

@@ -455,6 +455,9 @@ ul.none li > span {
 .only-countries .columns .column + .column {
   margin-left: 80px;
 }
+.only-countries .block + .block {
+  margin-top: 40px;
+}
 .only-country .grid-cell.as-numeric {
   width: 80px;
 }
