@@ -22,6 +22,7 @@ var models;
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.linkText = ko.observable('Show link to this page');
             this.isLinkVisible = ko.observable(false);
+            this.legend = ko.observable({});
             var me = this;
             me.host = host;
             var enterpriseParam = me.getUrlParameter('enterprise');
@@ -308,6 +309,9 @@ var models;
                 clickable: false
             });
             this.ctaLayer.setMap(this.map);
+            var legendId = kmlName.replace(/.kmz\?v=1/g, '').replace(/.kmz/g, '');
+            debugger;
+            this.legend(models.KmlLegendData.rows[legendId]);
             return true;
         };
         MainModel.prototype.numberWithCommas = function (x) {
