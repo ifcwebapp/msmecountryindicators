@@ -1,7 +1,10 @@
 ﻿.only-index {
 
     .fields {
-        .field-name { width: 100px } 
+        .field-name {
+            width: 100px;
+        }
+
         .select {
             select {
                 width: 400px;
@@ -12,6 +15,42 @@
     .field-value {
         .link.as-question-mark {
             cursor: help;
+        }
+    }
+
+    .field-value.as-map-layer {
+        svg {
+            display: inline;
+            vertical-align: middle;
+
+            rect {
+                &:nth-child(1) {
+                    fill: #246F4D;
+                }
+                &:nth-child(2) {
+                    fill: #40965C;
+                }
+                &:nth-child(3) {
+                    fill: #58B06F;
+                }
+                &:nth-child(4) {
+                    fill: #82C483;
+                }
+                &:nth-child(5) {
+                    fill: #A8D5A5;
+                }
+            }
+        }
+    }
+
+    .field-value.as-indicator {
+        svg {
+            display: inline;
+            vertical-align: middle;
+
+            circle {
+                fill: #E6550D;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ title: Main
         <div class="clear"></div>
     </div>
     <div id="panel" class="fields as-compact" data-bind="visible: isExpanded">
-        
+
         <div class="field">
             <div class="field-name">Source type:</div>
             <div class="field-value select">
@@ -23,25 +23,11 @@ title: Main
                 <a href="#" class="link as-icon as-question-mark" title="Source type description, to be updated."><i></i></a>
             </div>
         </div>
-
-
-        <!--<div class="left">
-
-                <select id="enterpriseChoice" style="width: 80px;" data-bind="value: enterprise, event: { change: refreshData }">
-                    <option value="MSMEs">MSMEs</option>
-                    <option value="SMEs">SMEs</option>
-                    <option value="Micro">Micro</option>
-
-
-                </select>
-            </div>-->
         <div class="field">
-
             <div class="field-name">Map layer:</div>
             <div class="field-value select">
                 <select id="category" data-bind="value: category, event: { change: getKml }">
                     <option disabled="disabled">------ Country Level Indicators -------------------------</option>
-
                     <option value="PopulationTotal">Total Population</option>
                     <option value="GNI">GNI per capita, Atlas method</option>
                     <option value="IncomeGroup">Income group</option>
@@ -60,19 +46,22 @@ title: Main
                     <option value="Firm Size by Sales">Firm size definition by sales</option>
                 </select>
             </div>
+            <div class="field-value as-map-layer">
+                Shown as
+                <svg width="50" height="20">
+                    <rect x="0" y="0" width="10" height="20"  />
+                    <rect x="10" y="0" width="10" height="20" />
+                    <rect x="20" y="0" width="10" height="20" />
+                    <rect x="30" y="0" width="10" height="20" />
+                    <rect x="40" y="0" width="10" height="20" />
+                </svg>
+            </div>
             <label class="field-value checkbox">
                 <input id="showLegend" name="showLegend" type="checkbox" data-bind="checked: isLegendVisible, click: getKml" />Show Legend
             </label>
         </div>
         <div class="field">
-
             <div class="field-name">Indicator:</div>
-            <!--<div class="left">
-                    <select id="indicatorStyle" style="width: 70px;" data-bind="value: indicatorStyleValue, event: { change: showSelectors }">
-                        <option value="bubble">Bubble</option>
-                        <option value="chart">Chart</option>
-                    </select>
-                </div>-->
             <div class="field-value select" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
                 <select id="bubbleIndicator" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
                     <option value="Number of Enterprises">Enterprises (absolute #)</option>
@@ -83,16 +72,15 @@ title: Main
                     <option value="Vallue added">Value added to the economy (% of total)</option>
                 </select>
             </div>
-            <!--<div class="left" id="chartSelector" data-bind="visible: isChartSelectorVisible">
-
-                    <select id="chartIndicator" data-bind="value: chartIndicatorValue, event: { change: function () { showSelectors(); showLegend() } }">
-                        <option value="sectors">Sector Breakdown</option>
-                    </select>
-
-                </div>-->
-
+            <div class="field-value as-indicator">
+                Shown as
+                <svg width="50" height="24">
+                    <circle cx="14" cy="12" r="12"></circle>
+                    <circle cx="34" cy="12" r="6"></circle>
+                    <circle cx="45" cy="12" r="3"></circle>
+                </svg>
+            </div>
         </div>
-
         <div class="field">
             <div class="field-name">Firm size:</div>
             <div class="field-value radios">
@@ -101,7 +89,6 @@ title: Main
                 <label class="radio"><input type="radio" name="firm" value="MSMEs" data-bind="checked: enterprise, click: refreshData " />MSMEs</label>
             </div>
         </div>
-
         <div class="field">
             <div data-bind="visible: isChartSelectorVisible">
                 <div id="legendserved">
@@ -125,7 +112,6 @@ title: Main
     <div style="padding: 10px 0;" class="quieter">
         Only clean data is presented on the maps (excluding economies whose information is not census data or not covering the whole countries/sectors in the economy or outliers). However, all data (clean and not clean) is included in the downloadable full database excel file. Form more information and before using the data please read the <a href="http://www.ifc.org/wps/wcm/connect/b06d0b004958619ba722b719583b6d16/MSME-CI-MethodologyNote.pdf?MOD=AJPERES&CACHEID=b06d0b004958619ba722b719583b6d16" target="_blank">Description Note on the MSME Country Indicators – 2014</a>  along with the country specific comments in the <a href="http://ifcwebapp.github.io/msmecountryindicators/msme_data_with_notes.xlsx" target="_blank">MSME-CI MS Excel workbook.</a>  MSME-CI presents secondary data collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). IFC is not responsible for the quality, accuracy, reliability or completeness of data provided by the sources. Data are not always standardized across countries and time which, among other issues, hampers comparability.
     </div>
-
 </div>
 <div class="clear"></div>
 <!--<div id="data">
