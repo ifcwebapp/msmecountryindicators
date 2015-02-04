@@ -159,48 +159,12 @@ var models;
                         bubble.setMap(null);
                     }
                 }
-                else {
-                    var categoryData = [];
-                    for (var j = 0; j < betta.categories.length; j++) {
-                        var c = betta.categories[j];
-                        try {
-                            var d = bubble.data.Value[c][me.source() + me.enterprise()];
-                            categoryData[j] = { category: c, year: d[3], value: d[13] };
-                        }
-                        catch (e) {
-                            categoryData[j] = { category: c, year: 0, value: 0 };
-                        }
-                    }
-                    var total = 0;
-                    categoryData.forEach(function (v, n) { return total += v.value; });
-                    if (categoryData.filter(function (v, n) { return v.year != 0; }).length > 0) {
-                        var dims = { width: 0, height: 0 };
-                        try {
-                            dims = models.CountryIndicatorDataDimensions.rows[me.source() + me.enterprise()][bubble.data.Key]["sectors"];
-                        }
-                        catch (e) {
-                        }
-                        bubble.setIcon({
-                            url: _this.host + "images/" + me.source() + me.enterprise() + "/" + bubble.data.Key + ".png",
-                            scaledSize: new google.maps.Size(dims.width / 4 * scaledZoom, dims.height / 4 * scaledZoom)
-                        });
-                        var title = '';
-                        for (var k = 0; k < betta.categories.length; k++) {
-                            title += sprintf('%s: %s\n', betta.categories[k], categoryData[k].year != 0 ? categoryData[k].value + "% in " + categoryData[k].year : (total == 100 ? categoryData[k].value + '%' : 'No data'));
-                        }
-                        bubble.setTitle(title);
-                        bubble.setMap(map);
-                    }
-                    else {
-                        bubble.setMap(null);
-                    }
-                }
             });
         };
         MainModel.prototype.updateBubbleTitle = function (main, info, bubble, category) {
             var id = main.bubbleIndicatorValue();
-            var selectedText = $('#bubbleIndicator option:selected').text().trim();
-            var selectedTextMap = $('#category option:selected').text().trim();
+            var selectedText = $('#bubbleIndicator option[value="' + main.bubbleIndicatorValue() + '"]').text().trim();
+            var selectedTextMap = $('#category option[value="' + main.category() + '"]').text().trim();
             if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
                 var record = info.Value[id][main.source() + main.enterprise()];
                 var bubbleTitle = selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
@@ -310,7 +274,6 @@ var models;
             });
             this.ctaLayer.setMap(this.map);
             var legendId = kmlName.replace(/.kmz\?v=1/g, '').replace(/.kmz/g, '');
-            debugger;
             this.legend(models.KmlLegendData.rows[legendId]);
             return true;
         };
