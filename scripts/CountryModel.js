@@ -6,7 +6,7 @@ var models;
             this.source = ko.observable(0);
             this.noData = 'No data';
             this.countries = ko.observableArray([]);
-            this.isSourcesVisible = ko.observable(false);
+            this.isSourcesVisible = ko.observable(true);
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.name = ko.observable('');
             this.cats = ['Number of Enterprises', 'Density', 'Employment', 'Vallue added', 'Number of Employees', 'Size Breakdown', 'Manufacturing', 'Trade', 'Agri/Other', 'Services'];
