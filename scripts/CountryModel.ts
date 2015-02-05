@@ -16,7 +16,7 @@ module models {
         refreshData: any;
         showSources: any;
         
-        isSourcesVisible = ko.observable(false);
+        isSourcesVisible = ko.observable(true);
         summaryData: KnockoutObservable<any> = ko.observable(models.CountryData.rows["ALB"]);
         name = ko.observable('');
 

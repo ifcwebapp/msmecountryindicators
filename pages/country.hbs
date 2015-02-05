@@ -31,7 +31,8 @@ layout: right-column.hbs
         </div>
     </div>
     <div id="scrollablePart" style="overflow-y: auto">
-        <div style="font-weight: bold" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+
+        <div class="header as-snugly" style="margin-bottom:5px" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
         <div class="field">
             <div class="field-name">Source type:</div>
             <div class="field-value select">
@@ -112,6 +113,43 @@ layout: right-column.hbs
             </table>
             <div>
                 <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
+            </div>
+        </div>
+
+        <div class="header as-snugly">MSME Definitions</div>
+        <div style="margin-top: 20px">
+            <table class="grid as-missing-header">
+                <thead>
+                    <tr class="grid-row as-subtotal">
+                        <th></th>
+                        <th >Number of employees</th>
+                        <th >Assets (local currency, unless noted otherwise)</th>
+                        <th >Turnover (local currency, unless noted otherwise)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="grid-row as-odd">
+                        <td>Micro</td>
+                        <td ></td>
+                        <td ></td>
+                        <td ></td>
+                    </tr>
+                    <tr class="grid-row as-even">
+                        <td>Small</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="grid-row as-odd">
+                        <td>Medium</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <span style="font-weight: bold">Source: </span>
             </div>
         </div>
         <!-- ko if: hasAny(summaryData()) -->
