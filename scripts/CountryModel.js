@@ -49,6 +49,9 @@ var models;
             this.sectorBreakdownServicesMicro = ko.observable(this.noData);
             this.sectorBreakdownServicesSme = ko.observable(this.noData);
             this.sectorBreakdownServicesMsme = ko.observable(this.noData);
+            this.msmeDefinitions = ko.observable([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
+            this.msmeDefinitionSource = ko.observable(this.noData);
+            this.msmeDefinitionSourceYear = ko.observable(this.noData);
             this.showEnterpriseCommonData = ko.computed(function () {
                 return _this.enterpriseDataEnterpriseCountMicro() != _this.noData || _this.enterpriseDataEnterpriseCountSme() != _this.noData || _this.enterpriseDataEnterpriseCountMsme() != _this.noData || _this.enterpriseDataEnterpriseDensityMicro() != _this.noData || _this.enterpriseDataEnterpriseDensitySme() != _this.noData || _this.enterpriseDataEnterpriseDensityMsme() != _this.noData || _this.enterpriseDataEmploymentPersentMicro() != _this.noData || _this.enterpriseDataEmploymentPersentSme() != _this.noData || _this.enterpriseDataEmploymentPersentMsme() != _this.noData || _this.enterpriseDataEnterprisePersentMicro() != _this.noData || _this.enterpriseDataEnterprisePersentSme() != _this.noData || _this.enterpriseDataEnterprisePersentMsme() != _this.noData || _this.enterpriseDataEmploymentCountMicro() != _this.noData || _this.enterpriseDataEmploymentCountSme() != _this.noData || _this.enterpriseDataEmploymentCountMsme() != _this.noData;
             });
@@ -222,12 +225,44 @@ var models;
             var countryCode = cd != undefined ? cd : me.getUrlParameter('country');
             if (countryCode != "null") {
                 me.showSummary({ code: countryCode }, null);
+                me.showMsmeDefinitions(countryCode);
             }
             me.refreshData = function () {
                 me.showSummary({ code: countryCode }, null);
+                me.showMsmeDefinitions(countryCode);
                 return true;
             };
         }
+        CountryModel.prototype.showMsmeDefinitions = function (countryCode) {
+            this.msmeDefinitions([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
+            this.msmeDefinitionSource(this.noData);
+            this.msmeDefinitionSourceYear(this.noData);
+            var msmeCountryData = models.MsmeDefinitionsData.rows[countryCode];
+            if (msmeCountryData[this.source()] != null) {
+                var srcData = msmeCountryData[this.source()];
+                for (var i = 0; i < srcData.length; i++) {
+                    var l = srcData[i];
+                    if (l[7] == "Micro") {
+                        this.msmeDefinitions()[0] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[1] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[2] = l[10] != '' ? l[10] : this.noData;
+                    }
+                    if (l[7] == "Small") {
+                        this.msmeDefinitions()[3] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[4] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[5] = l[10] != '' ? l[10] : this.noData;
+                    }
+                    if (l[7] == "Medium") {
+                        this.msmeDefinitions()[6] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[7] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[8] = l[10] != '' ? l[10] : this.noData;
+                    }
+                    this.msmeDefinitionSource(l[4]);
+                    this.msmeDefinitionSourceYear(l[3]);
+                }
+            }
+            this.msmeDefinitions.valueHasMutated();
+        };
         CountryModel.prototype.numberWithCommas = function (x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };

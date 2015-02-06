@@ -154,26 +154,26 @@
                 <tbody>
                     <tr class="grid-row as-odd">
                         <td>Micro</td>
-                        <td ></td>
-                        <td ></td>
-                        <td ></td>
+                        <td data-bind="html: msmeDefinitions()[0]"></td>
+                        <td data-bind="html: msmeDefinitions()[1]"></td>
+                        <td data-bind="html: msmeDefinitions()[2]"></td>
                     </tr>
                     <tr class="grid-row as-even">
                         <td>Small</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td data-bind="html: msmeDefinitions()[3]"></td>
+                        <td data-bind="html: msmeDefinitions()[4]"></td>
+                        <td data-bind="html: msmeDefinitions()[5]"></td>
                     </tr>
                     <tr class="grid-row as-odd">
                         <td>Medium</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td data-bind="html: msmeDefinitions()[6]"></td>
+                        <td data-bind="html: msmeDefinitions()[7]"></td>
+                        <td data-bind="html: msmeDefinitions()[8]"></td>
                     </tr>
                 </tbody>
             </table>
             <div>
-                <span style="font-weight: bold">Source: </span>
+                <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()"></span>
             </div>
         </div>
         <!-- ko if: hasAny(summaryData()) -->
@@ -338,6 +338,7 @@
 <script src="scripts/CountryIndicatorSources.js" type="text/javascript"></script>
 <script src="scripts/CountriesInfo.js" type="text/javascript"></script>
 <script src="scripts/CountryData.js" type="text/javascript"></script>
+<script src="scripts/MsmeDefinitionsData.js" type="text/javascript"></script>
 <script src="scripts/CountryModel.js" type="text/javascript"></script>
 <script type="text/javascript">
     ko.applyBindings(new models.CountryModel('http://ifcwebapp.github.io/msmecountryindicators/'));
