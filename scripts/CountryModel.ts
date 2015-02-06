@@ -70,6 +70,11 @@ module models {
         sectorBreakdownServicesSme = ko.observable(this.noData);
         sectorBreakdownServicesMsme = ko.observable(this.noData);
 
+        msmeDefinitions = ko.observable([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
+        msmeDefinitionSource = ko.observable(this.noData);
+        msmeDefinitionSourceYear = ko.observable(this.noData);
+        
+
         showEnterpriseCommonData = ko.computed(() => {
             return  this.enterpriseDataEnterpriseCountMicro() != this.noData ||
                     this.enterpriseDataEnterpriseCountSme() != this.noData ||
@@ -290,14 +295,49 @@ module models {
 
             if (countryCode != "null") {
                 me.showSummary({ code: countryCode }, null);
+                me.showMsmeDefinitions(countryCode);
             }
 
             me.refreshData = () => {
                 me.showSummary({ code: countryCode }, null);
+                me.showMsmeDefinitions(countryCode);
                 return true;
             }
 
             
+        }
+
+        showMsmeDefinitions(countryCode: string) {
+            this.msmeDefinitions([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
+            this.msmeDefinitionSource(this.noData);
+            this.msmeDefinitionSourceYear(this.noData);
+            var msmeCountryData = models.MsmeDefinitionsData.rows[countryCode];
+            if (msmeCountryData[this.source()] != null) {
+                var srcData = msmeCountryData[this.source()];
+                for (var i = 0; i < srcData.length; i++) {
+                    var l = srcData[i];
+                    if (l[7] == "Micro") {
+                        this.msmeDefinitions()[0] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[1] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[2] = l[10] != '' ? l[10] : this.noData;
+                    }
+                    if (l[7] == "Small") {
+                        this.msmeDefinitions()[3] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[4] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[5] = l[10] != '' ? l[10] : this.noData;
+                    }
+                    if (l[7] == "Medium") {
+                        this.msmeDefinitions()[6] = l[8] != '' ? l[8] : this.noData;
+                        this.msmeDefinitions()[7] = l[9] != '' ? l[9] : this.noData;
+                        this.msmeDefinitions()[8] = l[10] != '' ? l[10] : this.noData;
+                    }
+
+                    this.msmeDefinitionSource(l[4]);
+                    this.msmeDefinitionSourceYear(l[3]);
+                }
+            }
+
+            this.msmeDefinitions.valueHasMutated();
         }
 
         numberWithCommas(x: any) {
