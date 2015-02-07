@@ -54,9 +54,8 @@
             </a>
         </div>
     </div>
-    <div id="scrollablePart" style="overflow-y: auto">
-
-        <div class="header as-snugly" style="margin-bottom:5px" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+    <div id="scrollablePart" class="provided" style="overflow-y: auto">
+        <div class="header" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
         <div class="field">
             <div class="field-name">Source type:</div>
             <div class="field-value select">
@@ -68,7 +67,7 @@
                 </select>
             </div>
         </div>
-        <div data-bind="visible: showEnterpriseCommonData">
+        <div class="sourced" data-bind="visible: showEnterpriseCommonData">
             <table class="grid">
                 <thead>
                     <tr class="grid-row as-subtotal">
@@ -111,12 +110,12 @@
                     </tr>
                 </tbody>
             </table>
-            <div>
+            <div class="source">
                 <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
             </div>
         </div>
         <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
-            <table class="grid as-missing-header">
+            <table class="grid">
                 <thead>
                     <tr class="grid-row as-subtotal">
                         <th></th>
@@ -133,127 +132,143 @@
                         <td class="grid-cell as-numeric" data-bind="text: enterpriseDataValueAddedMsme() + (enterpriseDataValueAddedMsme() != 'No data' ? '%' : ' ')"></td>
                     </tr>
                 </tbody>
-
             </table>
             <div>
                 <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
             </div>
         </div>
-
-        <div class="header as-snugly">MSME Definitions</div>
-        <div style="margin-top: 20px">
-            <table class="grid as-missing-header">
+        <div class="header">MSME Definitions</div>
+        <div class="sourced">
+            <table class="grid as-comfy">
                 <thead>
                     <tr class="grid-row as-subtotal">
                         <th></th>
-                        <th >Number of employees</th>
-                        <th >Assets (local currency, unless noted otherwise)</th>
-                        <th >Turnover (local currency, unless noted otherwise)</th>
+                        <th>Number of employees</th>
+                        <th>Assets (local currency, unless noted otherwise)</th>
+                        <th>Turnover (local currency, unless noted otherwise)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="grid-row as-odd">
                         <td>Micro</td>
-                        <td data-bind="html: msmeDefinitions()[0]"></td>
-                        <td data-bind="html: msmeDefinitions()[1]"></td>
-                        <td data-bind="html: msmeDefinitions()[2]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[0]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[1]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[2]"></td>
                     </tr>
                     <tr class="grid-row as-even">
                         <td>Small</td>
-                        <td data-bind="html: msmeDefinitions()[3]"></td>
-                        <td data-bind="html: msmeDefinitions()[4]"></td>
-                        <td data-bind="html: msmeDefinitions()[5]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[3]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[4]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[5]"></td>
                     </tr>
                     <tr class="grid-row as-odd">
                         <td>Medium</td>
-                        <td data-bind="html: msmeDefinitions()[6]"></td>
-                        <td data-bind="html: msmeDefinitions()[7]"></td>
-                        <td data-bind="html: msmeDefinitions()[8]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[6]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[7]"></td>
+                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[8]"></td>
                     </tr>
                 </tbody>
             </table>
-            <div>
+            <div class="source">
                 <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()"></span>
             </div>
         </div>
+        <!-- ko with: { isShown: ko.observable(false) } -->
+        <div class="provider" data-bind="css: { 'as-shown': isShown() }">
+            <a class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
+            <div class="provider-details">
+                <!-- ko with: $parent -->
+                <div data-bind="if: enterpriseDataCommonSource() != noData">
+                    <div style="font-weight: bold" data-bind="text: enterpriseDataCommonSource"></div>
+                    <div data-bind="foreach: enterpriseDataCommonSources">
+                        <div data-bind="html: $data"></div>
+                    </div>
+                </div>
+                <div data-bind="if: enterpriseDataValueAddedSource() != noData && enterpriseDataValueAddedSource() != enterpriseDataCommonSource()">
+                    <div style="font-weight: bold" data-bind="text: enterpriseDataValueAddedSource"></div>
+                    <div data-bind="foreach: enterpriseDataValueAddedSources">
+                        <div data-bind="text: $data"></div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <div class="provided">
         <!-- ko if: hasAny(summaryData()) -->
         <div class="header as-snugly">Sector Distribution Details</div>
         <!-- ko foreach: summaryData() -->
-        <table data-bind="if: $data.Categories.length > 0" class="grid">
-            <thead>
-                <tr>
-                    <th></th>
-                    <!-- ko foreach: $data.Categories[0].Value[0].Value -->
-                    <th class="grid-cell as-numeric" data-bind="text: Key"></th>
-                    <!-- /ko -->
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: $data.Categories">
-                <tr class="grid-row as-subtotal">
-                    <td data-bind="text: Key"></td>
+        <div class="sourced">
+            <table data-bind="if: $data.Categories.length > 0" class="grid">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <!-- ko foreach: $data.Categories[0].Value[0].Value -->
+                        <th class="grid-cell as-numeric" data-bind="text: Key"></th>
+                        <!-- /ko -->
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: $data.Categories">
+                    <tr class="grid-row as-subtotal">
+                        <td data-bind="text: Key"></td>
+                        <!-- ko foreach: Value -->
+                        <!-- ko if: Key == 'Total' -->
+                        <!-- ko foreach: Value -->
+                        <!-- ko if: Key.indexOf('%') == -1 -->
+                        <td class="grid-cell as-numeric" data-bind="text: Value"></td>
+                        <!-- /ko -->
+                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                        <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </tr>
                     <!-- ko foreach: Value -->
-                    <!-- ko if: Key == 'Total' -->
-                    <!-- ko foreach: Value -->
-                    <!-- ko if: Key.indexOf('%') == -1 -->
-                    <td class="grid-cell as-numeric" data-bind="text: Value"></td>
-                    <!-- /ko -->
-                    <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                    <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
-                    <!-- /ko -->
-                    <!-- /ko -->
-                    <!-- /ko -->
-                    <!-- /ko -->
-                </tr>
-                <!-- ko foreach: Value -->
-                <!-- ko if: Key != 'Total' -->
-                <tr class="grid-row" data-bind="css: $index() % 2 ? 'as-odd' : 'as-even'">
-                    <td data-bind="text: Key" style="padding-left: 20px"></td>
-                    <!-- ko foreach: Value -->
-                    <!-- ko if: Key.indexOf('%') == -1 -->
-                    <td class="grid-cell as-numeric" data-bind="text: Value"></td>
-                    <!-- /ko -->
-                    <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                    <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
+                    <!-- ko if: Key != 'Total' -->
+                    <tr class="grid-row" data-bind="css: $index() % 2 ? 'as-odd' : 'as-even'">
+                        <td data-bind="text: Key" style="padding-left: 20px"></td>
+                        <!-- ko foreach: Value -->
+                        <!-- ko if: Key.indexOf('%') == -1 -->
+                        <td class="grid-cell as-numeric" data-bind="text: Value"></td>
+                        <!-- /ko -->
+                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                        <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </tr>
                     <!-- /ko -->
                     <!-- /ko -->
-                </tr>
-                <!-- /ko -->
-                <!-- /ko -->
-            </tbody>
-        </table>
-        <div>
-            <span style="font-weight: bold">Source: </span>
-            <!-- ko foreach: $data.Sources -->
+                </tbody>
+            </table>
+            <div class="source">
+                <span style="font-weight: bold">Source: </span>
+                <!-- ko foreach: $data.Sources -->
                 <span data-bind="text: Name"></span>
-            <!-- /ko -->
+                <!-- /ko -->
+            </div>
         </div>
         <!-- /ko -->
         <!-- /ko -->
-        <a href='javascript:void()' data-bind="click: showSources, text: isSourcesVisible() ? 'Hide data sources' : 'Show data sources'">Show data sources</a>
-        <div id='sources' data-bind="visible: isSourcesVisible">
-            <div class="header">MSME Participation in the Economy Sources</div>
-            <div data-bind="if: enterpriseDataCommonSource() != noData">
-                <div style="font-weight: bold" data-bind="text: enterpriseDataCommonSource"></div>
-                <div data-bind="foreach: enterpriseDataCommonSources">
-                    <div data-bind="html: $data"></div>
-                </div>
-            </div>
-            <div data-bind="if: enterpriseDataValueAddedSource() != noData && enterpriseDataValueAddedSource() != enterpriseDataCommonSource()">
-                <div style="font-weight: bold" data-bind="text: enterpriseDataValueAddedSource"></div>
-                <div data-bind="foreach: enterpriseDataValueAddedSources">
-                    <div data-bind="text: $data"></div>
-                </div>
-            </div>
-            <div data-bind="if: summaryData() != null && summaryData().length > 0 && summaryData()[0]['Sources'].length > 0">
-                <div class="header">Sector Distribution Details Data Sources</div>
-                <div data-bind="foreach: summaryData">
-                    <div data-bind="foreach: $data.Sources">
-                        <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
+
+        <!-- ko if: summaryData()[0]['Sources'].length > 0 -->
+            <!-- ko with: { isShown: ko.observable(false) } -->
+                <div class="provider" data-bind="css: { 'as-shown': isShown() }">
+                    <a class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
+                    <div class="provider-details">
+                        <!-- ko with: $parent -->
+                            <div data-bind="foreach: summaryData">
+                                <div data-bind="foreach: $data.Sources">
+                                    <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
+                                </div>
+                            </div>
+                        <!-- /ko -->
                     </div>
                 </div>
-            </div>
-        </div><br/><br/><br/><br/>
-    </div>
+            <!-- /ko -->
+        <!-- /ko -->
+        
 </div>
 
 </div>
