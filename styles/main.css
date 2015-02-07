@@ -34,10 +34,6 @@ body:before {
   height: 40px;
   clear: both;
 }
-#map-canvas {
-  width: 990px;
-  height: 550px;
-}
 #rightColumn {
   float: right;
   margin: 40px 10px 0px 5px;
@@ -398,8 +394,8 @@ ul.none li > span {
 }
 .quieter {
   font-size: 12px;
-  line-height: 16px;
-  color: #444;
+  line-height: 19px;
+  color: #555;
 }
 .page-header {
   padding-top: 10px;
@@ -493,7 +489,7 @@ ul.none li > span {
   vertical-align: baseline;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  padding: 2px 0px;
+  padding: 3px 0px;
 }
 .radios .radio + .radio {
   margin-left: 15px;
@@ -517,7 +513,7 @@ ul.none li > span {
   top: 1px;
 }
 .field {
-  line-height: 40px;
+  line-height: 36px;
 }
 .field:after {
   clear: both;
@@ -528,6 +524,7 @@ ul.none li > span {
 }
 .field .field-name {
   width: 120px;
+  color: #666;
   float: left;
   display: block;
 }
@@ -575,6 +572,26 @@ ul.none li > span {
 }
 .only-index .field-value.as-indicator svg circle {
   fill: #E6550D;
+}
+.only-index .page-header {
+  margin-left: 20px;
+}
+.only-index .intro {
+  padding: 20px;
+  border: solid 1px #cccccc;
+}
+.only-index .pane {
+  margin-left: 20px;
+}
+.only-index .map {
+  width: 990px;
+  height: 550px;
+}
+.only-index .block + .block {
+  margin-top: 20px;
+}
+.only-index .afterwords {
+  padding: 0px 20px;
 }
 .links .link + .link {
   margin-left: 15px;
