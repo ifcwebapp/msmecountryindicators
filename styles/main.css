@@ -474,19 +474,27 @@ ul.none li > span {
   background-color: #ddd;
   margin: 0 -10px -10px -10px;
   padding: 20px;
+  border-top: solid 3px #999;
 }
 .only-country .provider.as-shown .provider-details {
   display: block;
+  padding-right: 120px;
 }
 .only-country .provider-toggler {
   position: absolute;
   bottom: 0px;
   right: 0px;
   padding: 2px 5px;
-  color: white;
-  background-color: #999;
   width: 100px;
   text-align: center;
+  background-color: #eee;
+  border: solid 1px #cccccc;
+  border-width: 1px 0px 0px 1px;
+}
+.only-country .provider.as-shown .provider-toggler {
+  color: white;
+  background-color: #999;
+  border: none;
 }
 .only-country .grid-cell.as-numeric {
   width: 80px;
@@ -502,6 +510,7 @@ ul.none li > span {
   margin-top: 5px;
   padding-top: 5px;
   padding-left: 5px;
+  padding-right: 100px;
 }
 .grid {
   width: 100%;
