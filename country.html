@@ -175,7 +175,7 @@
         </div>
         <!-- ko with: { isShown: ko.observable(false) } -->
         <div class="provider" data-bind="css: { 'as-shown': isShown() }">
-            <a class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
+            <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
             <div class="provider-details">
                 <!-- ko with: $parent -->
                 <div data-bind="if: enterpriseDataCommonSource() != noData">
@@ -255,7 +255,7 @@
         <!-- ko if: summaryData()[0]['Sources'].length > 0 -->
             <!-- ko with: { isShown: ko.observable(false) } -->
                 <div class="provider" data-bind="css: { 'as-shown': isShown() }">
-                    <a class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
+                    <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
                     <div class="provider-details">
                         <!-- ko with: $parent -->
                             <div data-bind="foreach: summaryData">
