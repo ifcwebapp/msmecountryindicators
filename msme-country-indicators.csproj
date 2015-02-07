@@ -148,6 +148,7 @@
     <TypeScriptCompile Include="scripts\maps.ts" />
     <TypeScriptCompile Include="scripts\sprintf.d.ts" />
     <TypeScriptCompile Include="scripts\text.ts" />
+    <Content Include="styles\spacings.less" />
     <TypeScriptCompile Include="typings\googlemaps\google.maps.d.ts" />
     <TypeScriptCompile Include="typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="typings\jquery.ui.layout\jquery.ui.layout.d.ts" />

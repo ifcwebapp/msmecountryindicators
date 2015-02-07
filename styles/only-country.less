@@ -1,5 +1,78 @@
-﻿.only-country {
+﻿@import 'mixins';
+
+.only-country {
+
+    // being provided
+
+    .provided {
+        position: relative;
+        padding: 10px;
+        padding-top: 0px;
+        border: solid 1px @border-color;
+    }
+
+    .provided .header:first-child {
+        padding-top: 0px;
+    }
+
+    .provided + .provided {
+        margin-top: 50px;
+    }
+
+    .provider {
+        margin-top: 10px;
+    }
+
+    .provider-details {
+        display: none;
+        background-color: #ddd;
+        margin: 0 -10px -10px -10px;
+        padding: 20px;
+    }
+
+    .provider.as-shown .provider-details {
+        display: block;
+    }
+    
+    .provider-toggler {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        padding: 2px 5px;
+        color: white;
+        background-color: #888;
+        width: 100px;
+        text-align: center;
+    }
+
+    
+
+    // grid
+
     .grid-cell.as-numeric {
         width: 80px;
+    }
+
+    .grid.as-comfy {
+        .grid-cell.as-numeric {
+            width: 160px + 10px;
+        }
+    }
+
+    .field + .sourced {
+        margin-top: 5px;
+    }
+
+
+    .sourced {
+        .grid {
+        }
+
+        .source {
+            border-top: solid 1px #eee;
+            margin-top: 5px;
+            padding-top: 5px;
+            padding-left: 5px;
+        }
     }
 }
