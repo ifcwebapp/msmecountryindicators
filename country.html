@@ -195,80 +195,85 @@
         </div>
         <!-- /ko -->
     </div>
+    
+    <!-- ko if: hasAny(summaryData()) -->
     <div class="provided">
-        <!-- ko if: hasAny(summaryData()) -->
-        <div class="header as-snugly">Sector Distribution Details</div>
-        <!-- ko foreach: summaryData() -->
-        <div class="sourced">
-            <table data-bind="if: $data.Categories.length > 0" class="grid">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <!-- ko foreach: $data.Categories[0].Value[0].Value -->
-                        <th class="grid-cell as-numeric" data-bind="text: Key"></th>
-                        <!-- /ko -->
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: $data.Categories">
-                    <tr class="grid-row as-subtotal">
-                        <td data-bind="text: Key"></td>
-                        <!-- ko foreach: Value -->
-                        <!-- ko if: Key == 'Total' -->
-                        <!-- ko foreach: Value -->
-                        <!-- ko if: Key.indexOf('%') == -1 -->
-                        <td class="grid-cell as-numeric" data-bind="text: Value"></td>
-                        <!-- /ko -->
-                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                        <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
-                        <!-- /ko -->
-                        <!-- /ko -->
-                        <!-- /ko -->
-                        <!-- /ko -->
-                    </tr>
-                    <!-- ko foreach: Value -->
-                    <!-- ko if: Key != 'Total' -->
-                    <tr class="grid-row" data-bind="css: $index() % 2 ? 'as-odd' : 'as-even'">
-                        <td data-bind="text: Key" style="padding-left: 20px"></td>
-                        <!-- ko foreach: Value -->
-                        <!-- ko if: Key.indexOf('%') == -1 -->
-                        <td class="grid-cell as-numeric" data-bind="text: Value"></td>
-                        <!-- /ko -->
-                        <!-- ko ifnot: Key.indexOf('%') == -1 -->
-                        <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
-                        <!-- /ko -->
-                        <!-- /ko -->
-                    </tr>
-                    <!-- /ko -->
-                    <!-- /ko -->
-                </tbody>
-            </table>
-            <div class="source">
-                <span style="font-weight: bold">Source: </span>
-                <!-- ko foreach: $data.Sources -->
-                <span data-bind="text: Name"></span>
-                <!-- /ko -->
-            </div>
-        </div>
-        <!-- /ko -->
-        <!-- /ko -->
 
-        <!-- ko if: summaryData()[0]['Sources'].length > 0 -->
-            <!-- ko with: { isShown: ko.observable(false) } -->
-                <div class="provider" data-bind="css: { 'as-shown': isShown() }">
-                    <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
-                    <div class="provider-details">
-                        <!-- ko with: $parent -->
-                            <div data-bind="foreach: summaryData">
-                                <div data-bind="foreach: $data.Sources">
-                                    <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
-                                </div>
-                            </div>
+            <div class="header as-snugly">Sector Distribution Details</div>
+            <!-- ko foreach: summaryData() -->
+            <div class="sourced">
+                <table data-bind="if: $data.Categories.length > 0" class="grid">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <!-- ko foreach: $data.Categories[0].Value[0].Value -->
+                            <th class="grid-cell as-numeric" data-bind="text: Key"></th>
+                            <!-- /ko -->
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: $data.Categories">
+                        <tr class="grid-row as-subtotal">
+                            <td data-bind="text: Key"></td>
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key == 'Total' -->
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key.indexOf('%') == -1 -->
+                            <td class="grid-cell as-numeric" data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                            <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tr>
+                        <!-- ko foreach: Value -->
+                        <!-- ko if: Key != 'Total' -->
+                        <tr class="grid-row" data-bind="css: $index() % 2 ? 'as-odd' : 'as-even'">
+                            <td data-bind="text: Key" style="padding-left: 20px"></td>
+                            <!-- ko foreach: Value -->
+                            <!-- ko if: Key.indexOf('%') == -1 -->
+                            <td class="grid-cell as-numeric" data-bind="text: Value"></td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: Key.indexOf('%') == -1 -->
+                            <td class="grid-cell as-numeric" data-bind="text: Value + '%'"></td>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tr>
                         <!-- /ko -->
-                    </div>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <div class="source">
+                    <span style="font-weight: bold">Source: </span>
+                    <!-- ko foreach: $data.Sources -->
+                    <span data-bind="text: Name"></span>
+                    <!-- /ko -->
                 </div>
+            </div>
             <!-- /ko -->
-        <!-- /ko -->
         
+            <!-- ko if: summaryData()[0]['Sources'].length > 0 -->
+                <!-- ko with: { isShown: ko.observable(false) } -->
+                    <div class="provider" data-bind="css: { 'as-shown': isShown() }">
+                        <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
+                        <div class="provider-details">
+                            <!-- ko with: $parent -->
+                                <div data-bind="foreach: summaryData">
+                                    <div data-bind="foreach: $data.Sources">
+                                        <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
+                                    </div>
+                                </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                <!-- /ko -->
+            <!-- /ko -->
+
+        
+    </div>
+    <!-- /ko -->
+
 </div>
 
 </div>
