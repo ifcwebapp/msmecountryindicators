@@ -22,7 +22,7 @@ layout: right-column.hbs
 {{/section}}
 <div id="summary" class="only-country">
     <div class="page-header-container">
-        <div style="float:left;margin-right: 10px" class="page-header">Country:</div>
+        <div style="float:left; margin-right: 10px" class="page-header">Country:</div>
         <div style="float:left;" class="select" >
             <select id="country" data-bind="value: currentCountry, options: countries, optionsText: 'name', optionsValue: 'code', event: { change: refreshData }"></select>
         </div>
@@ -35,10 +35,9 @@ layout: right-column.hbs
             </a>
         </div>
     </div>
-    <div id="scrollablePart" class="provided" style="overflow-y: auto">
-        <div class="header" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+    <div id="scrollablePart" class="provided">
         <div class="field">
-            <div class="field-name">Source type:</div>
+            <div class="field-name">Source type</div>
             <div class="field-value select">
                 <select id="source" data-bind="value: source, event: { change: refreshData }">
                     <option value="0" disabled="disabled">Most widely used</option>
@@ -48,6 +47,7 @@ layout: right-column.hbs
                 </select>
             </div>
         </div>
+        <div class="header" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
         <div class="sourced" data-bind="visible: showEnterpriseCommonData">
             <table class="grid">
                 <thead>
