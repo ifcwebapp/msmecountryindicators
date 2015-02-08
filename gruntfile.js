@@ -56,11 +56,6 @@ module.exports = function (grunt) {
                     cwd: 'styles',
                     src: ['**/*', '!**/*.less'],
                     dest: 'built/styles'
-                }, {
-                    expand: true,
-                    cwd: 'styles',
-                    src: ['**/*', '!**/*.less'],
-                    dest: 'assets/styles'
                 }]
             },
             'distributive': {
@@ -92,7 +87,7 @@ module.exports = function (grunt) {
             // recompiles less files whenever a change to a less file is done
             'less': {
                 files: ['styles/*.less'],
-                tasks: ['less-being-watched'],
+                tasks: ['less:all'],
                 options: {
                     debounceDelay: 100
                 }
@@ -154,18 +149,12 @@ module.exports = function (grunt) {
         'default', ['build']
     );
     grunt.registerTask(
-        'less-being-watched', [
-            'less:all',
-            'copy:styles'
-        ]
-    );
-    grunt.registerTask(
         'build', [
             'clean:all',
+            'assemble:all',
             'ts:all',
             'less:all',
             'copy:assets',
-            'assemble:all'
         ]
     )
     grunt.registerTask(

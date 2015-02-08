@@ -15,9 +15,7 @@ module models {
         showSummary: any;
         summaryDialog: any;
         refreshData: any;
-        showSources: any;
         
-        isSourcesVisible = ko.observable(true);
         summaryData: KnockoutObservable<any> = ko.observable(models.CountryData.rows["ALB"]);
         name = ko.observable('');
 
@@ -141,10 +139,6 @@ module models {
                     }
                 }
             };
-
-            me.showSources = () => {
-                me.isSourcesVisible(!me.isSourcesVisible());
-            }
 
             me.showSummary = (obj: any, ev: any) => {
                 var d = models.CountryData.rows[obj.code];

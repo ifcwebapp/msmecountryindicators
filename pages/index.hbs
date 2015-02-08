@@ -2,15 +2,21 @@
 title: Main
 ---
 <div class="only-index">
+    
     <div class="page-header">MSME Country Indicators</div>
+    
     <div id="shortPanel" style="max-width: 700px" data-bind="visible: !isExpanded(), click: expandMenu">
         <div data-bind="html: shortPanelText"></div>
         <div class="clear"></div>
     </div>
-    <div id="panel" class="fields as-compact" data-bind="visible: isExpanded">
+    
+    <div class="intro block">
+        The MSME Country Indicators Database 2014 records the number of formally registered micro, small, and medium enterprises (MSMEs) across 155 economies. The 2014 update includes the latest country MSME definitions, number of enterprises, employment figures, sectorial distribution, and historical data. In addition, the 2014 update kick-starts the collection of information regarding MSME contribution to the economies and includes information on multiple MSME definitions and data sources within a country. Data is also disaggregated by firm size.
+    </div>
 
+    <div id="panel" class="pane fields block" data-bind="visible: isExpanded">
         <div class="field">
-            <div class="field-name">Source type:</div>
+            <div class="field-name">Source type</div>
             <div class="field-value select">
                 <select id="source" data-bind="value: source, event: { change: refreshData }">
                     <option value="0">Most Widely Used</option>
@@ -24,7 +30,7 @@ title: Main
             </div>
         </div>
         <div class="field">
-            <div class="field-name">Map layer:</div>
+            <div class="field-name">Map layer</div>
             <div class="field-value select">
                 <select id="category" data-bind="value: category, event: { change: getKml }">
                     <option disabled="disabled">------ Country Level Indicators -------------------------</option>
@@ -47,9 +53,9 @@ title: Main
                 </select>
             </div>
             <div class="field-value as-map-layer" title="Shown on the map as colored areas.">
-                
+
                 <svg width="50" height="20">
-                    <rect x="0" y="0" width="10" height="20"  />
+                    <rect x="0" y="0" width="10" height="20" />
                     <rect x="10" y="0" width="10" height="20" />
                     <rect x="20" y="0" width="10" height="20" />
                     <rect x="30" y="0" width="10" height="20" />
@@ -58,7 +64,7 @@ title: Main
             </div>
         </div>
         <div class="field">
-            <div class="field-name">Indicator:</div>
+            <div class="field-name">Indicator</div>
             <div class="field-value select" id="bubbleSelector" data-bind="visible: !isChartSelectorVisible()">
                 <select id="bubbleIndicator" data-bind="value: bubbleIndicatorValue, event: { change: showSelectors }">
                     <option value="Number of Enterprises">Enterprises (absolute #)</option>
@@ -78,7 +84,7 @@ title: Main
             </div>
         </div>
         <div class="field">
-            <div class="field-name">Firm size:</div>
+            <div class="field-name">Firm size</div>
             <div class="field-value radios">
                 <label class="radio"><input type="radio" name="firm" value="Micro" data-bind="checked: enterprise, click: refreshData " />Micro</label>
                 <label class="radio"><input type="radio" name="firm" value="SMEs" data-bind="checked: enterprise, click: refreshData " />SMEs</label>
@@ -86,11 +92,9 @@ title: Main
             </div>
         </div>
     </div>
-    <div style="padding: 10px 0;">
-        The MSME Country Indicators Database 2014 records the number of formally registered micro, small, and medium enterprises (MSMEs) across 155 economies. The 2014 update includes the latest country MSME definitions, number of enterprises, employment figures, sectorial distribution, and historical data. In addition, the 2014 update kick-starts the collection of information regarding MSME contribution to the economies and includes information on multiple MSME definitions and data sources within a country. Data is also disaggregated by firm size.
-    </div>
-    <div id="map-canvas"></div>
-    <div id="map-legend" class="quieter">
+
+    <div class="map block" id="map-canvas"></div>
+    <div class="block" id="map-legend">
         <div style="text-align:center; font-weight: bold" data-bind="text: legend().name"></div>
         <div style="text-align:center;">
             <div data-bind="foreach: legend().values">
@@ -102,7 +106,7 @@ title: Main
             <div class="clear"></div>
         </div>
     </div>
-    <div style="padding: 10px 0;" class="quieter">
+    <div class="block afterwords quieter">
         Only clean data is presented on the maps (excluding economies whose information is not census data or not covering the whole countries/sectors in the economy or outliers). However, all data (clean and not clean) is included in the downloadable full database excel file. Form more information and before using the data please read the <a href="http://www.ifc.org/wps/wcm/connect/b06d0b004958619ba722b719583b6d16/MSME-CI-MethodologyNote.pdf?MOD=AJPERES&CACHEID=b06d0b004958619ba722b719583b6d16" target="_blank">Description Note on the MSME Country Indicators – 2014</a>  along with the country specific comments in the <a href="http://ifcwebapp.github.io/msmecountryindicators/msme_data_with_notes.xlsx" target="_blank">MSME-CI MS Excel workbook.</a>  MSME-CI presents secondary data collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). IFC is not responsible for the quality, accuracy, reliability or completeness of data provided by the sources. Data are not always standardized across countries and time which, among other issues, hampers comparability.
     </div>
 </div>

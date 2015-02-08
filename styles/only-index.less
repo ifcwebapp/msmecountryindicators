@@ -1,4 +1,6 @@
-﻿.only-index {
+﻿@import 'mixins';
+
+.only-index {
 
     .fields {
         .field-name {
@@ -27,15 +29,19 @@
                 &:nth-child(1) {
                     fill: #246F4D;
                 }
+
                 &:nth-child(2) {
                     fill: #40965C;
                 }
+
                 &:nth-child(3) {
                     fill: #58B06F;
                 }
+
                 &:nth-child(4) {
                     fill: #82C483;
                 }
+
                 &:nth-child(5) {
                     fill: #A8D5A5;
                 }
@@ -52,5 +58,33 @@
                 fill: #E6550D;
             }
         }
+    }
+
+    .page-header {
+        margin-left: 20px;
+    }
+    
+    .intro {
+        padding: 20px;
+        //background-color: #f5f5f5;
+        border: solid 1px @border-color;
+    }
+
+    .pane {
+        margin-left: 20px
+    }
+    
+    // map
+    .map {
+        width: 990px;
+        height: 550px;
+    }
+
+    .block + .block {
+        margin-top: 20px;
+    }
+
+    .afterwords {
+        padding: 0px 20px;
     }
 }
