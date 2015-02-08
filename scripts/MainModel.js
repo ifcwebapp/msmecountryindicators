@@ -322,12 +322,9 @@ var models;
                         var infowindow = new google.maps.InfoWindow({
                             content: ''
                         });
-                        google.maps.event.addListener(bubble, 'click', function () {
-                            var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
-                            navigateToUrl(countryPageUrl);
-                        });
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
+                        google.maps.event.addListener(bubble, 'click', whenClickedOpenPopupOver(info, main, infowindow, bubble));
                     })(i);
                 }
             }
@@ -335,6 +332,35 @@ var models;
         return MainModel;
     })();
     models.MainModel = MainModel;
+    function whenClickedOpenPopupOver(info, main, popup, marker) {
+        return function whenClickedOpenPopup() {
+            closeAllWindows(main);
+            $.get('mapInfo.html', function (html) {
+                var node = $("#temp");
+                node.html(html);
+                var infoData = $("#infoData");
+                ko.applyBindings(main.getCountryInfoModel(info, main), infoData[0]);
+                var transformedHtml = node.html();
+                popup.setContent(transformedHtml);
+                popup.open(main.map, marker);
+            });
+        };
+    }
+    function whenClickedOpenUrlOver(info, main) {
+        return function whenClickedOpenUrl() {
+            var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
+            navigateToUrl(countryPageUrl);
+        };
+    }
+    function closeAllWindows(main) {
+        useAllWindows(main, function (window) { return window.close(); });
+    }
+    function useAllWindows(main, use) {
+        var windows = main.windows;
+        for (var index = 0; index < windows.length; index++) {
+            use(windows[index]);
+        }
+    }
     function navigateToUrl(url) {
         window.location.href = url;
     }
