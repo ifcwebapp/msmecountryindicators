@@ -9,10 +9,15 @@
         padding: 10px;
         padding-top: 0px;
         border: solid 1px @border-color;
-    }
+        .mix-clearfix();
+        .field {
+            float: right;
+            .field-name { width: auto; margin-right: 5px; }
+        }
 
-    .provided .header:first-child {
-        padding-top: 0px;
+        .field + .header {
+            padding-top: 0px;
+        }
     }
 
     .provided + .provided {
@@ -64,27 +69,6 @@
     .grid.as-comfy {
         .grid-cell.as-numeric {
             width: 160px + 10px;
-        }
-    }
-
-    .field + .sourced {
-        margin-top: 5px;
-    }
-
-
-    .sourced {
-
-        
-
-        .grid {
-        }
-
-        .source {
-            border-top: solid 1px #eee;
-            margin-top: 5px;
-            padding-top: 5px;
-            padding-left: 5px;
-            padding-right: 100px;
         }
     }
 }

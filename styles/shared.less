@@ -1,0 +1,37 @@
+﻿@import 'mixins';
+
+.sourced {
+    .grid {
+    }
+
+    .source {
+        border-top: solid 1px #eee;
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-right: 100px;
+    }
+}
+
+
+
+.block + .block {
+    margin-top: 20px;
+}
+
+
+.popup {
+    font-family: @font-family; // fighting google map styles
+
+    .header {
+        padding-top: 0px
+    }
+
+    .page-header-container {
+        padding-top: 0px;
+        line-height: 40px;
+        .page-header {
+            line-height: 40px;
+        }
+    }
+}
