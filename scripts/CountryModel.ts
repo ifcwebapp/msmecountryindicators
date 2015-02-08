@@ -1,4 +1,6 @@
-﻿///<reference path='../typings/knockout/knockout.d.ts' />
+﻿///<reference path='arrays.ts' />
+///<reference path='maps.ts' />
+///<reference path='../typings/knockout/knockout.d.ts' />
 ///<reference path='../typings/jquery/jquery.d.ts' />
 ///<reference path='../typings/jqueryui/jqueryui.d.ts' />
 ///<reference path='../typings/highcharts/highcharts.d.ts' />
@@ -166,11 +168,27 @@ module models {
                 me.source(parseInt(sourceParam));
             }
 
-            var infos = models.CountryData.rows;
-            for (var info in infos) {
-                me.countries.push({ name: infos[info][0].CountryName, code: infos[info][0].CountryCode });
-            }
-
+            var regions = nm.toArray(
+                models.CountryRegionMap.map,
+                (region, regionName) => ({
+                    region: regionName,
+                    countries: nm.toArray(
+                        region,
+                        (countryName, countryCode) => ({
+                            name: countryName,
+                            code: countryCode,
+                            url: encodeURI('data/MSME Country Indicators - ' + countryName + ' Summary' + '.xlsx')
+                        })
+                        ),
+                    url: encodeURI('data/MSME Country Indicators - ' + regionName + ' Summary' + '.xlsx')
+                })
+                );
+            var allCountries = na.mapConcat(regions, region => region.countries);
+            allCountries.sort((left, right) => {
+                return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
+            });
+            me.countries(allCountries);
+            
             var getVal = (a: any, pName: string, i: number = 13) => {
                 if (a[pName] != null) {
                     return a[pName][i];
