@@ -22,7 +22,10 @@ layout: right-column.hbs
 {{/section}}
 <div id="summary" class="only-country">
     <div class="page-header-container">
-        <div style="float:left;" class="page-header" data-bind="text: name"></div>
+        <div style="float:left;" class="page-header" >
+            <select id="country" data-bind="value: currentCountry, options: countries, optionsText: 'name', optionsValue: 'code', event: { change: refreshData }"></select>
+        </div>
+
         <div style="float:right" class="links">
             <a class="link" href="#" data-bind="attr: {href: 'index.html?source=' + source() }">Go to map view</a>
             <a class="link" href="countries.html">Go to country list view</a>

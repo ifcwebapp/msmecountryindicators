@@ -11,6 +11,7 @@ module models {
         //enterprise: KnockoutObservable<string> = ko.observable('MSMEs');
         noData = 'No data';
         countries: KnockoutObservableArray<any> = ko.observableArray([]);
+        currentCountry = ko.observable("ALB");
         showSummary: any;
         summaryDialog: any;
         refreshData: any;
@@ -293,14 +294,15 @@ module models {
 
             var countryCode = cd != undefined ? cd : me.getUrlParameter('country');
 
+            me.currentCountry(countryCode);
             if (countryCode != "null") {
-                me.showSummary({ code: countryCode }, null);
-                me.showMsmeDefinitions(countryCode);
+                me.showSummary({ code: me.currentCountry() }, null);
+                me.showMsmeDefinitions(me.currentCountry());
             }
 
             me.refreshData = () => {
-                me.showSummary({ code: countryCode }, null);
-                me.showMsmeDefinitions(countryCode);
+                me.showSummary({ code: me.currentCountry() }, null);
+                me.showMsmeDefinitions(me.currentCountry());
                 return true;
             }
 
