@@ -411,22 +411,13 @@ module models {
 
 
                         var infowindow = new google.maps.InfoWindow({
-                            content: ''//main.getCountryInfo(info, main)
-                            //maxWidth: 200
+                            content: ''
                         });
-
-                        google.maps.event.addListener(bubble, 'click', function () {
-                            var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
-                            navigateToUrl(countryPageUrl);
-                        });
-
-
-                        //google.maps.event.addListener(infowindow, 'domready', function () {
-                        //    ko.applyBindings(main, $("#link" + countryCode)[0]);
-                        //});
 
                         main.bubbles.push(bubble);
                         main.windows.push(infowindow);
+                        google.maps.event.addListener(bubble, 'click', whenClickedOpenPopupOver(info, main, infowindow, bubble));
+
                     })(i);
 
                 }
@@ -435,6 +426,49 @@ module models {
         }
 
     }
+
+    function whenClickedOpenPopupOver(
+        info: any,
+        main: MainModel,
+        popup: google.maps.InfoWindow,
+        marker: google.maps.Marker
+    ) {
+        return function whenClickedOpenPopup() : void {
+
+            closeAllWindows(main);
+            $.get('mapInfo.html', html => {
+                 
+                var node = $("#temp");
+                node.html(html);
+                var infoData = $("#infoData");
+                ko.applyBindings(main.getCountryInfoModel(info, main), infoData[0]);
+                var transformedHtml = node.html();
+                popup.setContent(transformedHtml);
+                popup.open(main.map, marker);
+                 
+            });
+        };
+    }
+
+    function whenClickedOpenUrlOver(info: any, main: MainModel) {
+        return function whenClickedOpenUrl() {
+            var countryPageUrl = 'country.html?country=' + info.Key + '&source=' + main.source();
+            navigateToUrl(countryPageUrl);
+        }
+    }
+
+    function closeAllWindows(main: MainModel) {
+        useAllWindows(main, window => window.close());
+    }
+
+    function useAllWindows(main: MainModel, use: (window: google.maps.InfoWindow) => void) {
+        var windows = main.windows;
+        for (var index = 0; index < windows.length; index++) {
+            use(windows[index]);
+        }
+    }
+
+
     function navigateToUrl(url: string): void {
         window.location.href = url;
     }
