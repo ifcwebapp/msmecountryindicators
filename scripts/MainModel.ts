@@ -221,13 +221,14 @@ module models {
 
         }
 
-        updateBubbleTitle(main: MainModel, info: any, bubble: google.maps.Marker, category: string) {
+        updateBubbleTitle(main: MainModel, info: any, bubble: any, category: string) {
             var id = main.bubbleIndicatorValue();
             var selectedText = $('#bubbleIndicator option[value="' + main.bubbleIndicatorValue() + '"]').text().trim();
             var selectedTextMap = $('#category option[value="' + main.category() + '"]').text().trim();
+            
             if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
                 var record = info.Value[id][main.source() + main.enterprise()];
-                var bubbleTitle = selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
+                var bubbleTitle = "Country: " + bubble.countryInfo.Name + "; " + selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
                 if (selectedText != selectedTextMap) {
                     var r = { val: null, year: null };
                     var postfix = "";
@@ -281,7 +282,7 @@ module models {
 
                     }
                     if (r != null && r.val != null) {
-                        bubbleTitle += ", " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
+                        bubbleTitle += "; " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
                     }
                 }
                 bubble.setTitle(bubbleTitle);
@@ -400,11 +401,12 @@ module models {
 
                         var countryCode = models.CountryIndicatorData.rows[i].Key;
                         var countryInfo = models.CountriesInfo.rows[countryCode];
-                        //console.log(countryCode);
+                        
                         var bubble = new google.maps.Marker({
                             position: new google.maps.LatLng(countryInfo.Latitude, countryInfo.Longitude),
                             bubbleType: "country",
-                            data: info
+                            data: info,
+                            countryInfo: countryInfo
                             //map: map
                         });
 
