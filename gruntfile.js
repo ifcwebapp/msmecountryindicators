@@ -50,6 +50,14 @@ module.exports = function (grunt) {
                     dest: 'built'
                 }]
             },
+            'html-assets-only': {
+                files: [{
+                    expand: true,
+                    cwd: 'assets/',
+                    src: ['*.html'],
+                    dest: 'built'
+                }]
+            },
             'styles': {
                 files: [{
                     expand: true,
@@ -92,9 +100,16 @@ module.exports = function (grunt) {
                     debounceDelay: 100
                 }
             },
-            'html': {
+            'hbs': {
                 files: ['layout/*.hbs', 'pages/*.hbs', 'partials/*.hbs'],
                 tasks: ['assemble:all'],
+                options: {
+                    debounceDelay: 100,
+                }
+            },
+            'html': {
+                files: ['assets/*.html'],
+                tasks: ['copy:html-assets-only'],
                 options: {
                     debounceDelay: 100,
                 }

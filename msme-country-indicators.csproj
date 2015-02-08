@@ -442,6 +442,9 @@
   <ItemGroup>
     <Folder Include="assets\images\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="styles\shared.less" />
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES3</TypeScriptTarget>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
