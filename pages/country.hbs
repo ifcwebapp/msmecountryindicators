@@ -22,7 +22,8 @@ layout: right-column.hbs
 {{/section}}
 <div id="summary" class="only-country">
     <div class="page-header-container">
-        <div style="float:left;" class="page-header" >
+        <div style="float:left;margin-right: 10px" class="page-header">Country:</div>
+        <div style="float:left;" class="select" >
             <select id="country" data-bind="value: currentCountry, options: countries, optionsText: 'name', optionsValue: 'code', event: { change: refreshData }"></select>
         </div>
 
@@ -117,40 +118,42 @@ layout: right-column.hbs
                 <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
             </div>
         </div>
-        <div class="header">MSME Definitions</div>
-        <div class="sourced">
-            <table class="grid as-comfy">
-                <thead>
-                    <tr class="grid-row as-subtotal">
-                        <th></th>
-                        <th>Number of employees</th>
-                        <th>Assets (local currency, unless noted otherwise)</th>
-                        <th>Turnover (local currency, unless noted otherwise)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="grid-row as-odd">
-                        <td>Micro</td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[0]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[1]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[2]"></td>
-                    </tr>
-                    <tr class="grid-row as-even">
-                        <td>Small</td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[3]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[4]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[5]"></td>
-                    </tr>
-                    <tr class="grid-row as-odd">
-                        <td>Medium</td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[6]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[7]"></td>
-                        <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[8]"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="source">
-                <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()"></span>
+        <div data-bind="visible: showMsmeDefinitionData">
+            <div class="header">MSME Definitions</div>
+            <div class="sourced">
+                <table class="grid as-comfy">
+                    <thead>
+                        <tr class="grid-row as-subtotal">
+                            <th></th>
+                            <th>Number of employees</th>
+                            <th>Assets (local currency, unless noted otherwise)</th>
+                            <th>Turnover (local currency, unless noted otherwise)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="grid-row as-odd">
+                            <td>Micro</td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[0]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[1]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[2]"></td>
+                        </tr>
+                        <tr class="grid-row as-even">
+                            <td>Small</td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[3]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[4]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[5]"></td>
+                        </tr>
+                        <tr class="grid-row as-odd">
+                            <td>Medium</td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[6]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[7]"></td>
+                            <td class="grid-cell as-numeric" data-bind="html: msmeDefinitions()[8]"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="source">
+                    <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()"></span>
+                </div>
             </div>
         </div>
         <!-- ko with: { isShown: ko.observable(false) } -->

@@ -72,6 +72,51 @@ module models {
         msmeDefinitions = ko.observable([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
         msmeDefinitionSource = ko.observable(this.noData);
         msmeDefinitionSourceYear = ko.observable(this.noData);
+
+        resetValues = () => {
+            this.enterpriseDataCommonSource(this.noData);
+            this.enterpriseDataCommonSourceYear(this.noData);
+            this.enterpriseDataCommonSources([]);
+            this.enterpriseDataValueAddedSource(this.noData);
+            this.enterpriseDataValueAddedSourceYear(this.noData);
+            this.enterpriseDataValueAddedSources([]);
+            this.enterpriseDataEnterpriseCountMicro(this.noData);
+            this.enterpriseDataEnterpriseCountSme(this.noData);
+            this.enterpriseDataEnterpriseCountMsme(this.noData);
+            this.enterpriseDataEnterpriseDensityMicro(this.noData);
+            this.enterpriseDataEnterpriseDensitySme(this.noData);
+            this.enterpriseDataEnterpriseDensityMsme(this.noData);
+            this.enterpriseDataEmploymentPersentMicro(this.noData);
+            this.enterpriseDataEmploymentPersentSme(this.noData);
+            this.enterpriseDataEmploymentPersentMsme(this.noData);
+            this.enterpriseDataEnterprisePersentMicro(this.noData);
+            this.enterpriseDataEnterprisePersentSme(this.noData);
+            this.enterpriseDataEnterprisePersentMsme(this.noData);
+            this.enterpriseDataEmploymentCountMicro(this.noData);
+            this.enterpriseDataEmploymentCountSme(this.noData);
+            this.enterpriseDataEmploymentCountMsme(this.noData);
+            this.enterpriseDataValueAddedMicro(this.noData);
+            this.enterpriseDataValueAddedSme(this.noData);
+            this.enterpriseDataValueAddedMsme(this.noData);
+            this.sectorBreakdownManufacturingMicro(this.noData);
+            this.sectorBreakdownManufacturingSme(this.noData);
+            this.sectorBreakdownManufacturingMsme(this.noData);
+            this.sectorBreakdownTradeMicro(this.noData);
+            this.sectorBreakdownTradeSme(this.noData);
+            this.sectorBreakdownTradeMsme(this.noData);
+            this.sectorBreakdownAgriMicro(this.noData);
+            this.sectorBreakdownAgriSme(this.noData);
+            this.sectorBreakdownAgriMsme(this.noData);
+            this.sectorBreakdownServicesMicro(this.noData);
+            this.sectorBreakdownServicesSme(this.noData);
+            this.sectorBreakdownServicesMsme(this.noData);
+            this.msmeDefinitions([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
+            this.msmeDefinitionSource(this.noData);
+            this.msmeDefinitionSourceYear(this.noData);
+
+            $("#source option").attr({ disabled: 'disabled' });
+            
+        }
         
 
         showEnterpriseCommonData = ko.computed(() => {
@@ -97,6 +142,13 @@ module models {
             return this.enterpriseDataValueAddedMicro() != this.noData ||
                 this.enterpriseDataValueAddedSme() != this.noData ||
                 this.enterpriseDataValueAddedMsme() != this.noData;
+        });
+
+        showMsmeDefinitionData = ko.computed(() => {
+            $.grep(this.msmeDefinitions(), (e, i) => {
+                return e != this.noData;
+            });
+            return this.msmeDefinitionSource() != this.noData || this.msmeDefinitionSourceYear() != this.noData;
         });
 
         constructor(host: string, src: string, cd: string) {
@@ -290,11 +342,13 @@ module models {
 
             me.currentCountry(countryCode);
             if (countryCode != "null") {
+                me.resetValues();
                 me.showSummary({ code: me.currentCountry() }, null);
                 me.showMsmeDefinitions(me.currentCountry());
             }
 
             me.refreshData = () => {
+                me.resetValues();
                 me.showSummary({ code: me.currentCountry() }, null);
                 me.showMsmeDefinitions(me.currentCountry());
                 return true;
@@ -302,6 +356,8 @@ module models {
 
             
         }
+
+
 
         showMsmeDefinitions(countryCode: string) {
             this.msmeDefinitions([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
