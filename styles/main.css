@@ -352,10 +352,6 @@ ul.none li > span {
 .text-right {
   text-align: right;
 }
-.infoSource {
-  font-size: 0.9em;
-  color: grey;
-}
 .tabs {
   position: relative;
   border-bottom: solid 1px #cccccc;
@@ -460,7 +456,21 @@ ul.none li > span {
   padding-top: 0px;
   border: solid 1px #cccccc;
 }
-.only-country .provided .header:first-child {
+.only-country .provided:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.only-country .provided .field {
+  float: right;
+}
+.only-country .provided .field .field-name {
+  width: auto;
+  margin-right: 5px;
+}
+.only-country .provided .field + .header {
   padding-top: 0px;
 }
 .only-country .provided + .provided {
@@ -501,16 +511,6 @@ ul.none li > span {
 }
 .only-country .grid.as-comfy .grid-cell.as-numeric {
   width: 170px;
-}
-.only-country .field + .sourced {
-  margin-top: 5px;
-}
-.only-country .sourced .source {
-  border-top: solid 1px #eee;
-  margin-top: 5px;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 100px;
 }
 .grid {
   width: 100%;
@@ -628,7 +628,7 @@ ul.none li > span {
 .only-index .field-value.as-indicator svg circle {
   fill: #E6550D;
 }
-.only-index .page-header {
+.only-index > .page-header {
   margin-left: 20px;
 }
 .only-index .intro {
@@ -641,9 +641,6 @@ ul.none li > span {
 .only-index .map {
   width: 990px;
   height: 550px;
-}
-.only-index .block + .block {
-  margin-top: 20px;
 }
 .only-index .afterwords {
   padding: 0px 20px;
@@ -666,5 +663,28 @@ ul.none li > span {
   position: relative;
   top: -2px;
   background-image: url(icons/material-design-icons/ic_help_grey600_18dp.png);
+}
+.sourced .source {
+  border-top: solid 1px #eee;
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 100px;
+}
+.block + .block {
+  margin-top: 20px;
+}
+.popup {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.popup .header {
+  padding-top: 0px;
+}
+.popup .page-header-container {
+  padding-top: 0px;
+  line-height: 40px;
+}
+.popup .page-header-container .page-header {
+  line-height: 40px;
 }
 /*# sourceMappingURL=main.css.map */
