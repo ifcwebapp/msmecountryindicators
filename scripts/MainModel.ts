@@ -214,7 +214,17 @@ module models {
 
                         bubble.setMap(map);
                     } else {
-                        bubble.setMap(null);
+                        bubble.setIcon(
+                            {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                fillOpacity: 0.5,
+                                fillColor: '#CCCCCC',
+                                strokeOpacity: 0,
+                                scale: 2*scaledZoom * 4
+
+                            });
+                        bubble.setMap(map);
+                        //bubble.setMap(null);
                     }
                 }
             });
@@ -225,68 +235,70 @@ module models {
             var id = main.bubbleIndicatorValue();
             var selectedText = $('#bubbleIndicator option[value="' + main.bubbleIndicatorValue() + '"]').text().trim();
             var selectedTextMap = $('#category option[value="' + main.category() + '"]').text().trim();
-            
+            var bubbleTitle = "Country: " + bubble.countryInfo.Name + "; ";
+            var record = null;
             if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
-                var record = info.Value[id][main.source() + main.enterprise()];
-                var bubbleTitle = "Country: " + bubble.countryInfo.Name + "; " + selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
-                if (selectedText != selectedTextMap) {
-                    var r = { val: null, year: null };
-                    var postfix = "";
-                    switch (category) {
-                        case "PopulationTotal":
-                            r = main.getFirstRecord(record, info.Value, 5, 3);
-                            break;
-                        case "GNI":
-                            r = main.getFirstRecord(record, info.Value, 4, 3);
-                            break;
-                        case "IncomeGroup":
-                            r = main.getFirstRecord(record, info.Value, 7, 3);
-                            break;
-                        case "Size Breakdown":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            postfix = "%";
-                            break;
-                        case "Density":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "Employment":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "Vallue added":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "Firm Size by Number":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "Firm Size by Assets":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "Firm Size by Sales":
-                            r = main.getRecord(main, info.Value, category, 13, 3);
-                            break;
-                        case "EnterpriseSurveysChecking":
-                            r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
-                            break;
-                        case "EnterpriseSurveysCredit":
-                            r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
-                            break;
-                        case "StartingBusinessRank":
-                            r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
-                            break;
-                        case "DomesticCreditToPrivateSector":
-                            r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
-                            break;
-                        case "LaborForceTotal":
-                            r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
-                            break;
-
-                    }
-                    if (r != null && r.val != null) {
-                        bubbleTitle += "; " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
-                    }
-                }
-                bubble.setTitle(bubbleTitle);
+                record = info.Value[id][main.source() + main.enterprise()];
+                bubbleTitle += selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
             }
+            if (selectedText != selectedTextMap) {
+                var r = { val: null, year: null };
+                var postfix = "";
+                switch (category) {
+                case "PopulationTotal":
+                    r = main.getFirstRecord(record, info.Value, 5, 3);
+                    break;
+                case "GNI":
+                    r = main.getFirstRecord(record, info.Value, 4, 3);
+                    break;
+                case "IncomeGroup":
+                    r = main.getFirstRecord(record, info.Value, 7, 3);
+                    break;
+                case "Size Breakdown":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    postfix = "%";
+                    break;
+                case "Density":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "Employment":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "Vallue added":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "Firm Size by Number":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "Firm Size by Assets":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "Firm Size by Sales":
+                    r = main.getRecord(main, info.Value, category, 13, 3);
+                    break;
+                case "EnterpriseSurveysChecking":
+                    r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
+                    break;
+                case "EnterpriseSurveysCredit":
+                    r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
+                    break;
+                case "StartingBusinessRank":
+                    r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
+                    break;
+                case "DomesticCreditToPrivateSector":
+                    r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
+                    break;
+                case "LaborForceTotal":
+                    r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
+                    break;
+
+                }
+                if (r != null && r.val != null) {
+                    bubbleTitle += "; " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
+                }
+            }
+
+            bubble.setTitle(bubbleTitle);
         }
 
         private updateAllBubblesTitles(category: string) : void {
@@ -365,7 +377,7 @@ module models {
         }
 
         getFirstRecord(record: any, records: any, i: number, yearIndex: number) {
-            if (record[i] == null) {
+            if (record == null || record[i] == null) {
                 for (var r in records) {
                     for (var a in records[r]) {
                         if (records[r][a][i] != null) {
@@ -377,7 +389,12 @@ module models {
                 return { val: record[i], year: record[yearIndex] };
             }
 
-            return { val: record[i], year: record[yearIndex] };
+            if (record != null) {
+                return { val: record[i], year: record[yearIndex] };
+            } else {
+                return { val: null, year: null };
+            }
+            
         }
 
         getRecord(main: MainModel, records: any, id: string, i: number, yearIndex: number) {
