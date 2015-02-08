@@ -6,6 +6,7 @@ var models;
             this.source = ko.observable(0);
             this.noData = 'No data';
             this.countries = ko.observableArray([]);
+            this.currentCountry = ko.observable("ALB");
             this.summaryData = ko.observable(models.CountryData.rows["ALB"]);
             this.name = ko.observable('');
             this.cats = ['Number of Enterprises', 'Density', 'Employment', 'Vallue added', 'Number of Employees', 'Size Breakdown', 'Manufacturing', 'Trade', 'Agri/Other', 'Services'];
@@ -51,11 +52,59 @@ var models;
             this.msmeDefinitions = ko.observable([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
             this.msmeDefinitionSource = ko.observable(this.noData);
             this.msmeDefinitionSourceYear = ko.observable(this.noData);
+            this.resetValues = function () {
+                _this.enterpriseDataCommonSource(_this.noData);
+                _this.enterpriseDataCommonSourceYear(_this.noData);
+                _this.enterpriseDataCommonSources([]);
+                _this.enterpriseDataValueAddedSource(_this.noData);
+                _this.enterpriseDataValueAddedSourceYear(_this.noData);
+                _this.enterpriseDataValueAddedSources([]);
+                _this.enterpriseDataEnterpriseCountMicro(_this.noData);
+                _this.enterpriseDataEnterpriseCountSme(_this.noData);
+                _this.enterpriseDataEnterpriseCountMsme(_this.noData);
+                _this.enterpriseDataEnterpriseDensityMicro(_this.noData);
+                _this.enterpriseDataEnterpriseDensitySme(_this.noData);
+                _this.enterpriseDataEnterpriseDensityMsme(_this.noData);
+                _this.enterpriseDataEmploymentPersentMicro(_this.noData);
+                _this.enterpriseDataEmploymentPersentSme(_this.noData);
+                _this.enterpriseDataEmploymentPersentMsme(_this.noData);
+                _this.enterpriseDataEnterprisePersentMicro(_this.noData);
+                _this.enterpriseDataEnterprisePersentSme(_this.noData);
+                _this.enterpriseDataEnterprisePersentMsme(_this.noData);
+                _this.enterpriseDataEmploymentCountMicro(_this.noData);
+                _this.enterpriseDataEmploymentCountSme(_this.noData);
+                _this.enterpriseDataEmploymentCountMsme(_this.noData);
+                _this.enterpriseDataValueAddedMicro(_this.noData);
+                _this.enterpriseDataValueAddedSme(_this.noData);
+                _this.enterpriseDataValueAddedMsme(_this.noData);
+                _this.sectorBreakdownManufacturingMicro(_this.noData);
+                _this.sectorBreakdownManufacturingSme(_this.noData);
+                _this.sectorBreakdownManufacturingMsme(_this.noData);
+                _this.sectorBreakdownTradeMicro(_this.noData);
+                _this.sectorBreakdownTradeSme(_this.noData);
+                _this.sectorBreakdownTradeMsme(_this.noData);
+                _this.sectorBreakdownAgriMicro(_this.noData);
+                _this.sectorBreakdownAgriSme(_this.noData);
+                _this.sectorBreakdownAgriMsme(_this.noData);
+                _this.sectorBreakdownServicesMicro(_this.noData);
+                _this.sectorBreakdownServicesSme(_this.noData);
+                _this.sectorBreakdownServicesMsme(_this.noData);
+                _this.msmeDefinitions([_this.noData, _this.noData, _this.noData, _this.noData, _this.noData, _this.noData, _this.noData, _this.noData, _this.noData]);
+                _this.msmeDefinitionSource(_this.noData);
+                _this.msmeDefinitionSourceYear(_this.noData);
+                $("#source option").attr({ disabled: 'disabled' });
+            };
             this.showEnterpriseCommonData = ko.computed(function () {
                 return _this.enterpriseDataEnterpriseCountMicro() != _this.noData || _this.enterpriseDataEnterpriseCountSme() != _this.noData || _this.enterpriseDataEnterpriseCountMsme() != _this.noData || _this.enterpriseDataEnterpriseDensityMicro() != _this.noData || _this.enterpriseDataEnterpriseDensitySme() != _this.noData || _this.enterpriseDataEnterpriseDensityMsme() != _this.noData || _this.enterpriseDataEmploymentPersentMicro() != _this.noData || _this.enterpriseDataEmploymentPersentSme() != _this.noData || _this.enterpriseDataEmploymentPersentMsme() != _this.noData || _this.enterpriseDataEnterprisePersentMicro() != _this.noData || _this.enterpriseDataEnterprisePersentSme() != _this.noData || _this.enterpriseDataEnterprisePersentMsme() != _this.noData || _this.enterpriseDataEmploymentCountMicro() != _this.noData || _this.enterpriseDataEmploymentCountSme() != _this.noData || _this.enterpriseDataEmploymentCountMsme() != _this.noData;
             });
             this.showEnterpriseValueAddedData = ko.computed(function () {
                 return _this.enterpriseDataValueAddedMicro() != _this.noData || _this.enterpriseDataValueAddedSme() != _this.noData || _this.enterpriseDataValueAddedMsme() != _this.noData;
+            });
+            this.showMsmeDefinitionData = ko.computed(function () {
+                $.grep(_this.msmeDefinitions(), function (e, i) {
+                    return e != _this.noData;
+                });
+                return _this.msmeDefinitionSource() != _this.noData || _this.msmeDefinitionSourceYear() != _this.noData;
             });
             var me = this;
             me.host = host;
@@ -219,13 +268,16 @@ var models;
                 }
             };
             var countryCode = cd != undefined ? cd : me.getUrlParameter('country');
+            me.currentCountry(countryCode);
             if (countryCode != "null") {
-                me.showSummary({ code: countryCode }, null);
-                me.showMsmeDefinitions(countryCode);
+                me.resetValues();
+                me.showSummary({ code: me.currentCountry() }, null);
+                me.showMsmeDefinitions(me.currentCountry());
             }
             me.refreshData = function () {
-                me.showSummary({ code: countryCode }, null);
-                me.showMsmeDefinitions(countryCode);
+                me.resetValues();
+                me.showSummary({ code: me.currentCountry() }, null);
+                me.showMsmeDefinitions(me.currentCountry());
                 return true;
             };
         }
