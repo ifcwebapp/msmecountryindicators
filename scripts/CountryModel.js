@@ -112,10 +112,20 @@ var models;
             if (sourceParam != "null") {
                 me.source(parseInt(sourceParam));
             }
-            var infos = models.CountryData.rows;
-            for (var info in infos) {
-                me.countries.push({ name: infos[info][0].CountryName, code: infos[info][0].CountryCode });
-            }
+            var regions = nm.toArray(models.CountryRegionMap.map, function (region, regionName) { return ({
+                region: regionName,
+                countries: nm.toArray(region, function (countryName, countryCode) { return ({
+                    name: countryName,
+                    code: countryCode,
+                    url: encodeURI('data/MSME Country Indicators - ' + countryName + ' Summary' + '.xlsx')
+                }); }),
+                url: encodeURI('data/MSME Country Indicators - ' + regionName + ' Summary' + '.xlsx')
+            }); });
+            var allCountries = na.mapConcat(regions, function (region) { return region.countries; });
+            allCountries.sort(function (left, right) {
+                return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
+            });
+            me.countries(allCountries);
             var getVal = function (a, pName, i) {
                 if (i === void 0) { i = 13; }
                 if (a[pName] != null) {
