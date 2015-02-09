@@ -200,7 +200,7 @@ module models {
                 this.updateBubbleTitle(me, info, bubble, category);
 
                 if (isBubble) {
-                    if (bubble.data.Value[id] != undefined && bubble.data.Value[id][me.source() + me.enterprise()] != undefined) {
+                    if (bubble.data != undefined && bubble.data.Value[id] != undefined && bubble.data.Value[id][me.source() + me.enterprise()] != undefined) {
                         var record = bubble.data.Value[id][me.source() + me.enterprise()];
                         bubble.setIcon(
                             {
@@ -237,59 +237,63 @@ module models {
             var selectedTextMap = $('#category option[value="' + main.category() + '"]').text().trim();
             var bubbleTitle = "Country: " + bubble.countryInfo.Name + "; ";
             var record = null;
-            if (info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
+            if (info != undefined && info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
                 record = info.Value[id][main.source() + main.enterprise()];
                 bubbleTitle += selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
             }
             if (selectedText != selectedTextMap) {
                 var r = { val: null, year: null };
                 var postfix = "";
+                if (info != undefined) {
+                    switch (category) {
+                    case "PopulationTotal":
+                        r = main.getFirstRecord(record, info.Value, 5, 3);
+                        break;
+                    case "GNI":
+                        r = main.getFirstRecord(record, info.Value, 4, 3);
+                        break;
+                    case "IncomeGroup":
+                        r = main.getFirstRecord(record, info.Value, 7, 3);
+                        break;
+                    case "Size Breakdown":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        postfix = "%";
+                        break;
+                    case "Density":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    case "Employment":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    case "Vallue added":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    case "Firm Size by Number":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    case "Firm Size by Assets":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    case "Firm Size by Sales":
+                        r = main.getRecord(main, info.Value, category, 13, 3);
+                        break;
+                    }
+                }
                 switch (category) {
-                case "PopulationTotal":
-                    r = main.getFirstRecord(record, info.Value, 5, 3);
-                    break;
-                case "GNI":
-                    r = main.getFirstRecord(record, info.Value, 4, 3);
-                    break;
-                case "IncomeGroup":
-                    r = main.getFirstRecord(record, info.Value, 7, 3);
-                    break;
-                case "Size Breakdown":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    postfix = "%";
-                    break;
-                case "Density":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "Employment":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "Vallue added":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "Firm Size by Number":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "Firm Size by Assets":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "Firm Size by Sales":
-                    r = main.getRecord(main, info.Value, category, 13, 3);
-                    break;
-                case "EnterpriseSurveysChecking":
-                    r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[info.Key];
+                    case "EnterpriseSurveysChecking":
+                        r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[bubble.countryInfo.IsoA3];
                     break;
                 case "EnterpriseSurveysCredit":
-                    r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[info.Key];
+                    r = models.AdditionalIndicatorData.EnterpriseSurveysCredit[bubble.countryInfo.IsoA3];
                     break;
                 case "StartingBusinessRank":
-                    r = models.AdditionalIndicatorData.StartingBusinessRank[info.Key];
+                    r = models.AdditionalIndicatorData.StartingBusinessRank[bubble.countryInfo.IsoA3];
                     break;
                 case "DomesticCreditToPrivateSector":
-                    r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[info.Key];
+                    r = models.AdditionalIndicatorData.DomesticCreditToPrivateSector[bubble.countryInfo.IsoA3];
                     break;
                 case "LaborForceTotal":
-                    r = models.AdditionalIndicatorData.LaborForceTotal[info.Key];
+                    r = models.AdditionalIndicatorData.LaborForceTotal[bubble.countryInfo.IsoA3];
                     break;
 
                 }
@@ -409,7 +413,7 @@ module models {
         }
 
         initiateBubbles(main: MainModel) {
-
+            var countryCodes = [];
             if (this.bubbles.length == 0) {
                 for (var i = 0; i < models.CountryIndicatorData.rows.length; i++) {
                     (i => {
@@ -417,6 +421,7 @@ module models {
                         var info = models.CountryIndicatorData.rows[i];
 
                         var countryCode = models.CountryIndicatorData.rows[i].Key;
+                        countryCodes.push(countryCode);
                         var countryInfo = models.CountriesInfo.rows[countryCode];
                         
                         var bubble = new google.maps.Marker({
@@ -442,6 +447,23 @@ module models {
                 }
             }
 
+            for (var cd in models.CountriesInfo.rows) {
+                var a = $.grep(countryCodes, (e, i) => {
+                    return e == cd;
+                }).length;
+                if (a == 0) {
+                    var countryInfo = models.CountriesInfo.rows[cd];
+                    var bubble = new google.maps.Marker({
+                        position: new google.maps.LatLng(countryInfo.Latitude, countryInfo.Longitude),
+                        bubbleType: "country",
+                        data: undefined,
+                        countryInfo: countryInfo
+                        //map: map
+                    });
+
+                    main.bubbles.push(bubble);
+                }
+            }
         }
 
     }
