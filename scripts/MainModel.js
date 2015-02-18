@@ -91,7 +91,6 @@ var models;
             data.summaryDialog.dialog("open");
         };
         MainModel.prototype.showSelectors = function () {
-            this.isChartSelectorVisible(this.indicatorStyleValue() == "chart");
             this.showBubbles(this.map.getZoom(), this.map, this.category());
         };
         MainModel.prototype.showLegend = function () {
@@ -216,6 +215,22 @@ var models;
                             break;
                     }
                 }
+                else {
+                    switch (category) {
+                        case "GNI":
+                            var d = models.GniPopulationData.rows[bubble.countryInfo.IsoA3];
+                            if (d != undefined) {
+                                r = { val: models.GniPopulationData.rows[bubble.countryInfo.IsoA3][0], year: 2012 };
+                            }
+                            break;
+                        case "PopulationTotal":
+                            var d = models.GniPopulationData.rows[bubble.countryInfo.IsoA3];
+                            if (d != undefined) {
+                                r = { val: models.GniPopulationData.rows[bubble.countryInfo.IsoA3][1], year: 2012 };
+                            }
+                            break;
+                    }
+                }
                 switch (category) {
                     case "EnterpriseSurveysChecking":
                         r = models.AdditionalIndicatorData.EnterpriseSurveysChecking[bubble.countryInfo.IsoA3];
@@ -269,9 +284,13 @@ var models;
         MainModel.prototype.getKml = function () {
             if (this.ctaLayer != null) {
                 this.ctaLayer.setMap(null);
+                this.ctaLayer = null;
             }
             var kmlName = "";
             var category = this.category();
+            if (category == "NOTHING") {
+                return true;
+            }
             if (category == "Density" || category == "Employment" || category == "Vallue added" || category == "Size Breakdown" || category == "Firm Size by Number" || category == "Firm Size by Assets" || category == "Firm Size by Sales") {
                 kmlName = category + "_" + this.enterprise() + "_" + this.source() + ".kmz?v=1";
                 kmlName = kmlName.replace(/\s/g, '_');
