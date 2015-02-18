@@ -133,6 +133,7 @@
     <TypeScriptCompile Include="scripts\arrays.ts" />
     <TypeScriptCompile Include="scripts\core.ts" />
     <TypeScriptCompile Include="scripts\CountriesInfo.ts" />
+    <TypeScriptCompile Include="scripts\GniPopulationData.ts" />
     <TypeScriptCompile Include="scripts\MsmeDefinitionsData.ts" />
     <TypeScriptCompile Include="scripts\CountryData.ts" />
     <TypeScriptCompile Include="scripts\CountryIndicatorData.ts" />
