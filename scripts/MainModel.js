@@ -175,7 +175,7 @@ var models;
             var record = null;
             if (info != undefined && info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
                 record = info.Value[id][main.source() + main.enterprise()];
-                bubbleTitle += selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3];
+                bubbleTitle += selectedText + ": " + main.numberWithCommas(record[13]) + " in " + record[3] + '; ';
             }
             if (selectedText != selectedTextMap) {
                 var r = { val: null, year: null };
@@ -184,9 +184,21 @@ var models;
                     switch (category) {
                         case "PopulationTotal":
                             r = main.getFirstRecord(record, info.Value, 5, 3);
+                            if (r == null || r.val == null) {
+                                var d = models.GniPopulationData.rows[bubble.countryInfo.IsoA3];
+                                if (d != undefined) {
+                                    r = { val: models.GniPopulationData.rows[bubble.countryInfo.IsoA3][1], year: 2012 };
+                                }
+                            }
                             break;
                         case "GNI":
                             r = main.getFirstRecord(record, info.Value, 4, 3);
+                            if (r == null || r.val == null) {
+                                var d = models.GniPopulationData.rows[bubble.countryInfo.IsoA3];
+                                if (d != undefined) {
+                                    r = { val: models.GniPopulationData.rows[bubble.countryInfo.IsoA3][0], year: 2012 };
+                                }
+                            }
                             break;
                         case "IncomeGroup":
                             r = main.getFirstRecord(record, info.Value, 7, 3);
@@ -249,7 +261,7 @@ var models;
                         break;
                 }
                 if (r != null && r.val != null) {
-                    bubbleTitle += "; " + selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
+                    bubbleTitle += selectedTextMap + ": " + main.numberWithCommas(r.val) + postfix + (r.year != "" ? " in " + r.year : "");
                 }
             }
             bubble.setTitle(bubbleTitle);
