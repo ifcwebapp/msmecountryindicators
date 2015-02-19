@@ -235,7 +235,7 @@ module models {
             var id = main.bubbleIndicatorValue();
             var selectedText = $('#bubbleIndicator option[value="' + main.bubbleIndicatorValue() + '"]').text().trim();
             var selectedTextMap = $('#category option[value="' + main.category() + '"]').text().trim();
-            var bubbleTitle = "Country: " + bubble.countryInfo.Name + "; ";
+            var bubbleTitle = "" + bubble.countryInfo.Name + "; ";
             var record = null;
             if (info != undefined && info.Value[id] != undefined && info.Value[id][main.source() + main.enterprise()] != undefined) {
                 record = info.Value[id][main.source() + main.enterprise()];
