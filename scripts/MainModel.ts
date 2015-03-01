@@ -220,7 +220,7 @@ module models {
                                 fillOpacity: 0.5,
                                 fillColor: '#CCCCCC',
                                 strokeOpacity: 0,
-                                scale: 2*scaledZoom * 4
+                                scale: scaledZoom * 4
 
                             });
                         bubble.setMap(map);
@@ -508,10 +508,10 @@ module models {
         marker: google.maps.Marker
     ) {
         return function whenClickedOpenPopup() : void {
-
+            
             closeAllWindows(main);
             $.get('mapInfo.html', html => {
-                 
+                alert(2);
                 var node = $("#temp");
                 node.html(html);
                 var infoData = $("#infoData");
