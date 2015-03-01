@@ -160,7 +160,7 @@ var models;
                             fillOpacity: 0.5,
                             fillColor: '#CCCCCC',
                             strokeOpacity: 0,
-                            scale: 2 * scaledZoom * 4
+                            scale: scaledZoom * 4
                         });
                         bubble.setMap(map);
                     }
@@ -403,6 +403,7 @@ var models;
         return function whenClickedOpenPopup() {
             closeAllWindows(main);
             $.get('mapInfo.html', function (html) {
+                alert(2);
                 var node = $("#temp");
                 node.html(html);
                 var infoData = $("#infoData");
