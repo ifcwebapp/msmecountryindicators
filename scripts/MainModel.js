@@ -403,7 +403,6 @@ var models;
         return function whenClickedOpenPopup() {
             closeAllWindows(main);
             $.get('mapInfo.html', function (html) {
-                alert(2);
                 var node = $("#temp");
                 node.html(html);
                 var infoData = $("#infoData");
