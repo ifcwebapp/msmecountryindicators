@@ -511,7 +511,6 @@ module models {
             
             closeAllWindows(main);
             $.get('mapInfo.html', html => {
-                alert(2);
                 var node = $("#temp");
                 node.html(html);
                 var infoData = $("#infoData");
