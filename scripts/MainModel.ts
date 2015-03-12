@@ -15,6 +15,18 @@ module models {
 
         source: KnockoutObservable<number> = ko.observable(0);
         enterprise: KnockoutObservable<string> = ko.observable('MSMEs');
+        enterpriseName = ko.computed(() => {
+            switch(this.enterprise()) {
+                case 'MSMEs':
+                    return 'MSME';
+                case 'SMEs':
+                    return 'SME';
+                case 'Micro':
+                    return 'Micro Enterprises';
+                default:
+                    return this.enterprise();
+            } 
+        });
         category: KnockoutObservable<string> = ko.observable('Density');
         year: KnockoutObservable<number> = ko.observable(2010);
 

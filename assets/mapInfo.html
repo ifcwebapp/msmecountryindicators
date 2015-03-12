@@ -1,13 +1,15 @@
 ﻿<div id="infoData" class="popup">
 
     <div class="page-header-container">
+        <div><a class="link" style='float: right' data-bind="attr: {href: 'country.html?country=' + info.Key + '&source=' + main.source()}">More country data and MSME definitions</a></div>
+        <div class="clear"></div>
         <div class="page-header" style="white-space:nowrap; float: left" data-bind="text: countryName"></div>
-        <a class="link" style='float: right' data-bind="attr: {href: 'country.html?country=' + info.Key + '&source=' + main.source()}">More country data and MSME definitions</a>
+        <div class="clear"></div>
     </div>
     
     
     
-    <div class="header" data-bind="visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
+    <div class="header" data-bind="text: main.enterpriseName() + ' Participation in the Economy', visible: showEnterpriseCommonData() || showEnterpriseValueAddedData()">MSME Participation in the Economy</div>
     <div class="sourced block" data-bind="visible: showEnterpriseCommonData">
         <table class="grid">
             <thead>
