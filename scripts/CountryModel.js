@@ -168,8 +168,10 @@ var models;
                         if (c != "Vallue added") {
                             var p;
                             for (var first in val[c]) {
-                                p = first;
-                                break;
+                                if (first[0] == me.source()) {
+                                    p = first;
+                                    break;
+                                }
                             }
                             me.name(getVal(val[c], p, 2));
                             me.enterpriseDataCommonSource(getVal(val[c], p, 6));
@@ -178,8 +180,10 @@ var models;
                         else {
                             var p;
                             for (var first in val[c]) {
-                                p = first;
-                                break;
+                                if (first[0] == me.source()) {
+                                    p = first;
+                                    break;
+                                }
                             }
                             me.enterpriseDataValueAddedSource(getVal(val[c], p, 6));
                             me.enterpriseDataValueAddedSourceYear(getVal(val[c], p, 3));

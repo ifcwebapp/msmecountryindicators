@@ -8,6 +8,18 @@ var models;
             this.ctaLayer = null;
             this.source = ko.observable(0);
             this.enterprise = ko.observable('MSMEs');
+            this.enterpriseName = ko.computed(function () {
+                switch (_this.enterprise()) {
+                    case 'MSMEs':
+                        return 'MSME';
+                    case 'SMEs':
+                        return 'SME';
+                    case 'Micro':
+                        return 'Micro Enterprises';
+                    default:
+                        return _this.enterprise();
+                }
+            });
             this.category = ko.observable('Density');
             this.year = ko.observable(2010);
             this.kmlValue = ko.observable('');
