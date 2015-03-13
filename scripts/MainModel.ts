@@ -43,6 +43,9 @@ module models {
         summaryType: KnockoutObservable<string> = ko.observable('summary');
         shortPanelText: KnockoutComputed<string>;
 
+        mapLayerDialog: any;
+        //showMapLayerDialog: any;
+
         summaryData: KnockoutObservable<any> = ko.observable(models.CountryData.rows["ALB"]);
 
         linkText: KnockoutObservable<string> = ko.observable('Show link to this page');
@@ -93,13 +96,20 @@ module models {
             me.showBubbles(this.map.getZoom(), this.map, this.category());
 
             $('#scrollablePart').height($(window).height() - 110);
-            me.summaryDialog = $('#summary').dialog({
+            //me.summaryDialog = $('#summary').dialog({
+            //    autoOpen: false,
+            //    modal: true,
+            //    height: $(window).height() - 50,
+            //    width: 1000,
+            //    dialogClass: 'noTitleDialog'
+            //});
+
+            me.mapLayerDialog = $('#layerInfoPopup').dialog({
                 autoOpen: false,
-                modal: true,
-                height: $(window).height() - 50,
-                width: 1000,
                 dialogClass: 'noTitleDialog'
             });
+
+            
 
             me.shortPanelText = ko.computed(() => {
                 var b = me.bubbleIndicatorValue();
@@ -135,6 +145,14 @@ module models {
             data.summaryDialog.dialog('close');
         }
 
+        showMapLayerDialog(data: MainModel) {
+            data.mapLayerDialog.dialog("open");
+        }
+
+        closeMapLayerDialog(data: MainModel) {
+            data.mapLayerDialog.dialog('close');
+            
+        }
 
         showSummaryDialog(data: MainModel, event: any, country?: string) {
 
@@ -229,7 +247,7 @@ module models {
                         bubble.setIcon(
                             {
                                 path: google.maps.SymbolPath.CIRCLE,
-                                fillOpacity: 0.5,
+                                fillOpacity: 0.2,
                                 fillColor: '#CCCCCC',
                                 strokeOpacity: 0,
                                 scale: scaledZoom * 4
