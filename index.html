@@ -102,6 +102,9 @@
                     <rect x="40" y="0" width="10" height="20" />
                 </svg>
             </div>
+            <div class="field-value">
+                <a href="#" class="link as-icon as-question-mark" title="Click to learn more about map layers" data-bind="click: showMapLayerDialog"><i></i></a>
+            </div>
         </div>
         <div class="field">
             <div class="field-name">Indicator</div>
@@ -134,7 +137,11 @@
             </div>
         </div>
     </div>
-
+    <div id="layerInfoPopup" >
+        <div><span title="Close" style="cursor: pointer; float:right" onClick="$('#layerInfoPopup').dialog('close')">X</span></div>
+        <div class="clear"></div>
+        [Placeholder text]
+    </div>
     <div class="map block" id="map-canvas"></div>
     <div class="block" id="map-legend">
         <div style="text-align:center; font-weight: bold" data-bind="text: legend().name"></div>
@@ -152,8 +159,10 @@
     <div class="block afterwords quieter">
         Only clean data is presented on the maps (excluding economies whose information is not census data or not covering all sectors in the economy - except for agriculture - or outliers). However, all data (clean and not clean) is included in the downloadable full database excel file. For more information and before using the data please read the <a href="http://www.ifc.org/wps/wcm/connect/b06d0b004958619ba722b719583b6d16/MSME-CI-MethodologyNote.pdf?MOD=AJPERES&CACHEID=b06d0b004958619ba722b719583b6d16" target="_blank">Description Note on the MSME Country Indicators – 2014</a>  along with the country specific comments in the <a href="http://ifcwebapp.github.io/msmecountryindicators/msme_data_with_notes.xlsx" target="_blank">MSME-CI MS Excel workbook.</a>  MSME-CI presents secondary data collected by various institutions (statistical institutes, ministries, international organizations, small business promotion agencies, research institutions and others) using different methods (survey, census and others). IFC is not responsible for the quality, accuracy, reliability or completeness of data provided by the sources. Data are not always standardized across countries and time which, among other issues, hampers comparability.
     </div>
+    
 </div>
 <div class="clear"></div>
+
 
         </div>
     </div>

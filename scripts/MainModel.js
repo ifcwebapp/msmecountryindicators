@@ -64,11 +64,8 @@ var models;
             me.initiateBubbles(me);
             me.showBubbles(this.map.getZoom(), this.map, this.category());
             $('#scrollablePart').height($(window).height() - 110);
-            me.summaryDialog = $('#summary').dialog({
+            me.mapLayerDialog = $('#layerInfoPopup').dialog({
                 autoOpen: false,
-                modal: true,
-                height: $(window).height() - 50,
-                width: 1000,
                 dialogClass: 'noTitleDialog'
             });
             me.shortPanelText = ko.computed(function () {
@@ -96,6 +93,12 @@ var models;
         };
         MainModel.prototype.closeSummary = function (data) {
             data.summaryDialog.dialog('close');
+        };
+        MainModel.prototype.showMapLayerDialog = function (data) {
+            data.mapLayerDialog.dialog("open");
+        };
+        MainModel.prototype.closeMapLayerDialog = function (data) {
+            data.mapLayerDialog.dialog('close');
         };
         MainModel.prototype.showSummaryDialog = function (data, event, country) {
             var d = models.CountryData.rows[country];
@@ -169,7 +172,7 @@ var models;
                     else {
                         bubble.setIcon({
                             path: google.maps.SymbolPath.CIRCLE,
-                            fillOpacity: 0.5,
+                            fillOpacity: 0.2,
                             fillColor: '#CCCCCC',
                             strokeOpacity: 0,
                             scale: scaledZoom * 4
