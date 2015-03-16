@@ -106,7 +106,8 @@ module models {
 
             me.mapLayerDialog = $('#layerInfoPopup').dialog({
                 autoOpen: false,
-                dialogClass: 'noTitleDialog'
+                dialogClass: 'noTitleDialog',
+                width: 600
             });
 
             
