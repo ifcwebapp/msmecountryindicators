@@ -66,7 +66,8 @@ var models;
             $('#scrollablePart').height($(window).height() - 110);
             me.mapLayerDialog = $('#layerInfoPopup').dialog({
                 autoOpen: false,
-                dialogClass: 'noTitleDialog'
+                dialogClass: 'noTitleDialog',
+                width: 600
             });
             me.shortPanelText = ko.computed(function () {
                 var b = me.bubbleIndicatorValue();
