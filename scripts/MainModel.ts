@@ -400,6 +400,7 @@ module models {
         }
 
         getKml() {
+            closeAllWindows(this);
             if (this.ctaLayer != null) {
                 this.ctaLayer.setMap(null);
                 this.ctaLayer = null;
