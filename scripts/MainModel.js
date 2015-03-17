@@ -310,6 +310,7 @@ var models;
             return true;
         };
         MainModel.prototype.getKml = function () {
+            closeAllWindows(this);
             if (this.ctaLayer != null) {
                 this.ctaLayer.setMap(null);
                 this.ctaLayer = null;
