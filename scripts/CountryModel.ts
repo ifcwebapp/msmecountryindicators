@@ -17,6 +17,7 @@ module models {
         showSummary: any;
         summaryDialog: any;
         refreshData: any;
+        changeCountry: any;
         
         summaryData: KnockoutObservable<any> = ko.observable(models.CountryData.rows["ALB"]);
         name = ko.observable('');
@@ -376,7 +377,11 @@ module models {
                 return true;
             }
 
-            
+            me.changeCountry = () => {
+                me.source(0);
+                me.refreshData();
+                return true;
+            }
         }
 
 
