@@ -47,7 +47,7 @@
     <div class="page-header-container">
         <div style="float:left; margin-right: 10px" class="page-header">Country:</div>
         <div style="float:left;" class="select" >
-            <select id="country" data-bind="value: currentCountry, options: countries, optionsText: 'name', optionsValue: 'code', event: { change: refreshData }"></select>
+            <select id="country" data-bind="value: currentCountry, options: countries, optionsText: 'name', optionsValue: 'code', event: { change: changeCountry }"></select>
         </div>
 
         <div style="float:right" class="links">
@@ -115,7 +115,7 @@
                 </tbody>
             </table>
             <div class="source">
-                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()"></span>
+                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataCommonSource() != 'No data' ? (enterpriseDataCommonSource() + ', ' + enterpriseDataCommonSourceYear()) : 'Not available'"></span>
             </div>
         </div>
         <div style="margin-top: 20px" data-bind="visible: showEnterpriseValueAddedData">
@@ -138,7 +138,7 @@
                 </tbody>
             </table>
             <div>
-                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()"></span>
+                <span style="font-weight: bold">Source: </span><span data-bind="text: enterpriseDataValueAddedSource() != 'No data' ? ( enterpriseDataValueAddedSource() + ', ' + enterpriseDataValueAddedSourceYear()) : 'Not available'"></span>
             </div>
         </div>
         <div data-bind="visible: showMsmeDefinitionData">
@@ -175,7 +175,7 @@
                     </tbody>
                 </table>
                 <div class="source">
-                    <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()"></span>
+                    <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() != 'No data' ? ( msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()) : 'Not available'"></span>
                 </div>
             </div>
         </div>

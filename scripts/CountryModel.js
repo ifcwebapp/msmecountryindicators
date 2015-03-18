@@ -294,6 +294,11 @@ var models;
                 me.showMsmeDefinitions(me.currentCountry());
                 return true;
             };
+            me.changeCountry = function () {
+                me.source(0);
+                me.refreshData();
+                return true;
+            };
         }
         CountryModel.prototype.showMsmeDefinitions = function (countryCode) {
             this.msmeDefinitions([this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData, this.noData]);
