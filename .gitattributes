@@ -10,4 +10,5 @@
 
 *.kmz binary
 *.xlsx binary
+*.pdf binary
 *.exe
