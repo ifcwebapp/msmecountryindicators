@@ -55,7 +55,9 @@
     <Content Include="-magic-button.bat" />
     <Content Include="assets\content\about_teaser_bg.png" />
     <Content Include="assets\content\analysis_note.png" />
+    <Content Include="assets\content\analysis_note_2014.png" />
     <Content Include="assets\content\analysis_note_small.png" />
+    <Content Include="assets\content\analysis_note_small_2014.png" />
     <Content Include="assets\content\bmz_web.jpg" />
     <Content Include="assets\content\close.png" />
     <Content Include="assets\content\dash.png" />
@@ -445,6 +447,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="styles\shared.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\analysis note.pdf" />
+    <Content Include="assets\description note.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\analysis_note_2010.pdf" />
+    <Content Include="assets\description_note_2010.pdf" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES3</TypeScriptTarget>
