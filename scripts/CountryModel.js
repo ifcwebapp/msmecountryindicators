@@ -173,9 +173,12 @@ var models;
                                     break;
                                 }
                             }
-                            me.name(getVal(val[c], p, 2));
-                            me.enterpriseDataCommonSource(getVal(val[c], p, 6));
-                            me.enterpriseDataCommonSourceYear(getVal(val[c], p, 3));
+                            var nm = getVal(val[c], p, 2);
+                            if (nm != me.noData) {
+                                me.name(getVal(val[c], p, 2));
+                                me.enterpriseDataCommonSource(getVal(val[c], p, 6));
+                                me.enterpriseDataCommonSourceYear(getVal(val[c], p, 3));
+                            }
                         }
                         else {
                             var p;
@@ -185,38 +188,17 @@ var models;
                                     break;
                                 }
                             }
-                            me.enterpriseDataValueAddedSource(getVal(val[c], p, 6));
-                            me.enterpriseDataValueAddedSourceYear(getVal(val[c], p, 3));
+                            var nm = getVal(val[c], p, 2);
+                            if (nm != me.noData) {
+                                me.enterpriseDataValueAddedSource(getVal(val[c], p, 6));
+                                me.enterpriseDataValueAddedSourceYear(getVal(val[c], p, 3));
+                            }
                         }
                     }
                     var sourceSelect = $("#source");
                     for (var op in sourceSelect[0]) {
                         if (availableSources.indexOf(op) >= 0) {
                             $(sourceSelect[0][op]).removeAttr("disabled");
-                        }
-                    }
-                    if (me.enterpriseDataCommonSource() != me.noData) {
-                        var srcs = models.CountryIndicatorSources.rows[obj.code];
-                        if (srcs != null) {
-                            var src = srcs[me.enterpriseDataCommonSource()];
-                            if (src != null) {
-                                me.enterpriseDataCommonSources.removeAll();
-                                $.each(src["Sources"], function (i, e) {
-                                    me.enterpriseDataCommonSources.push(_this.urlify(e));
-                                });
-                            }
-                        }
-                    }
-                    if (me.enterpriseDataValueAddedSource() != me.noData && me.enterpriseDataValueAddedSource() != me.enterpriseDataCommonSource()) {
-                        var srcs = models.CountryIndicatorSources.rows[obj.code];
-                        if (srcs != null) {
-                            var src = srcs[me.enterpriseDataValueAddedSource()];
-                            if (src != null) {
-                                me.enterpriseDataValueAddedSources.removeAll();
-                                $.each(src["Sources"], function (i, e) {
-                                    me.enterpriseDataValueAddedSources.push(_this.urlify(e));
-                                });
-                            }
                         }
                     }
                     if (val['Number of Enterprises'] != null) {
@@ -326,6 +308,22 @@ var models;
                     }
                     this.msmeDefinitionSource(l[4]);
                     this.msmeDefinitionSourceYear(l[3]);
+                }
+            }
+            if (this.msmeDefinitionSource() != this.noData) {
+                var srcs = models.CountryIndicatorSources.rows[countryCode];
+                if (srcs != null) {
+                    var src = srcs[this.msmeDefinitionSource()];
+                    if (src != null) {
+                        if (src["Sources"].length > 0) {
+                            if (src["Sources"][0] != this.msmeDefinitionSource()) {
+                                var s = src["Sources"][0];
+                                s = this.urlify(s);
+                                this.msmeDefinitionSource(s);
+                                this.msmeDefinitionSourceYear(this.noData);
+                            }
+                        }
+                    }
                 }
             }
             this.msmeDefinitions.valueHasMutated();
