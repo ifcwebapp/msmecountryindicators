@@ -155,31 +155,11 @@ layout: right-column.hbs
                     </tbody>
                 </table>
                 <div class="source">
-                    <span style="font-weight: bold">Source: </span><span data-bind="text: msmeDefinitionSource() != 'No data' ? ( msmeDefinitionSource() + ', ' + msmeDefinitionSourceYear()) : 'Not available'"></span>
+                    <span style="font-weight: bold">Source: </span><span data-bind="html: msmeDefinitionSource() != 'No data' ? ( msmeDefinitionSource() + (msmeDefinitionSourceYear() != 'No data' ? ', ' + msmeDefinitionSourceYear() : '')) : 'Not available'"></span>
                 </div>
             </div>
         </div>
-        <!-- ko with: { isShown: ko.observable(false) } -->
-        <div class="provider" data-bind="css: { 'as-shown': isShown() }">
-            <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
-            <div class="provider-details">
-                <!-- ko with: $parent -->
-                <div data-bind="if: enterpriseDataCommonSource() != noData">
-                    <div style="font-weight: bold" data-bind="text: enterpriseDataCommonSource"></div>
-                    <div data-bind="foreach: enterpriseDataCommonSources">
-                        <div data-bind="html: $data"></div>
-                    </div>
-                </div>
-                <div data-bind="if: enterpriseDataValueAddedSource() != noData && enterpriseDataValueAddedSource() != enterpriseDataCommonSource()">
-                    <div style="font-weight: bold" data-bind="text: enterpriseDataValueAddedSource"></div>
-                    <div data-bind="foreach: enterpriseDataValueAddedSources">
-                        <div data-bind="text: $data"></div>
-                    </div>
-                </div>
-                <!-- /ko -->
-            </div>
-        </div>
-        <!-- /ko -->
+        
     </div>
     
     <!-- ko if: hasAny(summaryData()) -->
