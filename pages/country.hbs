@@ -213,28 +213,13 @@ layout: right-column.hbs
                 <div class="source">
                     <span style="font-weight: bold">Source: </span>
                     <!-- ko foreach: $data.Sources -->
-                    <span data-bind="text: Name"></span>
+                    <div data-bind="html: $root.urlify(Comments)"></div>
                     <!-- /ko -->
                 </div>
             </div>
             <!-- /ko -->
         
-            <!-- ko if: summaryData()[0]['Sources'].length > 0 -->
-                <!-- ko with: { isShown: ko.observable(false) } -->
-                    <div class="provider" data-bind="css: { 'as-shown': isShown() }">
-                        <a href="#" class="provider-toggler" data-bind="text: isShown() ? 'Hide details' : 'Show details', click: function() { isShown(!isShown()); }"></a>
-                        <div class="provider-details">
-                            <!-- ko with: $parent -->
-                                <div data-bind="foreach: summaryData">
-                                    <div data-bind="foreach: $data.Sources">
-                                        <span data-bind="text: Name + (Link != null ? ', ' : '')"></span><a target="_blank" href="#" data-bind="attr: {href: Link}, text: Link"></a>
-                                    </div>
-                                </div>
-                            <!-- /ko -->
-                        </div>
-                    </div>
-                <!-- /ko -->
-            <!-- /ko -->
+            
 
         
     </div>
