@@ -606,19 +606,19 @@ ul.none li > span {
   display: inline;
   vertical-align: middle;
 }
-.only-index .field-value.as-map-layer svg rect:nth-child(1) {
+.only-index .field-value.as-map-layer svg rect:nth-child(5) {
   fill: #246F4D;
 }
-.only-index .field-value.as-map-layer svg rect:nth-child(2) {
+.only-index .field-value.as-map-layer svg rect:nth-child(4) {
   fill: #40965C;
 }
 .only-index .field-value.as-map-layer svg rect:nth-child(3) {
   fill: #58B06F;
 }
-.only-index .field-value.as-map-layer svg rect:nth-child(4) {
+.only-index .field-value.as-map-layer svg rect:nth-child(2) {
   fill: #82C483;
 }
-.only-index .field-value.as-map-layer svg rect:nth-child(5) {
+.only-index .field-value.as-map-layer svg rect:nth-child(1) {
   fill: #A8D5A5;
 }
 .only-index .field-value.as-indicator svg {
